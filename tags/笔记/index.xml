@@ -1,0 +1,29 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>笔记 - 标签 - iris</title>
+        <link>https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/</link>
+        <description>笔记 - 标签 - iris</description>
+        <generator>Hugo -- gohugo.io</generator><managingEditor>ginshio78@gmail.com (GinShio)</managingEditor>
+            <webMaster>ginshio78@gmail.com (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 17 Oct 2020 22:33:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+    <title>编译原理 (3) – 词法分析2</title>
+    <link>https://blog.ginshio.org/2020/compilerprinciple_003/</link>
+    <pubDate>Sat, 17 Oct 2020 22:33:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2020/compilerprinciple_003/</guid>
+    <description><![CDATA[基于DFA的模式匹配器的优化 NFA的重要状态 如果一个 NFA 状态有一个标号非 \(\varepsilon\) 的离开转换, 那么我们称这个状态为 重要状态 (important state)。子集构造法在]]></description>
+</item><item>
+    <title>编译原理 (2) – 词法分析1</title>
+    <link>https://blog.ginshio.org/2020/compilerprinciple_002/</link>
+    <pubDate>Thu, 16 Jul 2020 16:47:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2020/compilerprinciple_002/</guid>
+    <description><![CDATA[词法分析是编译器的第一阶段, 主要负责读取源程序的输入字符, 将它们组成 词素, 生成并输出一个词法单元序列, 每个词法单元对应一个词素, 这个词法单元]]></description>
+</item><item>
+    <title>编译原理 (1) – 编译器与程序设计语言</title>
+    <link>https://blog.ginshio.org/2020/compilerprinciple_001/</link>
+    <pubDate>Tue, 14 Jul 2020 15:47:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2020/compilerprinciple_001/</guid>
+    <description><![CDATA[编译器 编译器, 是一个 程序, 它可以阅读以某一 源语言 编写的程序, 并把该程序翻译成一个 等价的 、 用 目标语言 编写的程序; 解释器，是另一种语言处理器, 它]]></description>
+</item></channel>
+</rss>
