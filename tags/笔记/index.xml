@@ -4,7 +4,14 @@
         <link>https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/</link>
         <description>笔记 - 标签 - iris</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>ginshio78@gmail.com (GinShio)</managingEditor>
-            <webMaster>ginshio78@gmail.com (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 17 Oct 2020 22:33:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ginshio78@gmail.com (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 03 Nov 2020 16:09:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+    <title>编译原理 (4) – 语法分析1</title>
+    <link>https://blog.ginshio.org/2020/compilerprinciple_004/</link>
+    <pubDate>Tue, 03 Nov 2020 16:09:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2020/compilerprinciple_004/</guid>
+    <description><![CDATA[程序设计语言构造的语法可以使用 上下文无关文法 或者 BNF (巴库斯-瑙尔范式) 表示法来描述, 文法为语言设计者和编译器编写者提供了很大便利: 文法给出了]]></description>
+</item><item>
     <title>编译原理 (3) – 词法分析2</title>
     <link>https://blog.ginshio.org/2020/compilerprinciple_003/</link>
     <pubDate>Sat, 17 Oct 2020 22:33:00 &#43;0800</pubDate>
