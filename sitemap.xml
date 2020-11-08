@@ -2,13 +2,14 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.ginshio.org/categories/</loc><lastmod>2020-11-08T22:34:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/</loc><lastmod>2020-11-08T22:34:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/posts/</loc><lastmod>2020-11-08T22:34:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/categories/sicp/</loc><lastmod>2020-11-08T22:33:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/2020/sicp_001/</loc><lastmod>2020-11-08T22:33:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/</loc><lastmod>2020-11-08T22:34:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/</loc><lastmod>2020-11-08T22:34:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/categories/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/posts/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/sicp/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/categories/sicp/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/2020/sicp_001/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/</loc><lastmod>2020-11-08T22:41:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</loc><lastmod>2020-11-08T22:34:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/2020/compilerprinciple_004/</loc><lastmod>2020-11-07T01:42:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/tags/%E9%BE%99%E4%B9%A6/</loc><lastmod>2020-11-08T22:34:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
