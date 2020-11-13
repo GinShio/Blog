@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>搭建邮箱服务器 - iris</title><meta name="Description" content="在服务器上搭建邮箱服务器"><meta property="og:title" content="搭建邮箱服务器" />
+<meta property="og:description" content="在服务器上搭建邮箱服务器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.ginshio.org/2020/mail_server/" />
+<meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
+<meta property="article:published_time" content="2020-11-13T22:43:00+08:00" />
+<meta property="article:modified_time" content="2020-11-14T00:19:12+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
+
+<meta name="twitter:title" content="搭建邮箱服务器"/>
+<meta name="twitter:description" content="在服务器上搭建邮箱服务器"/>
+<meta name="application-name" content="iris">
+<meta name="apple-mobile-web-app-title" content="iris"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2020/mail_server/" /><link rel="prev" href="https://blog.ginshio.org/2020/sicp_001/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "搭建邮箱服务器",
+        "inLanguage": "",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.ginshio.org\/2020\/mail_server\/"
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  942 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/mail_server\/","datePublished": "2020-11-13T22:43:00+08:00","dateModified": "2020-11-14T00:19:12+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
+                "@type": "Person",
+                "name": "GinShio"
+            },"description": "在服务器上搭建邮箱服务器"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/links/"><i class="fa fa-user-friends faa-wrench"></i> 友人帐 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/links/" title=""><i class="fa fa-user-friends faa-wrench"></i>友人帐</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">搭建邮箱服务器</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-13">2020-11-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 942 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#mailcow">Mailcow</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#dns">DNS</a></li>
+        <li><a href="#搭建">搭建</a></li>
+      </ul>
+    </li>
+    <li><a href="#黑名单">黑名单</a></li>
+    <li><a href="#推荐阅读">推荐阅读</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>搭建一个邮箱服务器, 方便自己之后使用, 还可以 <del>装逼</del></p>
+<h2 id="mailcow">Mailcow</h2>
+<p><a href="https://mailcow.email/" target="_blank" rel="noopener noreffer">Mailcow</a> 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮件等功能, 过程相对全面, 不过缺点是比较吃资源, 并且不支持 <strong>Synology/QNAP</strong> 或 <strong>OpenVZ</strong> 、 <strong>LXC</strong> 等虚拟化方式, 并且不能使用 <code>CentOS 7/8</code> 源中的 Docker 包, 要求真多。。。</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>1GHz</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>最少4G (包含交换空间)</td>
+</tr>
+<tr>
+<td>硬盘</td>
+<td>20GiB (不包含邮件)</td>
+</tr>
+</tbody>
+</table>
+<p>消耗资源的主要原因是 <code>ClamAV</code> 和 <code>Solr</code>, 即杀毒功能和搜索功能, 如果不需要可以关闭。</p>
+<h2 id="安装">安装</h2>
+<p>开始搭建服务器, 以下采用域名 <code>example.com</code>, IP <code>1.1.1.1</code>, 安装在 <code>/mailcow</code>, 使用主机的nginx反向代理, 请根据自己的需求修改</p>
+<h3 id="dns">DNS</h3>
+<p>DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮件和收到邮件, 防止邮件被拒收或者进入垃圾箱被识别成垃圾邮件等, 当然不是配置好了就不会进垃圾邮箱, 不配置肯定会有问题。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>记录</th>
+<th>记录值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>mail</td>
+<td>1.1.1.1</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>@</td>
+<td>mail.example.com (10)</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>@</td>
+<td>aspmx.l.google.com (15)</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>@</td>
+<td>mxbiz1.qq.com (20)</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>@</td>
+<td>v=spf1 a mx ip:1.1.1.1 -all</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>_dmarc</td>
+<td>v=DMARC1; p=reject; rua=<a href="mailto:admin@example.com">mailto:admin@example.com</a>; ruf=<a href="mailto:admin@example.com">mailto:admin@example.com</a>; adkim=s; aspf=s</td>
+</tr>
+</tbody>
+</table>
+<p>除了上述DNS解析之外, 还需要配置 <strong>DKIM</strong> 和 <strong>PTR</strong>, DKIM在我们搭建好服务之后配置, PTR需要向运营商提交工单申请 (阿里云和腾讯云是这样的), 当然PTR可有可无, <strong>配置了最好</strong> 。</p>
+<h3 id="搭建">搭建</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">EMAIL_HOST</span><span class="o">=</span><span class="s2">&#34;mail.example.com&#34;</span>
+<span class="nb">cd</span> /
+git clone https://github.com/mailcow/mailcow-dockerized mailcow <span class="o">&amp;&amp;</span> <span class="nb">cd</span> mailcow
+<span class="nb">echo</span> <span class="si">${</span><span class="nv">EMAIL_HOST</span><span class="si">}</span> <span class="p">|</span> ./generate_config.sh
+sed -i <span class="s2">&#34;s/HTTP_PORT=*/HTTP_PORT=8080/&#34;</span> mailcow.conf <span class="c1"># HTTP端口</span>
+sed -i <span class="s2">&#34;s/HTTPS_PORT=*/HTTPS_PORT=8443/&#34;</span> mailcow.conf <span class="c1"># HTTPS端口</span>
+sed -i <span class="s2">&#34;s/TZ=*/TZ=Asia\/Shanghai/&#34;</span> mailcow.conf <span class="c1"># 时区</span>
+sed -i <span class="s2">&#34;s/SKIP_LETS_ENCRYPT=*/SKIP_LETS_ENCRYPT=y/&#34;</span> mailcow.conf <span class="c1"># 证书申请, 关闭</span>
+sed -i <span class="s2">&#34;s/SKIP_SOGO=*/SKIP_SOGO=n/&#34;</span> mailcow.conf <span class="c1"># webmail, 开启</span>
+sed -i <span class="s2">&#34;s/SKIP_SOLR=*/SKIP_SOLR=n/&#34;</span> mailcow.conf <span class="c1"># 搜索, 关闭</span>
+sed -i <span class="s2">&#34;s/enable_ipv6: true/enable_ipv6: false/&#34;</span> docker-compose.yml <span class="c1"># 关闭ipv6</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>下面给出Nginx配置文件, Apache 配置文件请参见 <a href="https://mailcow.github.io/mailcow-dockerized-docs/firststeps-rp/#apache-24" target="_blank" rel="noopener noreffer">官方文档</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Nginx" data-lang="Nginx"><span class="k">server</span> <span class="p">{</span>
+  <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+  <span class="kn">listen</span> <span class="s">[::]:80</span><span class="p">;</span>
+  <span class="kn">server_name</span> <span class="s">mail.example.com</span><span class="p">;</span>
+  <span class="kn">return</span> <span class="mi">301</span> <span class="s">https://</span><span class="nv">$host$request_uri</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">server</span> <span class="p">{</span>
+  <span class="kn">listen</span> <span class="mi">443</span> <span class="s">ssl</span> <span class="s">http2</span><span class="p">;</span>
+  <span class="kn">listen</span> <span class="s">[::]:443</span> <span class="s">ssl</span> <span class="s">http2</span><span class="p">;</span>
+  <span class="kn">server_name</span> <span class="s">mail.example.com</span><span class="p">;</span>
+
+  <span class="kn">ssl_certificate</span> <span class="s">/path/to/cert</span><span class="p">;</span>
+  <span class="kn">ssl_certificate_key</span> <span class="s">/path/tp/key</span><span class="p">;</span>
+  <span class="kn">ssl_session_timeout</span> <span class="s">2h</span><span class="p">;</span>
+  <span class="kn">ssl_session_cache</span> <span class="s">shared:mailcow:16m</span><span class="p">;</span>
+  <span class="kn">ssl_session_tickets</span> <span class="no">off</span><span class="p">;</span>
+
+  <span class="c1"># See https://ssl-config.mozilla.org/#server=nginx for the latest ssl settings recommendations
+</span><span class="c1"></span>  <span class="c1"># An example config is given below
+</span><span class="c1"></span>  <span class="kn">ssl_protocols</span> <span class="s">TLSv1.2</span> <span class="s">TLSv1.3</span><span class="p">;</span>
+  <span class="kn">ssl_ciphers</span> <span class="s">HIGH:!aNULL:!MD5:!SHA1:!kRSA</span><span class="p">;</span>
+  <span class="kn">ssl_prefer_server_ciphers</span> <span class="no">off</span><span class="p">;</span>
+
+  <span class="kn">location</span> <span class="s">/Microsoft-Server-ActiveSync</span> <span class="p">{</span>
+    <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8080/Microsoft-Server-ActiveSync</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-Proto</span> <span class="nv">$scheme</span><span class="p">;</span>
+    <span class="kn">proxy_connect_timeout</span> <span class="mi">75</span><span class="p">;</span>
+    <span class="kn">proxy_send_timeout</span> <span class="mi">3650</span><span class="p">;</span>
+    <span class="kn">proxy_read_timeout</span> <span class="mi">3650</span><span class="p">;</span>
+    <span class="kn">proxy_buffers</span> <span class="mi">24</span> <span class="mi">256k</span><span class="p">;</span>
+    <span class="kn">client_body_buffer_size</span> <span class="mi">512k</span><span class="p">;</span>
+    <span class="kn">client_max_body_size</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+    <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8080/</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-Proto</span> <span class="nv">$scheme</span><span class="p">;</span>
+    <span class="kn">client_max_body_size</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>以上全部完成后, mailcow 基本配置完成, 只需要启动起服务即可, 默认用户密码 <code>admin</code> / <code>moohoo</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /mailcow
+docker-compose pull
+docker-compose up -d
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="黑名单">黑名单</h2>
+<p>上了黑名单的IP很容易被进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址</p>
+<ul>
+<li><a href="https://mxtoolbox.com/SuperTool.aspx" target="_blank" rel="noopener noreffer">MXToolBox</a></li>
+<li><a href="http://multirbl.valli.org/">http://multirbl.valli.org/</a></li>
+<li><a href="https://sender.office.com/" target="_blank" rel="noopener noreffer">Office 365</a></li>
+<li><a href="https://www.barracudacentral.org/rbl/removal-request" target="_blank" rel="noopener noreffer">Barracuda</a></li>
+</ul>
+<h2 id="推荐阅读">推荐阅读</h2>
+<ul>
+<li><a href="https://mailcow.github.io/mailcow-dockerized-docs/" target="_blank" rel="noopener noreffer">Mailcow官方文档</a></li>
+<li><a href="https://www.cnblogs.com/dmarcly/p/10947796.html" target="_blank" rel="noopener noreffer">DMARC 是什么？</a></li>
+<li><a href="https://newpants.top/2019/11/14/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Poste%E4%BA%94%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener noreffer">邮件服务器Poste五分钟搭建</a></li>
+<li><a href="https://lala.im/4168.html" target="_blank" rel="noopener noreffer">使用Mailcow自建邮件服务器</a></li>
+<li><a href="https://low.bi/p/r7VbxEKo3zA" target="_blank" rel="noopener noreffer">使用 mailcow:dockerized 搭建邮件服务器</a></li>
+<li><a href="http://www.renfei.org/blog/introduction-to-spf.html" target="_blank" rel="noopener noreffer">SPF 记录：原理、语法及配置方法简介</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-11-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2020/mail_server/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.ginshio.org/2020/mail_server/" data-title="搭建邮箱服务器" data-hashtags="server,Application"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.ginshio.org/2020/mail_server/" data-hashtag="server"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.ginshio.org/2020/mail_server/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.ginshio.org/2020/mail_server/" data-title="搭建邮箱服务器"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.ginshio.org/2020/mail_server/" data-title="搭建邮箱服务器"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.ginshio.org/2020/mail_server/" data-title="搭建邮箱服务器"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/server/">server</a>,&nbsp;<a href="/tags/application/">Application</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/sicp_001/" class="prev" rel="prev" title="SICP(1) – 构造过程抽象"><i class="fas fa-angle-left fa-fw"></i>SICP(1) – 构造过程抽象</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.ginshio.org/" target="_blank">GinShio</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["GinShio"],"clientID":"1ede37779b82f8d8a39e","clientSecret":"4dc775e507be852aa2805c6643495ed7178b7826","id":"2020-11-13T22:43:00+08:00","owner":"GinShio","repo":"Blog","title":"搭建邮箱服务器"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-172480612-1', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-172480612-1" async></script></body>
+</html>
