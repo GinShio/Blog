@@ -45,12 +45,12 @@ EMAIL_HOST="mail.example.com"
 cd /
 git clone https://github.com/mailcow/mailcow-dockerized mailcow && cd mailcow
 echo ${EMAIL_HOST} | ./generate_config.sh
-sed -i "s/HTTP_PORT=*/HTTP_PORT=8080/" mailcow.conf # HTTP端口
-sed -i "s/HTTPS_PORT=*/HTTPS_PORT=8443/" mailcow.conf # HTTPS端口
-sed -i "s/TZ=*/TZ=Asia\/Shanghai/" mailcow.conf # 时区
-sed -i "s/SKIP_LETS_ENCRYPT=*/SKIP_LETS_ENCRYPT=y/" mailcow.conf # 证书申请, 关闭
-sed -i "s/SKIP_SOGO=*/SKIP_SOGO=n/" mailcow.conf # webmail, 开启
-sed -i "s/SKIP_SOLR=*/SKIP_SOLR=n/" mailcow.conf # 搜索, 关闭
+sed -i "s/HTTP_PORT=.*/HTTP_PORT=8080/" mailcow.conf # HTTP端口
+sed -i "s/HTTPS_PORT=.*/HTTPS_PORT=8443/" mailcow.conf # HTTPS端口
+sed -i "s/TZ=.*/TZ=Asia\/Shanghai/" mailcow.conf # 时区
+sed -i "s/SKIP_LETS_ENCRYPT=.*/SKIP_LETS_ENCRYPT=y/" mailcow.conf # 证书申请, 关闭
+sed -i "s/SKIP_SOGO=.*/SKIP_SOGO=n/" mailcow.conf # webmail, 开启
+sed -i "s/SKIP_SOLR=.*/SKIP_SOLR=n/" mailcow.conf # 搜索, 关闭
 sed -i "s/enable_ipv6: true/enable_ipv6: false/" docker-compose.yml # 关闭ipv6
 ```
 
@@ -122,6 +122,62 @@ docker-compose up -d
 -   <http://multirbl.valli.org/>
 -   [Office 365](https://sender.office.com/)
 -   [Barracuda](https://www.barracudacentral.org/rbl/removal-request)
+
+
+## 为其他应用开启邮件服务器 {#为其他应用开启邮件服务器}
+
+
+### GitLab {#gitlab}
+
+我们的GitLab使用的是源码安装, 需要修改 `config/gitlab.yml` 开启 emil
+
+```shell
+cd /home/git/gitlab
+sed -i "s/email_enabled:.*/email_enabled: true/" config/gitlab.yml
+sed -i "s/email_from:.*/email_from: noreply@example.com" config/gitlab.yml
+sed -i "s/email_reply_to:.*/email_reply_to: noreply@example.com" config/gitlab.yml
+cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings.rb
+```
+
+将email启用后, 还需要配置smtp, 可以参考 [官方教程](https://docs.gitlab.com/omnibus/settings/smtp.html#mailcow), 修改配置文件 **config/initializers/smtp\_settings.rb**, 将 `ActionMailer::Base.smtp_settings` 修改为以下内容
+
+```ruby
+enable: true,
+address: "mail.example.com",
+port: 587,
+user_name: "noreply@example.com",
+password: "YourPassword",
+domain: "mail.example.com",
+authentication: :login,
+enable_starttls_auto: true,
+tls: false,
+openssl_verify_mode: 'none'
+```
+
+
+### Nextcloud {#nextcloud}
+
+配置邮箱服务器前需要先修改nextcloud的代码, 如下
+
+```shell
+cd /path/to/nextcloud
+sed -i \
+"s/\$streamContext = .*;/\$streamContext = stream_context_create(array('ssl'=>['verify_peer'=>false, 'verify_peer_name'=>false, 'allow_self_signed'=>true]));/" \
+3rdparty/swiftmailer/swiftmailer/lib/classes/Swift/Transport/StreamBuffer.php
+```
+
+登录管理员帐号进行邮箱服务器配置即可
+
+| 字段  | 值                   |
+|-----|---------------------|
+| 发送模式 | SMTP                 |
+| 加密  | STARTTLS             |
+| 来自地址 | noreply@example.com  |
+| 认证方式 | 登录                 |
+| 需要认证 | true                 |
+| 服务器地址 | mail.example.com:587 |
+| 证书  | noreply@example.com  |
+| 密码  | YourPassword         |
 
 
 ## 推荐阅读 {#推荐阅读}
