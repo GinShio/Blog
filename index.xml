@@ -3,8 +3,8 @@
         <title>iris</title>
         <link>https://blog.ginshio.org/</link>
         <description>iris | GinShio的个人博客</description>
-        <generator>Hugo -- gohugo.io</generator><managingEditor>ginshio78@gmail.com (GinShio)</managingEditor>
-            <webMaster>ginshio78@gmail.com (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 13 Nov 2020 22:43:00 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 13 Nov 2020 22:43:00 &#43;0800</lastBuildDate>
             <atom:link href="https://blog.ginshio.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>搭建邮箱服务器</title>
