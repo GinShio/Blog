@@ -11,6 +11,17 @@
 -   PostgreSQL
 -   Redis
 
+我们首先定义一些变量, 以便后边使用和修改
+
+```shell
+fpm_path="/etc/php/7.4/fpm" # php-fpm 根目录
+nextcloud_path="/path/to/nextcloud" # nextcloud 所在目录
+nextcloud_host="example.com"
+gitlab_path="/home/git/gitlab"
+gitaly_path="/home/git/gitaly"
+gitlab_host="example.com"
+```
+
 ---
 
 
@@ -33,8 +44,7 @@ apt install -y nginx postgresql \
 -   PHP: 修改 php-fpm 的配置文件
 
     ```shell
-    fpm_path="/etc/php/7.4/fpm"
-    cd $fpm_path
+    cd ${fpm_path}
     # php config
     sed -i "s/memory_limit = .*/memory_limit = 512M/" php.ini
     sed -i "s/;date.timezone.*/date.timezone = UTC/" php.ini
@@ -83,11 +93,11 @@ apt install -y nginx postgresql \
 
 ### Nextcloud 安装 {#nextcloud-安装}
 
-[下载](https://download.nextcloud.com/server/releases) 你需要的版本并解压到目录中, 这里假设解压后的目录为 `/var/www/nextcloud`
+[下载](https://download.nextcloud.com/server/releases) 你需要的版本并解压到目录中
 
 ```shell
-sudo chown -R www-data:www-data /var/www/nextcloud/
-sudo -u www-data -H mkdir -p /var/www/nextcloud/data
+sudo chown -R www-data:www-data ${nextcloud_root}
+sudo -u www-data -H mkdir -p ${nextcloud_root}
 ```
 
 准备工作完成后, 进入网页, 设置管理员帐号和数据库
@@ -154,13 +164,12 @@ sudo apt install -y build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-de
 sudo gem install bundler --no-document --version '< 2'
 # Node.js
 curl --silent --show-error https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
+    sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt-get update
 sudo apt-get install yarn
 # 数据库
 sudo adduser --disabled-login --gecos 'GitLab' git
-sudo apt install postgresql postgresql-client libpq-dev postgresql-contrib
-sudo systemctl start postgresql
 sudo -u postgres psql -d template1 -c "CREATE USER git WITH PASSWORD 'YourPassword' CREATEDB;"
 sudo -u postgres psql -d template1 -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
 sudo -u postgres psql -d template1 -c "CREATE EXTENSION IF NOT EXISTS btree_gist";
@@ -187,8 +196,6 @@ sudo usermod -aG redis git
 以下配置完成后, Gitlab基本配置完成, 登录网站设置默认管理员密码即可登录, 默认管理员帐号为 **root**
 
 ```shell
-gitlab_path=/home/git/gitlab
-gitaly_path=/home/git/gitaly
 # install gitlab
 cd /home/git
 sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-foss.git -b 13-0-stable gitlab
@@ -229,12 +236,13 @@ sudo -u git -H editor /home/git/gitlab-shell/config.yml
 sudo -u git -H bundle exec rake "gitlab:workhorse:install[/home/git/gitlab-workhorse]" RAILS_ENV=production
 # install gitaly
 cd ${gitlab_path}
-sudo -u git -H bundle exec rake "gitlab:gitaly:install[/home/git/gitaly,/home/git/repositories]" RAILS_ENV=production
+sudo -u git -H bundle exec rake \
+    "gitlab:gitaly:install[/home/git/gitaly,/home/git/repositories]" RAILS_ENV=production
 sudo chmod 0700 ${gitlab_path}/tmp/sockets/private
 sudo chown git ${gitlab_path}/tmp/sockets/private
 sudo -u git -H editor ${gitaly_path}/config.toml
-sudo -u git -H sh -c "$gitlab_path/bin/daemon_with_pidfile $gitlab_path/tmp/pids/gitaly.pid \
-  $gitaly_path/gitaly $gitaly_path/config.toml >> $gitlab_path/log/gitaly.log 2>&1 &"
+sudo -u git -H sh -c \
+    "${gitlab_path}/bin/daemon_with_pidfile ${gitlab_path}/tmp/pids/gitaly.pid ${gitaly_path}/gitaly ${gitaly_path}/config.toml >> ${gitlab_path}/log/gitaly.log 2>&1 &"
 # 初始化
 sudo -u git -H bundle exec rake gitlab:setup RAILS_ENV=production force=yes
 sudo cp lib/support/init.d/gitlab /etc/init.d/gitlab

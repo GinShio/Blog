@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>GPG 入门指北 - iris</title><meta name="Description" content="GinShio | GPG 入门教程"><meta property="og:title" content="GPG 入门指北" />
+<meta property="og:description" content="GinShio | GPG 入门教程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.ginshio.org/2020/gpg_started_guide/" />
+<meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
+<meta property="article:published_time" content="2020-11-14T18:14:00+08:00" />
+<meta property="article:modified_time" content="2020-11-15T05:47:36+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
+
+<meta name="twitter:title" content="GPG 入门指北"/>
+<meta name="twitter:description" content="GinShio | GPG 入门教程"/>
+<meta name="application-name" content="iris">
+<meta name="apple-mobile-web-app-title" content="iris"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2020/gpg_started_guide/" /><link rel="prev" href="https://blog.ginshio.org/2020/mail_server/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "GPG 入门指北",
+        "inLanguage": "",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.ginshio.org\/2020\/gpg_started_guide\/"
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "Application, Linux","wordcount":  2468 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/gpg_started_guide\/","datePublished": "2020-11-14T18:14:00+08:00","dateModified": "2020-11-15T05:47:36+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
+                "@type": "Person",
+                "name": "GinShio"
+            },"description": "GinShio | GPG 入门教程"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/links/"><i class="fa fa-user-friends faa-wrench"></i> 友人帐 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/links/" title=""><i class="fa fa-user-friends faa-wrench"></i>友人帐</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">GPG 入门指北</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-14">2020-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2468 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#初体验">初体验</a>
+      <ul>
+        <li><a href="#生成">生成</a></li>
+        <li><a href="#备份">备份</a></li>
+        <li><a href="#发布">发布</a></li>
+        <li><a href="#吊销">吊销</a></li>
+      </ul>
+    </li>
+    <li><a href="#深入了解">深入了解</a>
+      <ul>
+        <li><a href="#导入与删除">导入与删除</a></li>
+        <li><a href="#加密与解密">加密与解密</a></li>
+        <li><a href="#签名与校验">签名与校验</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Pretty Good Privacy (<strong>PGP</strong>), 是一套用于讯息加密、验证的应用程序, 由 <a href="https://en.wikipedia.org/wiki/Phil%5FZimmermann" target="_blank" rel="noopener noreffer">Phil Zimmermann</a> 于1991年发布, 由一系列散列、数据压缩、对称密钥加密以及公钥加密的算法组合而成。GNU Privacy Guard (<strong>GPG</strong>), 是一个用于加密、签名通信内容以及管理非对称密钥的自由软件, 遵循IETF订定的 <a href="https://tools.ietf.org/html/rfc4880" target="_blank" rel="noopener noreffer">OpenPGP技术标准</a> 设计, 并与PGP保持兼容。</p>
+<p>GPG的基于现代密码学, 主要是对非对称加密的应用, 由于自己本身是菜鸡, 又没有学过密码学, 所以对于以下加密方式进行简单的介绍, 如有不准确请指正。</p>
+<ul>
+<li><strong>对称加密</strong>: 又称私钥加密, 这类算法在加密与解密时使用 <strong>相同的</strong> 的密钥, 通信双方在通信之前需要协商一个密钥。对称加密简单、高效, 加密强度随密钥长度的增加而增加, 常见加密算法 <code>DES</code> 、 <code>ChaCha20</code> 、 <code>AES</code> 等</li>
+<li><strong>非对称加密</strong>: 又称公开密钥加密, 这类算法采用公钥加密私钥解密, 公钥可以随意发布, 私钥必须由用户严格保管, 通信双方在通信时使用对方的公钥加密自己的信息。非对称加密的数学基础是 <strong>超大整数的因数分解</strong> 、 <strong>整数有限域离散对数</strong> 、 <strong>椭圆曲线离散对数</strong> 等问题的复杂性。数字签名也是基于非对称加密实现, 简单地说即将文件散列后使用私钥加密生成签名, 验证时散列文件并与公钥解密签名的值做对比进行验证, 数字签名可以验证文件完整性, 也有防止伪造的作用。常见的加密算法有 <code>DSA</code> 、 <code>RSA</code> 、 <code>ECDSA</code> 等</li>
+</ul>
+<hr>
+<h2 id="初体验">初体验</h2>
+<h3 id="生成">生成</h3>
+<p>使用 <code>--generate-key</code> 参数可以创建一个使用默认值的密钥对, 如果想设置更多的值可以使用 <code>--full-generate-key</code> 参数, 如果再加上 <code>--expert</code> 开启专家模式, 专家模式允许你自己选择 <strong>不同的加密算法</strong> 与 <strong>不同的密钥种类</strong>, 在此仅介绍 <code>--full-generate-key</code> 参数。</p>
+<ol>
+<li>选择你希望的密钥种类: 我们选择默认的 <span class="underline">RSA and RSA</span>, 会生成采用RSA算法且拥有加密、签名、验证功能的密钥</li>
+<li>密钥长度: <a href="https://www.keylength.com/en/4/" target="_blank" rel="noopener noreffer">NIST建议</a> 2030年之前推荐的最小密钥长度, 对称加密 <strong>128bit</strong>, 非对称加密 <strong>2048bit</strong>, 椭圆曲线密码学 <strong>224bit</strong></li>
+<li>使用期限: 默认为永久(0), 在这里我们选择1天 (1)</li>
+</ol>
+<p>我们生成了一个密钥对, 可以看到一些关于新生成的密钥的信息, 包括了密钥长度、uid、指纹, 我们一般使用指纹来分别不同的密钥, 指纹是用40位16进制数字表示的串, 我们一般使用 <strong>邮箱</strong> 、 <strong>整串</strong> 或 <strong>串的最后16位</strong> 区分密钥。</p>
+<figure>
+    <img src="/blog/Applications/images/generate_gpg_key.png"/> 
+</figure>
+
+<h3 id="备份">备份</h3>
+<p>我们采用最朴素的方式保存密钥 —— 本地存储, 但是请记住一点, 私钥一定不能丢失或外泄。为了以防万一, 我们生成一份 <strong>吊销证书</strong>, 用以在特殊情况时吊销该密钥, 当然吊销证书也应该妥善保管。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg -a --export EFC4B50FE8F8B2B3 &gt; test.pub <span class="c1"># 导出公钥</span>
+gpg -a --export-secret-key EFC4B50FE8F8B2B3 &gt; test.sec <span class="c1"># 导出私钥</span>
+gpg -a --gen-revoke EFC4B50FE8F8B2B3 &gt; test.rev <span class="c1"># 生成吊销证书</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="发布">发布</h3>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>警告<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">将公钥发布到密钥服务器上是不可逆行为, 请谨慎操作</div>
+        </div>
+    </div>
+<p>首先列出常用的密钥服务器</p>
+<ul>
+<li><a href="http://pool.sks-keyservers.net" target="_blank" rel="noopener noreffer">sks-keyserver</a></li>
+<li><a href="https://keys.openpgp.org" target="_blank" rel="noopener noreffer">OpenPGP.org</a></li>
+<li><a href="http://keys.gnupg.net" target="_blank" rel="noopener noreffer">GnuPG.net</a></li>
+<li><a href="https://pgp.mit.edu" target="_blank" rel="noopener noreffer">MIT</a></li>
+<li><a href="http://keyserver.ubuntu.com" target="_blank" rel="noopener noreffer">Ubuntu</a></li>
+</ul>
+<p>我们可以从密钥服务器上查找、上传或导入公钥, 如果我们已经上传了公钥, 本地更新信息后需要再次上传将信息同步到服务器。需要注意的是, 公钥服务器会不断同步公钥, 不会因为你的密钥过期或吊销而删除。当你将公钥上传到服务器后, 其他人可以很好获取你的公钥, 完成一些实际用途。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg --keyserver pool.sks-keyservers.net --send-keys EFC4B50FE8F8B2B3
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="吊销">吊销</h3>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>警告<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">吊销密钥是不可逆行为, 请谨慎操作</div>
+        </div>
+    </div>
+<p>吊销密钥是不可逆行为, 当由于某些特殊原因, 请吊销密钥并更新服务器上的密钥信息, 尤其是私钥泄漏发生时请尽快吊销, 吊销时将密钥生成的吊销证书导入gpg即可完成。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg --import test.rev <span class="c1"># 吊销密钥</span>
+gpg --keyserver pool.sks-keyservers.net --send-keys EFC4B50FE8F8B2B3 <span class="c1"># 更新吊销信息</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="深入了解">深入了解</h2>
+<p>我们已经有了自己的密钥, 那么接下来, 我们先创建一个名为 <code>alpha.txt</code> 的文件, 里面记录了大写字母A-Z, 剩下的就交给GPG来做吧。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 创建 alpha.txt</span>
+<span class="nb">echo</span> <span class="s2">&#34;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span> &gt; alpha.txt
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="导入与删除">导入与删除</h3>
+<p>刚刚我们接触到了如何生成密钥, 接下来我们还需要导入一些密钥, 可能是其他人的, 也可能是我们自己的。我们可以从密钥服务器上查找一些公钥, 并导入到本地, 我们使用 <a href="https://keyring.debian.org/" target="_blank" rel="noopener noreffer">Debian Key Server</a> 上举例的公钥 <code>673A03E4C1DB921F</code> 做演示。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg --keyserver pool.sks-keyservers.net --search-keys 673A03E4C1DB921F <span class="c1"># 查找公钥</span>
+gpg --keyserver pool.sks-keyservers.net --recv-keys 673A03E4C1DB921F <span class="c1"># 导入公钥</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于一些本地的密钥, 我们可以使用 <code>--import</code> 导入密钥, 在使用 <code>--list-keys</code> 展示密钥时你会发现, 每个密钥都有一个信任级别, 这是一个十分复杂的概念, 你可以将好友的GPG公钥签名后 (<code>--sign-keys</code>), 再上传到公钥服务器上, 逐渐组成一个大的 <strong>信任网络</strong>, emmm&hellip;参见 <strong>Key Signing Party</strong> 。</p>
+<p>至于删除密钥, 相对来说简单很多, <code>--delete-keys</code> 可以删除公钥, <code>--delete-secert-keys</code> 可以删除私钥。</p>
+<h3 id="加密与解密">加密与解密</h3>
+<p>加密与解密内容是我们申请RSA密钥的主要理由, 我们可以将我们重要的数据加密、签名, 然后发布到互联网上, 这样没人可以知道你发布了什么, 除非他获取到了你的私钥。</p>
+<ul>
+<li>
+<p>加密: 参数 <code>-e</code> / <code>--encrypt</code>, 加密时使用 <code>-r</code> / <code>--recipient</code> 指定密钥, 加密文件时默认的加密文件为 <strong>alpha.txt.gpg</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg -er EFC4B50FE8F8B2B3 alpha.txt <span class="c1"># 加密文件, 输出到 alpha.txt.gpg</span>
+gpg -er EFC4B50FE8F8B2B3 -o alpha.encrypt alpha.txt <span class="c1"># 加密文件, 输出到 alpha.encrypt</span>
+md5sum alpha.txt <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> - <span class="p">|</span> gpg -aer EFC4B50FE8F8B2B3 - <span class="c1"># 将文件的md5校验值加密输出到终端</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>解密: 参数 <code>-d</code> / <code>--decrypt</code>, 使用 <code>-u</code> / <code>--local-user</code> 指定密钥, 解密文件时默认将解密的内容输出到终端中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg -du EFC4B50FE8F8B2B3 alpha.txt.gpg &gt; alpha.decrypt <span class="c1"># 解密数据到 alpha.decrypt</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="签名与校验">签名与校验</h3>
+<p>我们有时不需要对一些发布的文件进行加密, 可以进行数字签名, 表示这个文件是我发出的, 并不是别人伪造的。签名时指定密钥的参数与解密相同 <code>-u</code> / <code>--local-user</code>, 数字签名的方式有多种, 接下来依次介绍:</p>
+<ul>
+<li>
+<p>二进制签名: 参数 <code>-s</code> / <code>--sign</code>, 这种签名将源内容与签名存放在同一文件下, 并以二进制的形式保存文件, 默认输出文件为 <strong>alpha.txt.gpg</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg -u EFC4B50FE8F8B2B3 --sign alpha.txt
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>文本签名: 参数 <code>--clear-sign</code>, 这种签名将源内容与签名存放在同一文件下, 并以文本的形式保存文件, 查看输出文件就可以发现源内容与签名存放在一起, 默认输出文件为 <strong>alpha.txt.asc</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg -u EFC4B50FE8F8B2B3 --clear-sign alpha.txt
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>分离式签名: 参数 <code>-b</code> / <code>--detach-sign</code>, 这种签名将源内容与签名存放在不同文件, 签名与源文件可以分别发布, 默认签名为二进制形式, 默认输出文件名为 <strong>alpha.txt.sig</strong> 。如果需要文本形式的分离式签名可以加参数 <code>-a</code> / <code>--armor</code>, 此时默认输出文件名为 <strong>alpha.txt.asc</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg -u EFC4B50FE8F8B2B3 -b -o alpha.bin.sig alpha.txt <span class="c1"># 二进制分离式签名</span>
+gpg -u EFC4B50FE8F8B2B3 -ab -o alpha.asc.sig alpha.txt <span class="c1"># 文本分离式签名</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>签名加密同时进行: 以上签名形式只进行签名, 没有加密, 以下介绍的方式可以让签名加密同时进行, 但验证签名时只能直接解密同时验证签名, 默认输出文件名为 <strong>alpha.txt.gpg</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg -u EFC4B50FE8F8B2B3 -r EFC4B50FE8F8B2B3 -se alpha.txt
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>签名就此介绍完了, 如果我们需要验证他人的文件, 需要先获取他们的公钥才可以开始验证文件, 使用参数 <code>--verify</code> 对签名文件进行验证</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg --verify alpha.txt.asc <span class="c1"># 验证混合签名文件</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于分离式签名, 后缀是 <strong>.asc</strong> 和 <strong>.sig</strong> 的文件, gpg会默认查找去除后缀后的文件名作为数据文件进行验证, 也可以手动指定待验证的数据文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg --verify alpha.bin.sig <span class="c1"># 错误, 没有文件 alpha.bin.sig</span>
+cp alpha.asc.sig alpha.txt.asc.sig
+gpg --verify alpha.txt.asc.sig <span class="c1"># 验证文件 &#39;alpha.txt.asc&#39;, 签名损坏</span>
+cp alpha.asc.sig alpha.txt.sig
+gpg --verify alpha.txt.sig <span class="c1"># 验证文件 &#39;alpha.txt&#39;, 签名完好</span>
+gpg --verify alpha.bin.sig alpha.txt <span class="c1"># 指定数据文件为 &#39;alpha.txt&#39;, 使用 &#39;alpha.bin.sig&#39; 进行验证</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-11-15</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2020/gpg_started_guide/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.ginshio.org/2020/gpg_started_guide/" data-title="GPG 入门指北" data-hashtags="Application,Linux"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.ginshio.org/2020/gpg_started_guide/" data-hashtag="Application"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.ginshio.org/2020/gpg_started_guide/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.ginshio.org/2020/gpg_started_guide/" data-title="GPG 入门指北"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.ginshio.org/2020/gpg_started_guide/" data-title="GPG 入门指北"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.ginshio.org/2020/gpg_started_guide/" data-title="GPG 入门指北"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/application/">Application</a>,&nbsp;<a href="/tags/linux/">Linux</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/mail_server/" class="prev" rel="prev" title="搭建邮箱服务器"><i class="fas fa-angle-left fa-fw"></i>搭建邮箱服务器</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.ginshio.org/" target="_blank">GinShio</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["GinShio"],"clientID":"1ede37779b82f8d8a39e","clientSecret":"4dc775e507be852aa2805c6643495ed7178b7826","id":"2020-11-14T18:14:00+08:00","owner":"GinShio","repo":"Blog","title":"GPG 入门指北"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-172480612-1', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-172480612-1" async></script></body>
+</html>

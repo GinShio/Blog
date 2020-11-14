@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/compilerprinciple_004/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-03T16:09:00+08:00" />
-<meta property="article:modified_time" content="2020-11-07T01:42:42+08:00" />
+<meta property="article:modified_time" content="2020-11-15T02:38:26+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -30,7 +30,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/compilerprinciple_004\/"
         },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "笔记, 龙书","wordcount":  3987 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/compilerprinciple_004\/","datePublished": "2020-11-03T16:09:00+08:00","dateModified": "2020-11-07T01:42:42+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/blog.ginshio.org\/2020\/compilerprinciple_004\/","datePublished": "2020-11-03T16:09:00+08:00","dateModified": "2020-11-15T02:38:26+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -157,6 +157,7 @@
 <li><strong>错误产生式</strong>: 通过预测可能遇到的常见错误, 在当前语言的文法中加入特殊的产生式, 这些产生式可以生产含有错误的构造, 语法分析器就能检测到一个预期的错误, 生成适当的错误诊断信息</li>
 <li><strong>全局纠正</strong>: 处理一个错误的输入串时通过最少的改动将其转换为语法正确的串</li>
 </ul>
+<hr>
 <h2 id="上下文无关文法">上下文无关文法</h2>
 <p>一个上下文无关文法由 <strong>终结符</strong> 、 <strong>非终结符</strong> 、一个 <strong>开始符号</strong> 和一组 <strong>产生式</strong> 组成</p>
 <ul>
@@ -224,6 +225,7 @@
     <img src="/blog/CompilerPrinciple/images/ambiguity.svg"/> 
 </figure>
 
+<hr>
 <h2 id="设计文法">设计文法</h2>
 <p>文法能够描述程序设计语言的大部分语法, 语法分析器接受的词法单元序列构成了程序设计语言的超集, 编译器后续步骤必须对语法分析器的输出进行分析, 以保证源程序遵守那些没有被语法分析器检查的规则。</p>
 <p>文法是比正则表达式表达能力更强的表示方法, 每个可以使用正则表达式描述的构造都可以使用文法来描述, 反之不成立。为什么使用正则表达式来定义一个语言的词法语法？</p>
@@ -297,7 +299,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-11-07</span>
+                <span>更新于 2020-11-15</span>
             </div>
             <div class="post-info-license"></div>
         </div>

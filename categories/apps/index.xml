@@ -4,7 +4,14 @@
         <link>https://blog.ginshio.org/categories/apps/</link>
         <description>Apps - 分类 - iris</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 13 Nov 2020 22:43:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/categories/apps/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 14 Nov 2020 18:14:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/categories/apps/" rel="self" type="application/rss+xml" /><item>
+    <title>GPG 入门指北</title>
+    <link>https://blog.ginshio.org/2020/gpg_started_guide/</link>
+    <pubDate>Sat, 14 Nov 2020 18:14:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2020/gpg_started_guide/</guid>
+    <description><![CDATA[Pretty Good Privacy (PGP), 是一套用于讯息加密、验证的应用程序, 由 Phil Zimmermann 于1991年发布, 由一系列散列、数据压缩、对称密钥加密以及公钥加密的算法组合而成。GNU Privacy]]></description>
+</item><item>
     <title>搭建邮箱服务器</title>
     <link>https://blog.ginshio.org/2020/mail_server/</link>
     <pubDate>Fri, 13 Nov 2020 22:43:00 &#43;0800</pubDate>

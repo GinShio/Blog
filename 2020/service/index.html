@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/service/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-10-13T20:16:00+08:00" />
-<meta property="article:modified_time" content="2020-10-18T02:42:03+08:00" />
+<meta property="article:modified_time" content="2020-11-15T02:35:27+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/service\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  1933 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/service\/","datePublished": "2020-10-13T20:16:00+08:00","dateModified": "2020-10-18T02:42:03+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  1948 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/service\/","datePublished": "2020-10-13T20:16:00+08:00","dateModified": "2020-11-15T02:35:27+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -106,7 +106,7 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">在服务器上部署一些服务</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1933 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1948 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -139,7 +139,26 @@
 <li>PostgreSQL</li>
 <li>Redis</li>
 </ul>
-<hr>
+<p>我们首先定义一些变量, 以便后边使用和修改</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">fpm_path</span><span class="o">=</span><span class="s2">&#34;/etc/php/7.4/fpm&#34;</span> <span class="c1"># php-fpm 根目录</span>
+<span class="nv">nextcloud_path</span><span class="o">=</span><span class="s2">&#34;/path/to/nextcloud&#34;</span> <span class="c1"># nextcloud 所在目录</span>
+<span class="nv">nextcloud_host</span><span class="o">=</span><span class="s2">&#34;example.com&#34;</span>
+<span class="nv">gitlab_path</span><span class="o">=</span><span class="s2">&#34;/home/git/gitlab&#34;</span>
+<span class="nv">gitaly_path</span><span class="o">=</span><span class="s2">&#34;/home/git/gitaly&#34;</span>
+<span class="nv">gitlab_host</span><span class="o">=</span><span class="s2">&#34;example.com&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
 <h2 id="nextcloud">Nextcloud</h2>
 <p>Nextcloud 是 <a href="https://owncloud.com/" target="_blank" rel="noopener noreffer">ownCloud</a> 项目的一个分支, 一个开源的私有云盘应用, 官方提供了包括 桌面以及移动系统的客户端。</p>
 <h3 id="nextcloud-依赖">Nextcloud 依赖</h3>
@@ -191,11 +210,9 @@
 </span><span class="lnt">26
 </span><span class="lnt">27
 </span><span class="lnt">28
-</span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">fpm_path</span><span class="o">=</span><span class="s2">&#34;/etc/php/7.4/fpm&#34;</span>
-<span class="nb">cd</span> <span class="nv">$fpm_path</span>
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">fpm_path</span><span class="si">}</span>
 <span class="c1"># php config</span>
 sed -i <span class="s2">&#34;s/memory_limit = .*/memory_limit = 512M/&#34;</span> php.ini
 sed -i <span class="s2">&#34;s/;date.timezone.*/date.timezone = UTC/&#34;</span> php.ini
@@ -258,15 +275,15 @@ systemctl restart nginx
 </div></li>
 </ul>
 <h3 id="nextcloud-安装">Nextcloud 安装</h3>
-<p><a href="https://download.nextcloud.com/server/releases" target="_blank" rel="noopener noreffer">下载</a> 你需要的版本并解压到目录中, 这里假设解压后的目录为 <code>/var/www/nextcloud</code></p>
+<p><a href="https://download.nextcloud.com/server/releases" target="_blank" rel="noopener noreffer">下载</a> 你需要的版本并解压到目录中</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo chown -R www-data:www-data /var/www/nextcloud/
-sudo -u www-data -H mkdir -p /var/www/nextcloud/data
+<pre class="chroma"><code class="language-shell" data-lang="shell">sudo chown -R www-data:www-data <span class="si">${</span><span class="nv">nextcloud_root</span><span class="si">}</span>
+sudo -u www-data -H mkdir -p <span class="si">${</span><span class="nv">nextcloud_root</span><span class="si">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>准备工作完成后, 进入网页, 设置管理员帐号和数据库</p>
@@ -361,7 +378,6 @@ sudo -u www-data -H mkdir -p /var/www/nextcloud/data
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
-</span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">apt update -y <span class="o">&amp;&amp;</span> apt upgrade -y
@@ -374,13 +390,12 @@ sudo apt install -y build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-de
 sudo gem install bundler --no-document --version <span class="s1">&#39;&lt; 2&#39;</span>
 <span class="c1"># Node.js</span>
 curl --silent --show-error https://dl.yarnpkg.com/debian/pubkey.gpg <span class="p">|</span> sudo apt-key add -
-<span class="nb">echo</span> <span class="s2">&#34;deb https://dl.yarnpkg.com/debian/ stable main&#34;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/yarn.list
+<span class="nb">echo</span> <span class="s2">&#34;deb https://dl.yarnpkg.com/debian/ stable main&#34;</span> <span class="p">|</span> <span class="se">\
+</span><span class="se"></span>    sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt-get update
 sudo apt-get install yarn
 <span class="c1"># 数据库</span>
 sudo adduser --disabled-login --gecos <span class="s1">&#39;GitLab&#39;</span> git
-sudo apt install postgresql postgresql-client libpq-dev postgresql-contrib
-sudo systemctl start postgresql
 sudo -u postgres psql -d template1 -c <span class="s2">&#34;CREATE USER git WITH PASSWORD &#39;YourPassword&#39; CREATEDB;&#34;</span>
 sudo -u postgres psql -d template1 -c <span class="s2">&#34;CREATE EXTENSION IF NOT EXISTS pg_trgm;&#34;</span>
 sudo -u postgres psql -d template1 -c <span class="s2">&#34;CREATE EXTENSION IF NOT EXISTS btree_gist&#34;</span><span class="p">;</span>
@@ -482,12 +497,9 @@ sudo usermod -aG redis git
 </span><span class="lnt">75
 </span><span class="lnt">76
 </span><span class="lnt">77
-</span><span class="lnt">78
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">gitlab_path</span><span class="o">=</span>/home/git/gitlab
-<span class="nv">gitaly_path</span><span class="o">=</span>/home/git/gitaly
-<span class="c1"># install gitlab</span>
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># install gitlab</span>
 <span class="nb">cd</span> /home/git
 sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-foss.git -b 13-0-stable gitlab
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">gitlab_path</span><span class="si">}</span>
@@ -527,12 +539,13 @@ sudo -u git -H editor /home/git/gitlab-shell/config.yml
 sudo -u git -H bundle <span class="nb">exec</span> rake <span class="s2">&#34;gitlab:workhorse:install[/home/git/gitlab-workhorse]&#34;</span> <span class="nv">RAILS_ENV</span><span class="o">=</span>production
 <span class="c1"># install gitaly</span>
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">gitlab_path</span><span class="si">}</span>
-sudo -u git -H bundle <span class="nb">exec</span> rake <span class="s2">&#34;gitlab:gitaly:install[/home/git/gitaly,/home/git/repositories]&#34;</span> <span class="nv">RAILS_ENV</span><span class="o">=</span>production
+sudo -u git -H bundle <span class="nb">exec</span> rake <span class="se">\
+</span><span class="se"></span>    <span class="s2">&#34;gitlab:gitaly:install[/home/git/gitaly,/home/git/repositories]&#34;</span> <span class="nv">RAILS_ENV</span><span class="o">=</span>production
 sudo chmod <span class="m">0700</span> <span class="si">${</span><span class="nv">gitlab_path</span><span class="si">}</span>/tmp/sockets/private
 sudo chown git <span class="si">${</span><span class="nv">gitlab_path</span><span class="si">}</span>/tmp/sockets/private
 sudo -u git -H editor <span class="si">${</span><span class="nv">gitaly_path</span><span class="si">}</span>/config.toml
-sudo -u git -H sh -c <span class="s2">&#34;</span><span class="nv">$gitlab_path</span><span class="s2">/bin/daemon_with_pidfile </span><span class="nv">$gitlab_path</span><span class="s2">/tmp/pids/gitaly.pid \
-</span><span class="s2">  </span><span class="nv">$gitaly_path</span><span class="s2">/gitaly </span><span class="nv">$gitaly_path</span><span class="s2">/config.toml &gt;&gt; </span><span class="nv">$gitlab_path</span><span class="s2">/log/gitaly.log 2&gt;&amp;1 &amp;&#34;</span>
+sudo -u git -H sh -c <span class="se">\
+</span><span class="se"></span>    <span class="s2">&#34;</span><span class="si">${</span><span class="nv">gitlab_path</span><span class="si">}</span><span class="s2">/bin/daemon_with_pidfile </span><span class="si">${</span><span class="nv">gitlab_path</span><span class="si">}</span><span class="s2">/tmp/pids/gitaly.pid </span><span class="si">${</span><span class="nv">gitaly_path</span><span class="si">}</span><span class="s2">/gitaly </span><span class="si">${</span><span class="nv">gitaly_path</span><span class="si">}</span><span class="s2">/config.toml &gt;&gt; </span><span class="si">${</span><span class="nv">gitlab_path</span><span class="si">}</span><span class="s2">/log/gitaly.log 2&gt;&amp;1 &amp;&#34;</span>
 <span class="c1"># 初始化</span>
 sudo -u git -H bundle <span class="nb">exec</span> rake gitlab:setup <span class="nv">RAILS_ENV</span><span class="o">=</span>production <span class="nv">force</span><span class="o">=</span>yes
 sudo cp lib/support/init.d/gitlab /etc/init.d/gitlab
@@ -588,7 +601,7 @@ sudo systemctl <span class="nb">enable</span> gitlab-runner
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-10-18</span>
+                <span>更新于 2020-11-15</span>
             </div>
             <div class="post-info-license"></div>
         </div>

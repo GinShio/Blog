@@ -3,6 +3,8 @@
 
 搭建一个邮箱服务器, 方便自己之后使用, 还可以 ~~装逼~~
 
+---
+
 
 ## Mailcow {#mailcow}
 
@@ -15,6 +17,8 @@
 | 硬盘 | 20GiB (不包含邮件) |
 
 消耗资源的主要原因是 `ClamAV` 和 `Solr`, 即杀毒功能和搜索功能, 如果不需要可以关闭。
+
+---
 
 
 ## 安装 {#安装}
@@ -40,11 +44,23 @@ DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮
 
 ### 搭建 {#搭建}
 
+在搭建之前我们首先定义一些变量, 以便之后使用, 方便根据自己的需求更改
+
 ```shell
-EMAIL_HOST="mail.example.com"
-cd /
+path_to="/path/to"
+mailcow_root="${path_to}/mailcow" # mailcow 所在目录
+mail_host="mail.example.com"
+cert_file="/ssl/domain/cert.pem" # 域名证书
+key_file="/ssl/domain/key.pem" # 域名证书密钥
+ca_file="/ssl/domain/ca.pem" # 域名证书颁发者证书
+```
+
+现在开始正式的搭建邮箱服务器
+
+```shell
+cd ${path_to}
 git clone https://github.com/mailcow/mailcow-dockerized mailcow && cd mailcow
-echo ${EMAIL_HOST} | ./generate_config.sh
+echo ${email_host} | ./generate_config.sh
 sed -i "s/HTTP_PORT=.*/HTTP_PORT=8080/" mailcow.conf # HTTP端口
 sed -i "s/HTTPS_PORT=.*/HTTPS_PORT=8443/" mailcow.conf # HTTPS端口
 sed -i "s/TZ=.*/TZ=Asia\/Shanghai/" mailcow.conf # 时区
@@ -68,8 +84,8 @@ server {
   listen [::]:443 ssl http2;
   server_name mail.example.com;
 
-  ssl_certificate /path/to/cert;
-  ssl_certificate_key /path/tp/key;
+  ssl_certificate /ssl/domain/cert.pem;
+  ssl_certificate_key /ssl/domain/key.pem;
   ssl_session_timeout 2h;
   ssl_session_cache shared:mailcow:16m;
   ssl_session_tickets off;
@@ -108,10 +124,41 @@ server {
 以上全部完成后, mailcow 基本配置完成, 只需要启动起服务即可, 默认用户密码 `admin` / `moohoo`
 
 ```shell
-cd /mailcow
+cd ${mailcow_root}
 docker-compose pull
 docker-compose up -d
 ```
+
+
+### Encrypt {#encrypt}
+
+现在我们可以为SMTP与IMAP服务加入TLS, 假设我们已经对域名 `mail.example.com` 申请了证书, 对 postfix 与 dovecot 配置证书前, 我们需要根据 postfix 文档先将我们自己的证书与提供商的证书按顺序存放在同一文件下, 并且文件后缀为 **.pem**, 并存放在mailcow的ssl文件夹下
+
+```shell
+cat ${cert_file} ${ca_file} > ${mailcow_root}/data/assets/ssl/cert.pem
+cp ${key_file} ${mailcow_root}/mailcow/data/assets/ssl/key.pem
+```
+
+证书保存完毕后, 对 postfix 与 dovecot 进行配置, 配置完成重启服务即可
+
+```shell
+# postfix
+echo "smtp_use_tls = yes" >> data/conf/postfix/main.cf
+sed -i "s/smtp_tls_CAfile.*/smtp_tls_CAfile = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
+sed -i "s/smtp_tls_cert_file.*/smtp_tls_cert_file = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
+sed -i "s/smtp_tls_key_file.*/smtp_tls_key_file = \/etc\/ssl\/mail\/key.pem/" data/conf/postfix/main.cf
+echo "smtpd_use_tls = yes" >> data/conf/postfix/main.cf
+sed -i "s/smtpd_tls_CAfile.*/smtpd_tls_CAfile = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
+sed -i "s/smtpd_tls_cert_file.*/smtpd_tls_cert_file = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
+sed -i "s/smtpd_tls_key_file.*/smtpd_tls_key_file = \/etc\/ssl\/mail\/key.pem/" data/conf/postfix/main.cf
+# dovecot
+sed -i "s/ssl_cert.*/ssl_cert = <\/etc\/ssl\/mail\/cert.pem/" data/conf/dovecot/dovecot.conf
+sed -i "s/ssl_key.*/ssl_key = <\/etc\/ssl\/mail\/key.pem/" data/conf/dovecot/dovecot.conf
+# restart
+docker-compose restart postfix-mailcow dovecot-mailcow
+```
+
+---
 
 
 ## 黑名单 {#黑名单}
@@ -123,6 +170,8 @@ docker-compose up -d
 -   [Office 365](https://sender.office.com/)
 -   [Barracuda](https://www.barracudacentral.org/rbl/removal-request)
 
+---
+
 
 ## 为其他应用开启邮件服务器 {#为其他应用开启邮件服务器}
 
@@ -132,10 +181,12 @@ docker-compose up -d
 我们的GitLab使用的是源码安装, 需要修改 `config/gitlab.yml` 开启 emil
 
 ```shell
+gitlab_email_from="noreply@example.com"
+gitlab_email_reply="noreply@example.com"
 cd /home/git/gitlab
 sed -i "s/email_enabled:.*/email_enabled: true/" config/gitlab.yml
-sed -i "s/email_from:.*/email_from: noreply@example.com" config/gitlab.yml
-sed -i "s/email_reply_to:.*/email_reply_to: noreply@example.com" config/gitlab.yml
+sed -ie "s/email_from:.*/email_from: ${gitlab_email_from}" config/gitlab.yml
+sed -ie "s/email_reply_to:.*/email_reply_to: ${gitlab_email_reply}" config/gitlab.yml
 cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings.rb
 ```
 
@@ -144,14 +195,21 @@ cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings
 ```ruby
 enable: true,
 address: "mail.example.com",
-port: 587,
+port: 465,
 user_name: "noreply@example.com",
 password: "YourPassword",
 domain: "mail.example.com",
 authentication: :login,
 enable_starttls_auto: true,
-tls: false,
+tls: true,
 openssl_verify_mode: 'none'
+```
+
+配置完成后重启服务即可, 如果需要验证SMTP是否工作, 可以使用以下命令
+
+```shell
+echo "Notify.test_email('${gitlab_email_reply}', 'Message Subject', 'Message Body').deliver_now" | \
+sudo -u git -H bundle exec rails console -e production
 ```
 
 
@@ -164,6 +222,7 @@ cd /path/to/nextcloud
 sed -i \
 "s/\$streamContext = .*;/\$streamContext = stream_context_create(array('ssl'=>['verify_peer'=>false, 'verify_peer_name'=>false, 'allow_self_signed'=>true]));/" \
 3rdparty/swiftmailer/swiftmailer/lib/classes/Swift/Transport/StreamBuffer.php
+systemctl restart php7.4-fpm
 ```
 
 登录管理员帐号进行邮箱服务器配置即可
@@ -171,13 +230,15 @@ sed -i \
 | 字段  | 值                   |
 |-----|---------------------|
 | 发送模式 | SMTP                 |
-| 加密  | STARTTLS             |
+| 加密  | SSL/TLS              |
 | 来自地址 | noreply@example.com  |
 | 认证方式 | 登录                 |
 | 需要认证 | true                 |
-| 服务器地址 | mail.example.com:587 |
+| 服务器地址 | mail.example.com:465 |
 | 证书  | noreply@example.com  |
 | 密码  | YourPassword         |
+
+---
 
 
 ## 推荐阅读 {#推荐阅读}

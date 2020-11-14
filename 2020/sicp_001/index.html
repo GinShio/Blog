@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/sicp_001/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-07T15:05:00+08:00" />
-<meta property="article:modified_time" content="2020-11-08T22:41:09+08:00" />
+<meta property="article:modified_time" content="2020-11-15T02:39:23+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -30,7 +30,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/sicp_001\/"
         },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "笔记, SICP","wordcount":  2524 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/sicp_001\/","datePublished": "2020-11-07T15:05:00+08:00","dateModified": "2020-11-08T22:41:09+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/blog.ginshio.org\/2020\/sicp_001\/","datePublished": "2020-11-07T15:05:00+08:00","dateModified": "2020-11-15T02:39:23+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -139,6 +139,7 @@
 </ol>
 </blockquote>
 <p>我们准备学习的是有关 <strong>计算过程</strong> 的认识。计算过程是存在于计算机里的一类抽象事物, 在其演化进程中, 这些过程会去操作一些被成为 <strong>数据</strong> 的抽象事物。人们创造出一些名为 <strong>程序</strong> 的规则模式, 以指导这类过程的进行。</p>
+<hr>
 <h2 id="程序设计的基本元素">程序设计的基本元素</h2>
 <p>一个强有力的程序设计语言不仅是一种指挥计算机执行任务的方式, 它还应该成为一种框架, 使我们能够在其中组织自己有关计算过程的思维。当我们描述这个语言时, 我们应该注意该语言提供的, 将简单思维组合成复杂思维的方式。为此提供了三种机制:</p>
 <ul>
@@ -193,6 +194,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>可以发现, 将过程定义在内部, 因为x在sqrt的定义中是受约束的, 其他过程也定义在sqrt中, 即x的作用域中, 它们都可以直接使用x, 这被称为 <strong>词法作用域</strong> 。</p>
+<hr>
 <h2 id="过程与它们所产生的计算">过程与它们所产生的计算</h2>
 <h3 id="线性的递归和迭代">线性的递归和迭代</h3>
 <p>考虑阶乘的计算, \(n! = n \cdot [(n - 1) \cdot (n - 2) \cdots 3 \cdot 2 \cdot 1] = n \cdot (n - 1)!\), 我们可以翻译成以下过程</p>
@@ -275,6 +277,7 @@
 <h3 id="增长的阶">增长的阶</h3>
 <p>不同的计算过程在消耗计算资源的速率上可能存在巨大差异, 描述这种差异的方式采用 <code>增长的阶</code>, 以便对某一计算过程所需资源进行粗略度量。</p>
 <p>另 n 是一个参数, 它作为问题规模的一种度量, 令 \(R(n)\) 是一个计算过程在处理规模为n的问题时所需要的资源量。我们称 \(R(n)\) 具有 \(\Theta(f(n))\) 的增长阶, 记作 \(R(n) = \Theta(f(n))\), 读作 <strong>f(n)的theta</strong></p>
+<hr>
 <h2 id="用高阶函数做抽象">用高阶函数做抽象</h2>
 <p>通过以上的学习, 我们了解到, 过程也是一类抽象, 它们描述了一些对于数的复合操作, 但又不依赖与特定的数。人们总是对功能强大的程序设计语言有一个必然要求, 即能为公共的模块命名, 建立抽象, 然后直接在抽象的层次上工作。这就是为什么大部分程序设计语言都包含定义过程的机制的原因。</p>
 <p>即使在数值计算过程中, 如果将过程限制为只能以数作为参数, 那也将严重影响我们建立抽象的能力。我们有时需要构造出以过程为参数, 或以过程为返回值的过程, 这类能操作过程的过程称为 <strong>高阶过程</strong> 。</p>
@@ -298,7 +301,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-11-08</span>
+                <span>更新于 2020-11-15</span>
             </div>
             <div class="post-info-license"></div>
         </div>
