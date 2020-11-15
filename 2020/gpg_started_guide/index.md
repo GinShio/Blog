@@ -96,7 +96,15 @@ gpg --keyserver pool.sks-keyservers.net --recv-keys 673A03E4C1DB921F # 导入公
 
 对于一些本地的密钥, 我们可以使用 `--import` 导入密钥, 在使用 `--list-keys` 展示密钥时你会发现, 每个密钥都有一个信任级别, 这是一个十分复杂的概念, 你可以将好友的GPG公钥签名后 (`--sign-keys`), 再上传到公钥服务器上, 逐渐组成一个大的 **信任网络**, emmm...参见 **Key Signing Party** 。
 
+```shell
+gpg --import test.sec # 导入之前备份的私钥
+```
+
 至于删除密钥, 相对来说简单很多, `--delete-keys` 可以删除公钥, `--delete-secert-keys` 可以删除私钥。
+
+```shell
+gpg --delete-keys EFC4B50FE8F8B2B3
+```
 
 
 ### 加密与解密 {#加密与解密}

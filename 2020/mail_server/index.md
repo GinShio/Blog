@@ -1,7 +1,7 @@
 # 搭建邮箱服务器
 
 
-搭建一个邮箱服务器, 方便自己之后使用, 还可以 ~~装逼~~
+搭建一个邮箱服务器, 方便自己之后使用 (~~还可以装逼~~
 
 ---
 
@@ -48,8 +48,10 @@ DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮
 
 ```shell
 path_to="/path/to"
-mailcow_root="${path_to}/mailcow" # mailcow 所在目录
+mailcow_path="${path_to}/mailcow" # mailcow 所在目录
 mail_host="mail.example.com"
+http_port="8080"
+https_port="8443"
 cert_file="/ssl/domain/cert.pem" # 域名证书
 key_file="/ssl/domain/key.pem" # 域名证书密钥
 ca_file="/ssl/domain/ca.pem" # 域名证书颁发者证书
@@ -61,8 +63,8 @@ ca_file="/ssl/domain/ca.pem" # 域名证书颁发者证书
 cd ${path_to}
 git clone https://github.com/mailcow/mailcow-dockerized mailcow && cd mailcow
 echo ${email_host} | ./generate_config.sh
-sed -i "s/HTTP_PORT=.*/HTTP_PORT=8080/" mailcow.conf # HTTP端口
-sed -i "s/HTTPS_PORT=.*/HTTPS_PORT=8443/" mailcow.conf # HTTPS端口
+sed -ie "s/HTTP_PORT=.*/HTTP_PORT=${http_port}/" mailcow.conf # HTTP端口
+sed -ie "s/HTTPS_PORT=.*/HTTPS_PORT=${https_port}/" mailcow.conf # HTTPS端口
 sed -i "s/TZ=.*/TZ=Asia\/Shanghai/" mailcow.conf # 时区
 sed -i "s/SKIP_LETS_ENCRYPT=.*/SKIP_LETS_ENCRYPT=y/" mailcow.conf # 证书申请, 关闭
 sed -i "s/SKIP_SOGO=.*/SKIP_SOGO=n/" mailcow.conf # webmail, 开启
@@ -124,7 +126,7 @@ server {
 以上全部完成后, mailcow 基本配置完成, 只需要启动起服务即可, 默认用户密码 `admin` / `moohoo`
 
 ```shell
-cd ${mailcow_root}
+cd ${mailcow_path}
 docker-compose pull
 docker-compose up -d
 ```
@@ -135,8 +137,8 @@ docker-compose up -d
 现在我们可以为SMTP与IMAP服务加入TLS, 假设我们已经对域名 `mail.example.com` 申请了证书, 对 postfix 与 dovecot 配置证书前, 我们需要根据 postfix 文档先将我们自己的证书与提供商的证书按顺序存放在同一文件下, 并且文件后缀为 **.pem**, 并存放在mailcow的ssl文件夹下
 
 ```shell
-cat ${cert_file} ${ca_file} > ${mailcow_root}/data/assets/ssl/cert.pem
-cp ${key_file} ${mailcow_root}/mailcow/data/assets/ssl/key.pem
+cat ${cert_file} ${ca_file} > ${mailcow_path}/data/assets/ssl/cert.pem
+cp ${key_file} ${mailcow_path}/data/assets/ssl/key.pem
 ```
 
 证书保存完毕后, 对 postfix 与 dovecot 进行配置, 配置完成重启服务即可
@@ -244,9 +246,10 @@ systemctl restart php7.4-fpm
 ## 推荐阅读 {#推荐阅读}
 
 -   [Mailcow官方文档](https://mailcow.github.io/mailcow-dockerized-docs/)
+-   [Outlook 反垃圾邮件策略指南](https://sendersupport.olc.protection.outlook.com/pm/policies.aspx)
+-   [SPF 记录：原理、语法及配置方法简介](http://www.renfei.org/blog/introduction-to-spf.html)
 -   [DMARC 是什么？](https://www.cnblogs.com/dmarcly/p/10947796.html)
 -   [邮件服务器Poste五分钟搭建](https://newpants.top/2019/11/14/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Poste%E4%BA%94%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BA/)
 -   [使用Mailcow自建邮件服务器](https://lala.im/4168.html)
 -   [使用 mailcow:dockerized 搭建邮件服务器](https://low.bi/p/r7VbxEKo3zA)
--   [SPF 记录：原理、语法及配置方法简介](http://www.renfei.org/blog/introduction-to-spf.html)
 

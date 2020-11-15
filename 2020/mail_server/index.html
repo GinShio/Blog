@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/mail_server/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-13T22:43:00+08:00" />
-<meta property="article:modified_time" content="2020-11-15T02:37:08+08:00" />
+<meta property="article:modified_time" content="2020-11-15T15:19:51+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/mail_server\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  1570 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/mail_server\/","datePublished": "2020-11-13T22:43:00+08:00","dateModified": "2020-11-15T02:37:08+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  1584 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/mail_server\/","datePublished": "2020-11-13T22:43:00+08:00","dateModified": "2020-11-15T15:19:51+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -106,7 +106,7 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">搭建邮箱服务器</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-13">2020-11-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1570 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-13">2020-11-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1584 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -133,7 +133,7 @@
     <li><a href="#推荐阅读">推荐阅读</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>搭建一个邮箱服务器, 方便自己之后使用, 还可以 <del>装逼</del></p>
+            </div><div class="content" id="content"><p>搭建一个邮箱服务器, 方便自己之后使用 (<del>还可以装逼</del></p>
 <hr>
 <h2 id="mailcow">Mailcow</h2>
 <p><a href="https://mailcow.email/" target="_blank" rel="noopener noreffer">Mailcow</a> 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮件等功能, 过程相对全面, 不过缺点是比较吃资源, 并且不支持 <strong>Synology/QNAP</strong> 或 <strong>OpenVZ</strong> 、 <strong>LXC</strong> 等虚拟化方式, 并且不能使用 <code>CentOS 7/8</code> 源中的 Docker 包, 要求真多。。。</p>
@@ -217,11 +217,15 @@
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">path_to</span><span class="o">=</span><span class="s2">&#34;/path/to&#34;</span>
-<span class="nv">mailcow_root</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">path_to</span><span class="si">}</span><span class="s2">/mailcow&#34;</span> <span class="c1"># mailcow 所在目录</span>
+<span class="nv">mailcow_path</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">path_to</span><span class="si">}</span><span class="s2">/mailcow&#34;</span> <span class="c1"># mailcow 所在目录</span>
 <span class="nv">mail_host</span><span class="o">=</span><span class="s2">&#34;mail.example.com&#34;</span>
+<span class="nv">http_port</span><span class="o">=</span><span class="s2">&#34;8080&#34;</span>
+<span class="nv">https_port</span><span class="o">=</span><span class="s2">&#34;8443&#34;</span>
 <span class="nv">cert_file</span><span class="o">=</span><span class="s2">&#34;/ssl/domain/cert.pem&#34;</span> <span class="c1"># 域名证书</span>
 <span class="nv">key_file</span><span class="o">=</span><span class="s2">&#34;/ssl/domain/key.pem&#34;</span> <span class="c1"># 域名证书密钥</span>
 <span class="nv">ca_file</span><span class="o">=</span><span class="s2">&#34;/ssl/domain/ca.pem&#34;</span> <span class="c1"># 域名证书颁发者证书</span>
@@ -245,8 +249,8 @@
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">path_to</span><span class="si">}</span>
 git clone https://github.com/mailcow/mailcow-dockerized mailcow <span class="o">&amp;&amp;</span> <span class="nb">cd</span> mailcow
 <span class="nb">echo</span> <span class="si">${</span><span class="nv">email_host</span><span class="si">}</span> <span class="p">|</span> ./generate_config.sh
-sed -i <span class="s2">&#34;s/HTTP_PORT=.*/HTTP_PORT=8080/&#34;</span> mailcow.conf <span class="c1"># HTTP端口</span>
-sed -i <span class="s2">&#34;s/HTTPS_PORT=.*/HTTPS_PORT=8443/&#34;</span> mailcow.conf <span class="c1"># HTTPS端口</span>
+sed -ie <span class="s2">&#34;s/HTTP_PORT=.*/HTTP_PORT=</span><span class="si">${</span><span class="nv">http_port</span><span class="si">}</span><span class="s2">/&#34;</span> mailcow.conf <span class="c1"># HTTP端口</span>
+sed -ie <span class="s2">&#34;s/HTTPS_PORT=.*/HTTPS_PORT=</span><span class="si">${</span><span class="nv">https_port</span><span class="si">}</span><span class="s2">/&#34;</span> mailcow.conf <span class="c1"># HTTPS端口</span>
 sed -i <span class="s2">&#34;s/TZ=.*/TZ=Asia\/Shanghai/&#34;</span> mailcow.conf <span class="c1"># 时区</span>
 sed -i <span class="s2">&#34;s/SKIP_LETS_ENCRYPT=.*/SKIP_LETS_ENCRYPT=y/&#34;</span> mailcow.conf <span class="c1"># 证书申请, 关闭</span>
 sed -i <span class="s2">&#34;s/SKIP_SOGO=.*/SKIP_SOGO=n/&#34;</span> mailcow.conf <span class="c1"># webmail, 开启</span>
@@ -361,7 +365,7 @@ sed -i <span class="s2">&#34;s/enable_ipv6: true/enable_ipv6: false/&#34;</span>
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">mailcow_root</span><span class="si">}</span>
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">mailcow_path</span><span class="si">}</span>
 docker-compose pull
 docker-compose up -d
 </code></pre></td></tr></table>
@@ -374,8 +378,8 @@ docker-compose up -d
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">cat <span class="si">${</span><span class="nv">cert_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">ca_file</span><span class="si">}</span> &gt; <span class="si">${</span><span class="nv">mailcow_root</span><span class="si">}</span>/data/assets/ssl/cert.pem
-cp <span class="si">${</span><span class="nv">key_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">mailcow_root</span><span class="si">}</span>/mailcow/data/assets/ssl/key.pem
+<pre class="chroma"><code class="language-shell" data-lang="shell">cat <span class="si">${</span><span class="nv">cert_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">ca_file</span><span class="si">}</span> &gt; <span class="si">${</span><span class="nv">mailcow_path</span><span class="si">}</span>/data/assets/ssl/cert.pem
+cp <span class="si">${</span><span class="nv">key_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">mailcow_path</span><span class="si">}</span>/data/assets/ssl/key.pem
 </code></pre></td></tr></table>
 </div>
 </div><p>证书保存完毕后, 对 postfix 与 dovecot 进行配置, 配置完成重启服务即可</p>
@@ -549,11 +553,12 @@ systemctl restart php7.4-fpm
 <h2 id="推荐阅读">推荐阅读</h2>
 <ul>
 <li><a href="https://mailcow.github.io/mailcow-dockerized-docs/" target="_blank" rel="noopener noreffer">Mailcow官方文档</a></li>
+<li><a href="https://sendersupport.olc.protection.outlook.com/pm/policies.aspx" target="_blank" rel="noopener noreffer">Outlook 反垃圾邮件策略指南</a></li>
+<li><a href="http://www.renfei.org/blog/introduction-to-spf.html" target="_blank" rel="noopener noreffer">SPF 记录：原理、语法及配置方法简介</a></li>
 <li><a href="https://www.cnblogs.com/dmarcly/p/10947796.html" target="_blank" rel="noopener noreffer">DMARC 是什么？</a></li>
 <li><a href="https://newpants.top/2019/11/14/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Poste%E4%BA%94%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener noreffer">邮件服务器Poste五分钟搭建</a></li>
 <li><a href="https://lala.im/4168.html" target="_blank" rel="noopener noreffer">使用Mailcow自建邮件服务器</a></li>
 <li><a href="https://low.bi/p/r7VbxEKo3zA" target="_blank" rel="noopener noreffer">使用 mailcow:dockerized 搭建邮件服务器</a></li>
-<li><a href="http://www.renfei.org/blog/introduction-to-spf.html" target="_blank" rel="noopener noreffer">SPF 记录：原理、语法及配置方法简介</a></li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

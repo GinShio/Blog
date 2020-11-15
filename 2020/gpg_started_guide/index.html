@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/gpg_started_guide/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-14T18:14:00+08:00" />
-<meta property="article:modified_time" content="2020-11-15T05:47:36+08:00" />
+<meta property="article:modified_time" content="2020-11-15T15:19:41+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/gpg_started_guide\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "Application, Linux","wordcount":  2468 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/gpg_started_guide\/","datePublished": "2020-11-14T18:14:00+08:00","dateModified": "2020-11-15T05:47:36+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "Application, Linux","wordcount":  2486 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/gpg_started_guide\/","datePublished": "2020-11-14T18:14:00+08:00","dateModified": "2020-11-15T15:19:41+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -106,7 +106,7 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">GPG 入门指北</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-14">2020-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2468 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-14">2020-11-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2486 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -238,8 +238,24 @@ gpg --keyserver pool.sks-keyservers.net --recv-keys 673A03E4C1DB921F <span class
 </code></pre></td></tr></table>
 </div>
 </div><p>对于一些本地的密钥, 我们可以使用 <code>--import</code> 导入密钥, 在使用 <code>--list-keys</code> 展示密钥时你会发现, 每个密钥都有一个信任级别, 这是一个十分复杂的概念, 你可以将好友的GPG公钥签名后 (<code>--sign-keys</code>), 再上传到公钥服务器上, 逐渐组成一个大的 <strong>信任网络</strong>, emmm&hellip;参见 <strong>Key Signing Party</strong> 。</p>
-<p>至于删除密钥, 相对来说简单很多, <code>--delete-keys</code> 可以删除公钥, <code>--delete-secert-keys</code> 可以删除私钥。</p>
-<h3 id="加密与解密">加密与解密</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg --import test.sec <span class="c1"># 导入之前备份的私钥</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>至于删除密钥, 相对来说简单很多, <code>--delete-keys</code> 可以删除公钥, <code>--delete-secert-keys</code> 可以删除私钥。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gpg --delete-keys EFC4B50FE8F8B2B3
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="加密与解密">加密与解密</h3>
 <p>加密与解密内容是我们申请RSA密钥的主要理由, 我们可以将我们重要的数据加密、签名, 然后发布到互联网上, 这样没人可以知道你发布了什么, 除非他获取到了你的私钥。</p>
 <ul>
 <li>
