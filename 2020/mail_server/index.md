@@ -177,9 +177,9 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 
 我们已经配置了TLS, 对于邮件的传输过程来说我们的邮件是安全的, 但是对于服务提供商来说还是可以随意浏览我们的邮件内容的, 如果你希望重要的内容不被服务商所浏览, 可以尝试使用对邮件加密的方式。邮件加密并不是将邮件转换为一个带密码的文件, 而是使用非对称加密套件, 在MUA中进行加密、签名等, MTA只负责传输邮件而不能检测邮件的内容。如果你想使用加密的方式向我发送邮件, 请保存以下公钥:
 
--   [OpenPGP](https://blog.ginshio.org/pgp%5Fpublic%5Fkey)
--   [S/MIME (iris@ginshio.org)](https://blog.ginshio.org/iris%5Fsmime%5Fpublic%5Fkey)
--   [S/MIME (ginshio78@gmail.com)](https://blog.ginshio.org/gmail%5Fsmime%5Fpublic%5Fkey)
+-   [OpenPGP](https://github.com/GinShio/GinShio/blob/master/pgp%5Fpublic%5Fkey)
+-   [S/MIME (iris@ginshio.org)](https://github.com/GinShio/GinShio/blob/master/iris%5Fsmime%5Fpublic%5Fkey)
+-   [S/MIME (ginshio78@gmail.com)](https://github.com/GinShio/GinShio/blob/master/gmail%5Fsmime%5Fpublic%5Fkey)
 
 由于加密邮件是MUA行为, 一般情况服务提供商的Webmail并不支持加密邮件, 部分提供加密功能的提供商如果需要你上传私钥到他们的服务器, 请保持警惕, 私钥可以解密你的邮件。以下列出了常见的支持加密的MUA:
 
