@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/home/gitlab-runner/builds/RjBk9xTU/0/GinShio/blog",
+	"sourceRoot": "/home/gitlab-runner/builds/RjBk9xTU/0/GinShio/org/hugo",
 	"sources": [
 		"assets/css/style.scss",
 		"assets/css/_variables.scss",
