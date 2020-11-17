@@ -100,7 +100,33 @@ sudo chown -R www-data:www-data ${nextcloud_root}
 sudo -u www-data -H mkdir -p ${nextcloud_root}
 ```
 
-准备工作完成后, 进入网页, 设置管理员帐号和数据库
+准备工作完成后, 进入网页, 设置管理员帐号和数据库。
+
+
+### Nextcloud 开启邮件服务 {#nextcloud-开启邮件服务}
+
+配置邮箱服务器前需要先修改nextcloud的代码, 如下
+
+```shell
+cd /path/to/nextcloud
+sed -i \
+"s/\$streamContext = .*;/\$streamContext = stream_context_create(array('ssl'=>['verify_peer'=>false, 'verify_peer_name'=>false, 'allow_self_signed'=>true]));/" \
+3rdparty/swiftmailer/swiftmailer/lib/classes/Swift/Transport/StreamBuffer.php
+systemctl restart php7.4-fpm
+```
+
+登录管理员帐号进行邮箱服务器配置即可
+
+| 字段  | 值                   |
+|-----|---------------------|
+| 发送模式 | SMTP                 |
+| 加密  | SSL/TLS              |
+| 来自地址 | noreply@example.com  |
+| 认证方式 | 登录                 |
+| 需要认证 | true                 |
+| 服务器地址 | mail.example.com:465 |
+| 证书  | noreply@example.com  |
+| 密码  | YourPassword         |
 
 ---
 
@@ -284,5 +310,48 @@ sudo gitlab-runner register # 注册 runner
 sudo -u gitlan-runner -H mv /home/gitlab-runner/.bash_logout /home/gitlab-runner/.bash_logout.bkp
 sudo systemctl restart gitlab-runnner
 sudo systemctl enable gitlab-runner
+```
+
+
+### GitLab 开启邮件服务 {#gitlab-开启邮件服务}
+
+我们的GitLab使用的是源码安装, 需要修改 `config/gitlab.yml` 开启 emil
+
+```shell
+gitlab_email_from="noreply@example.com"
+gitlab_email_reply="noreply@example.com"
+cd /home/git/gitlab
+sed -i "s/email_enabled:.*/email_enabled: true/" config/gitlab.yml
+sed -ie "s/email_from:.*/email_from: ${gitlab_email_from}" config/gitlab.yml
+sed -ie "s/email_reply_to:.*/email_reply_to: ${gitlab_email_reply}" config/gitlab.yml
+cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings.rb
+```
+
+将email启用后, 还需要配置smtp, 可以参考 [官方教程](https://docs.gitlab.com/omnibus/settings/smtp.html#mailcow), 修改配置文件 **config/initializers/smtp\_settings.rb**, 将 `ActionMailer::Base.smtp_settings` 修改为以下内容
+
+```ruby
+enable: true,
+address: "mail.example.com",
+port: 465,
+user_name: "noreply@example.com",
+password: "YourPassword",
+domain: "mail.example.com",
+authentication: :login,
+enable_starttls_auto: true,
+tls: true,
+openssl_verify_mode: 'none'
+```
+
+开启对邮件的 S/MIME 签名服务, 将你的S/MIME私钥保存到 `${gitlab\_path}/.gitlab\_smime\_key`, 公钥保存到 `${gitlab_path}/.gitlab_smime_cert`
+
+```shell
+sed -i "103s/# enabled:.*/enabled: true/" config/gitlab.yml
+```
+
+配置完成后重启服务即可, 如果需要验证SMTP是否工作, 可以使用以下命令
+
+```shell
+echo "Notify.test_email('${gitlab_email_reply}', 'Message Subject', 'Message Body').deliver_now" | \
+sudo -u git -H bundle exec rails console -e production
 ```
 

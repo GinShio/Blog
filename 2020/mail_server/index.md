@@ -34,8 +34,6 @@ DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮
 |----|-------|--------------------------------------------------------------------------------------------------|
 | A   | mail    | 1.1.1.1                                                                                             |
 | MX  | @       | mail.example.com (10)                                                                               |
-| MX  | @       | aspmx.l.google.com (15)                                                                             |
-| MX  | @       | mxbiz1.qq.com (20)                                                                                  |
 | TXT | @       | v=spf1 a mx ip:1.1.1.1 -all                                                                         |
 | TXT | \_dmarc | v=DMARC1; p=reject; rua=<mailto:admin@example.com>; ruf=<mailto:admin@example.com>; adkim=s; aspf=s |
 
@@ -52,9 +50,11 @@ mailcow_path="${path_to}/mailcow" # mailcow 所在目录
 mail_host="mail.example.com"
 http_port="8080"
 https_port="8443"
-cert_file="/ssl/domain/cert.pem" # 域名证书
-key_file="/ssl/domain/key.pem" # 域名证书密钥
-ca_file="/ssl/domain/ca.pem" # 域名证书颁发者证书
+cert_path="/path/to/cert/" # 证书存放目录
+cert_file="${cert_path}/cert.pem" # 域名证书
+key_file="${cert_path}/key.pem" # 域名证书密钥
+ca_file="${cert_path}/intermediate_CA.pem" # 域名证书颁发者证书
+root_file="${cert_path}/root.pem" # 根证书
 ```
 
 现在开始正式的搭建邮箱服务器
@@ -132,12 +132,12 @@ docker-compose up -d
 ```
 
 
-### Encrypt {#encrypt}
+### TLS {#tls}
 
 现在我们可以为SMTP与IMAP服务加入TLS, 假设我们已经对域名 `mail.example.com` 申请了证书, 对 postfix 与 dovecot 配置证书前, 我们需要根据 postfix 文档先将我们自己的证书与提供商的证书按顺序存放在同一文件下, 并且文件后缀为 **.pem**, 并存放在mailcow的ssl文件夹下
 
 ```shell
-cat ${cert_file} ${ca_file} > ${mailcow_path}/data/assets/ssl/cert.pem
+cat ${cert_file} ${ca_file} ${root_file} > ${mailcow_path}/data/assets/ssl/cert.pem
 cp ${key_file} ${mailcow_path}/data/assets/ssl/key.pem
 ```
 
@@ -145,11 +145,11 @@ cp ${key_file} ${mailcow_path}/data/assets/ssl/key.pem
 
 ```shell
 # postfix
-echo "smtp_use_tls = yes" >> data/conf/postfix/main.cf
+sed -i "s/smtp_tls_security_level.*/smtp_tls_security_level = dane/" data/conf/postfix/main.cf
 sed -i "s/smtp_tls_CAfile.*/smtp_tls_CAfile = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
 sed -i "s/smtp_tls_cert_file.*/smtp_tls_cert_file = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
 sed -i "s/smtp_tls_key_file.*/smtp_tls_key_file = \/etc\/ssl\/mail\/key.pem/" data/conf/postfix/main.cf
-echo "smtpd_use_tls = yes" >> data/conf/postfix/main.cf
+sed -i "s/smtpd_tls_security_level.*/smtpd_tls_security_level = may/" data/conf/postfix/main.cf
 sed -i "s/smtpd_tls_CAfile.*/smtpd_tls_CAfile = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
 sed -i "s/smtpd_tls_cert_file.*/smtpd_tls_cert_file = \/etc\/ssl\/mail\/cert.pem/" data/conf/postfix/main.cf
 sed -i "s/smtpd_tls_key_file.*/smtpd_tls_key_file = \/etc\/ssl\/mail\/key.pem/" data/conf/postfix/main.cf
@@ -160,12 +160,10 @@ sed -i "s/ssl_key.*/ssl_key = <\/etc\/ssl\/mail\/key.pem/" data/conf/dovecot/dov
 docker-compose restart postfix-mailcow dovecot-mailcow
 ```
 
----
 
+### 黑名单 {#黑名单}
 
-## 黑名单 {#黑名单}
-
-上了黑名单的IP很容易被进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址
+在互联网上发送邮件不是可以为所欲为的, 邮局服务有一套反垃圾邮件机制, 当你的IP上了黑名单时, 从这个IP发出去的邮件很容易进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址
 
 -   [MXToolBox](https://mxtoolbox.com/SuperTool.aspx)
 -   <http://multirbl.valli.org/>
@@ -175,70 +173,32 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 ---
 
 
-## 为其他应用开启邮件服务器 {#为其他应用开启邮件服务器}
+## 安全 {#安全}
+
+我们已经配置了TLS, 对于邮件的传输过程来说我们的邮件是安全的, 但是对于服务提供商来说还是可以随意浏览我们的邮件内容的, 如果你希望重要的内容不被服务商所浏览, 可以尝试使用对邮件加密的方式。邮件加密并不是将邮件转换为一个带密码的文件, 而是使用非对称加密套件, 在MUA中进行加密、签名等, MTA只负责传输邮件而不能检测邮件的内容。如果你想使用加密的方式向我发送邮件, 请保存以下公钥:
+
+-   [OpenPGP](https://blog.ginshio.org/pgp%5Fpublic%5Fkey)
+-   [S/MIME (iris@ginshio.org)](https://blog.ginshio.org/iris%5Fsmime%5Fpublic%5Fkey)
+-   [S/MIME (ginshio78@gmail.com)](https://blog.ginshio.org/gmail%5Fsmime%5Fpublic%5Fkey)
+
+由于加密邮件是MUA行为, 一般情况服务提供商的Webmail并不支持加密邮件, 部分提供加密功能的提供商如果需要你上传私钥到他们的服务器, 请保持警惕, 私钥可以解密你的邮件。以下列出了常见的支持加密的MUA:
+
+-   [Microsoft Outlook](https://support.microsoft.com/zh-cn/outlook) (S/MIME)
+-   [Apple Mail](https://support.apple.com/mail) (S/MIME)
+-   [Mozilla Thunderbird](https://www.thunderbird.net/) (OpenPGP 和 S/MIME)
+-   [KDE Kontact KMail](http://kontact.kde.org/) (OpenPGP 和 S/MIME)
+-   [GNOME Evolution](https://wiki.gnome.org/Apps/Evolution) (OpenPGP 和 S/MIME)
+-   [Mutt](http://www.mutt.org/) (OpenPGP 和 S/MIME)
 
 
-### GitLab {#gitlab}
+### S/MIME {#s-mime}
 
-我们的GitLab使用的是源码安装, 需要修改 `config/gitlab.yml` 开启 emil
-
-```shell
-gitlab_email_from="noreply@example.com"
-gitlab_email_reply="noreply@example.com"
-cd /home/git/gitlab
-sed -i "s/email_enabled:.*/email_enabled: true/" config/gitlab.yml
-sed -ie "s/email_from:.*/email_from: ${gitlab_email_from}" config/gitlab.yml
-sed -ie "s/email_reply_to:.*/email_reply_to: ${gitlab_email_reply}" config/gitlab.yml
-cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings.rb
-```
-
-将email启用后, 还需要配置smtp, 可以参考 [官方教程](https://docs.gitlab.com/omnibus/settings/smtp.html#mailcow), 修改配置文件 **config/initializers/smtp\_settings.rb**, 将 `ActionMailer::Base.smtp_settings` 修改为以下内容
-
-```ruby
-enable: true,
-address: "mail.example.com",
-port: 465,
-user_name: "noreply@example.com",
-password: "YourPassword",
-domain: "mail.example.com",
-authentication: :login,
-enable_starttls_auto: true,
-tls: true,
-openssl_verify_mode: 'none'
-```
-
-配置完成后重启服务即可, 如果需要验证SMTP是否工作, 可以使用以下命令
-
-```shell
-echo "Notify.test_email('${gitlab_email_reply}', 'Message Subject', 'Message Body').deliver_now" | \
-sudo -u git -H bundle exec rails console -e production
-```
+安全多功能互联网邮件扩展 (S/MIME) 是基于 **PKI** 的符合 **X.509** 格式的非对称密钥协议, 提供了数字签名、加密功能。发送邮件时, 数字签名会以 `smime.p7s` 的附件跟随邮件发送, 如GMail的网页端就支持验证签名, 如果是加密邮件则整封邮件被加密后以 `smime.p7m` 的附件发送。双方互发信息之前, 如果没有对方公钥那么无法加密邮件, 需要先互相发送签名的邮件用以交换公钥, 导入公钥后可以开始发送加密邮件。你可以在 [Actalis](https://www.actalis.it/) 申请为期一年的免费 S/MIME 证书, 为你邮件加密开启第一步, 请保存好申请到的证书 (.pfx文件)、密码以及CRP。
 
 
-### Nextcloud {#nextcloud}
+### OpenPGP {#openpgp}
 
-配置邮箱服务器前需要先修改nextcloud的代码, 如下
-
-```shell
-cd /path/to/nextcloud
-sed -i \
-"s/\$streamContext = .*;/\$streamContext = stream_context_create(array('ssl'=>['verify_peer'=>false, 'verify_peer_name'=>false, 'allow_self_signed'=>true]));/" \
-3rdparty/swiftmailer/swiftmailer/lib/classes/Swift/Transport/StreamBuffer.php
-systemctl restart php7.4-fpm
-```
-
-登录管理员帐号进行邮箱服务器配置即可
-
-| 字段  | 值                   |
-|-----|---------------------|
-| 发送模式 | SMTP                 |
-| 加密  | SSL/TLS              |
-| 来自地址 | noreply@example.com  |
-| 认证方式 | 登录                 |
-| 需要认证 | true                 |
-| 服务器地址 | mail.example.com:465 |
-| 证书  | noreply@example.com  |
-| 密码  | YourPassword         |
+OpenPGP标准是一种非对称的非对称密钥协议, 提供了加密、签名等工程, OpenGPG是通过信任网络机制确保之间的密钥认证。相比于 S/MIME 而言, OpenGPG 在邮件方便被支持的更少, 比如Gmail可以在webmail中验证S/MIME签名, 但是并不支持 PGP/MIME。
 
 ---
 
@@ -249,6 +209,9 @@ systemctl restart php7.4-fpm
 -   [Outlook 反垃圾邮件策略指南](https://sendersupport.olc.protection.outlook.com/pm/policies.aspx)
 -   [SPF 记录：原理、语法及配置方法简介](http://www.renfei.org/blog/introduction-to-spf.html)
 -   [DMARC 是什么？](https://www.cnblogs.com/dmarcly/p/10947796.html)
+-   [了解 S/MIME](https://docs.microsoft.com/zh-cn/previous-versions/exchange-server/exchange-server-2000/aa995740(v=exchg.65))
+-   [电子邮件加密指南](https://emailselfdefense.fsf.org/zh-hans/)
+-   [在 Thunderbird 中使用 OpenPGP —— 怎么做以及问题解答](https://support.mozilla.org/zh-CN/kb/thunderbird-openpgp#w%5Fthunderbird-zhi-chi-openpgp-ma)
 -   [邮件服务器Poste五分钟搭建](https://newpants.top/2019/11/14/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Poste%E4%BA%94%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BA/)
 -   [使用Mailcow自建邮件服务器](https://lala.im/4168.html)
 -   [使用 mailcow:dockerized 搭建邮件服务器](https://low.bi/p/r7VbxEKo3zA)
