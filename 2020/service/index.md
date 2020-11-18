@@ -17,9 +17,13 @@
 fpm_path="/etc/php/7.4/fpm" # php-fpm 根目录
 nextcloud_path="/path/to/nextcloud" # nextcloud 所在目录
 nextcloud_host="example.com"
+nextcloud_db_user="nextcloud" # Nextcloud 数据库用户
+nextcloud_db_passwd="YourPassword" # Nextcloud 数据库密码
+nextcloud_db_name="nextcloud" # Nextcloud 数据库名称
 gitlab_path="/home/git/gitlab"
 gitaly_path="/home/git/gitaly"
 gitlab_host="example.com"
+gitlab_db_passwd="YourPassword" # GitLab 数据库密码
 ```
 
 ---
@@ -77,9 +81,9 @@ apt install -y nginx postgresql \
 -   PostgreSQL: 创建用户 **nextcloud** 和数据库 **nextcloud\_db**
 
     ```shell
-    adduser --disabled-login --gecos 'Nextcloud' nextcloud
-    sudo -u postgres -H psql -c "CREATE USER nextcloud WITH PASSWORD 'YourPassword'"
-    sudo -u postgres -H psql -c "CREATE DATABASE nextcloud_db OWNER nextcloud"
+    adduser --disabled-login --gecos 'Nextcloud' ${nextcloud_db_user}
+    sudo -u postgres -H psql -c "CREATE USER ${nextcloud_db_user} WITH PASSWORD ${nextcloud_db_passwd}'"
+    sudo -u postgres -H psql -c "CREATE DATABASE ${nextcloud_db_name} OWNER ${nextcloud_db_user}"
     ```
 
 -   Nginx: 配置网站, 修改 [官方示例配置文件](https://docs.nextcloud.com/server/20/admin%5Fmanual/installation/nginx.html#nextcloud-in-the-webroot-of-nginx) 并保存在 `/etc/nginx/sites-available/nextcloud`
@@ -96,8 +100,8 @@ apt install -y nginx postgresql \
 [下载](https://download.nextcloud.com/server/releases) 你需要的版本并解压到目录中
 
 ```shell
-sudo chown -R www-data:www-data ${nextcloud_root}
-sudo -u www-data -H mkdir -p ${nextcloud_root}
+sudo chown -R www-data:www-data ${nextcloud_path}
+sudo -u www-data -H mkdir -p ${nextcloud_path}
 ```
 
 准备工作完成后, 进入网页, 设置管理员帐号和数据库。
@@ -196,7 +200,7 @@ sudo apt-get update
 sudo apt-get install yarn
 # 数据库
 sudo adduser --disabled-login --gecos 'GitLab' git
-sudo -u postgres psql -d template1 -c "CREATE USER git WITH PASSWORD 'YourPassword' CREATEDB;"
+sudo -u postgres psql -d template1 -c "CREATE USER git WITH PASSWORD '${gitlab_db_passwd}' CREATEDB;"
 sudo -u postgres psql -d template1 -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
 sudo -u postgres psql -d template1 -c "CREATE EXTENSION IF NOT EXISTS btree_gist";
 sudo -u postgres psql -d template1 -c "CREATE DATABASE gitlabhq_production OWNER git;"

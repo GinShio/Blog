@@ -1,29 +1,37 @@
 # 搭建邮箱服务器
 
 
-搭建一个邮箱服务器, 方便自己之后使用 (~~还可以装逼~~
+搭建邮局服务器的想法之前一直都有, 不过一直没有尝试, 国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 `postfix` 和 `dovecot` 搭建, 尝试了大概3天被劝退了, 重新使用现成的解决方案也算终于搭建好了, 可以愉快的使用自建邮箱了 (~~可以愉快的装逼了~~
+
+{{< admonition info "2020-11-18更新" >}}
+更新了 mailu 的搭建, 虽然 mailu 相比 mailcow 省资源且可以使用宿主机的数据库, 不过 mailu 配置 SMTPS / IMAPS / POP3S 不如 mailcow 简单方便, 也没怎么研究, 目前没有切换到 mailu 的打算
+{{< /admonition >}}
 
 ---
 
 
-## Mailcow {#mailcow}
+## 部署 {#部署}
 
-[Mailcow](https://mailcow.email/) 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮件等功能, 过程相对全面, 不过缺点是比较吃资源, 并且不支持 **Synology/QNAP** 或 **OpenVZ** 、 **LXC** 等虚拟化方式, 并且不能使用 `CentOS 7/8` 源中的 Docker 包, 要求真多。。。
+开始搭建服务器, 以下采用域名 `example.com`, IP `1.1.1.1`, 安装在 `/mailcow`, 使用主机的nginx反向代理, 部署之前我们首先定义一些Shell变量, 以便之后使用, 请根据自己的需求更改
 
-| 资源 | 需求          |
-|----|-------------|
-| CPU | 1GHz          |
-| RAM | 最少4G (包含交换空间) |
-| 硬盘 | 20GiB (不包含邮件) |
+```shell
+path_to="/path/to"
+mailcow_path="${path_to}/mailcow" # mailcow 所在目录
+mailu_path="${path_to}/mailu"
+mail_host="mail.example.com"
+mail_ip="1.1.1.1"
+db_user="example_user" # 数据库用户 (Mailu使用宿主机PostgreSQL时使用)
+db_passwd="example_password" # 数据库密码 (Mailu使用宿主机PostgreSQL时使用)
+db_name="example_db" # 数据库名称  (Mailu使用宿主机PostgreSQL时使用)
+http_port="8080"
+https_port="8443"
+cert_path="/ssl/path/to/cert/" # 证书存放目录
+cert_file="${cert_path}/cert.pem" # 域名证书
+key_file="${cert_path}/key.pem" # 域名证书密钥
+ca_file="${cert_path}/intermediate_CA.pem" # 域名证书颁发者证书
+```
 
-消耗资源的主要原因是 `ClamAV` 和 `Solr`, 即杀毒功能和搜索功能, 如果不需要可以关闭。
-
----
-
-
-## 安装 {#安装}
-
-开始搭建服务器, 以下采用域名 `example.com`, IP `1.1.1.1`, 安装在 `/mailcow`, 使用主机的nginx反向代理, 请根据自己的需求修改
+另外, 由于webmail对 `S/MIME` 与 `PGP/MIME` 的支持并不好, 我们将在服务器上禁止webmail, 使用本地的邮件客户端收发邮件, 以便更好的使用加密、签名功能, 如有需要请自行开启webmail。
 
 
 ### DNS {#dns}
@@ -37,25 +45,42 @@ DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮
 | TXT | @       | v=spf1 a mx ip:1.1.1.1 -all                                                                         |
 | TXT | \_dmarc | v=DMARC1; p=reject; rua=<mailto:admin@example.com>; ruf=<mailto:admin@example.com>; adkim=s; aspf=s |
 
-除了上述DNS解析之外, 还需要配置 **DKIM** 和 **PTR**, DKIM在我们搭建好服务之后配置, PTR需要向运营商提交工单申请 (阿里云和腾讯云是这样的), 当然PTR可有可无, **配置了最好** 。
+除了上述DNS解析之外, 还需要配置 **DKIM** 和 **PTR**, DKIM在我们搭建好服务之后配置, PTR需要向运营商提交工单申请 (阿里云和腾讯云是这样的), **配置了最好**, 如果你没有配置ptr解析那么你可能会上一些黑名单。
 
 
-### 搭建 {#搭建}
+### 黑名单 {#黑名单}
 
-在搭建之前我们首先定义一些变量, 以便之后使用, 方便根据自己的需求更改
+在互联网上发送邮件不是可以为所欲为的, 邮局服务有一套反垃圾邮件机制, 当你的IP上了黑名单时, 从这个IP发出去的邮件很容易进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址
 
-```shell
-path_to="/path/to"
-mailcow_path="${path_to}/mailcow" # mailcow 所在目录
-mail_host="mail.example.com"
-http_port="8080"
-https_port="8443"
-cert_path="/path/to/cert/" # 证书存放目录
-cert_file="${cert_path}/cert.pem" # 域名证书
-key_file="${cert_path}/key.pem" # 域名证书密钥
-ca_file="${cert_path}/intermediate_CA.pem" # 域名证书颁发者证书
-root_file="${cert_path}/root.pem" # 根证书
-```
+-   [MXToolBox](https://mxtoolbox.com/SuperTool.aspx)
+-   <http://multirbl.valli.org/>
+-   [Office 365](https://sender.office.com/)
+-   [Barracuda](https://www.barracudacentral.org/rbl/removal-request)
+
+
+### Mailcow:dockerized {#mailcow-dockerized}
+
+[Mailcow:dockerized](https://mailcow.email/) 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮件等功能, 过程相对全面, 不过缺点是比较吃资源, 并且不支持 **Synology/QNAP** 或 **OpenVZ** 、 **LXC** 等虚拟化方式, 并且不能使用 `CentOS 7/8` 源中的 Docker 包, 要求真多。。。消耗资源的主要原因是 `ClamAV` 和 `Solr`, 即杀毒功能和搜索功能, 如果不需要可以关闭。
+
+| 资源 | 需求          |
+|----|-------------|
+| CPU | 1GHz          |
+| RAM | 最少4G (包含交换空间) |
+| 硬盘 | 20GiB (不包含邮件) |
+
+以下列出Mailcow:dockerized使用的端口 (HTTP和HTTPS为我们自定义的端口)
+
+| 服务                 | 协议 | 端口      | 容器            |
+|--------------------|----|---------|---------------|
+| Postfix SMTP / SMTPS | TCP | 25 / 465  | postfix-mailcow |
+| Postfix Submission   | TCP | 587       | postfix-mailcow |
+| Dovecot IMAP / IMAPS | TCP | 143 / 993 | dovecot-mailcow |
+| Dovecot POP3 / POP3S | TCP | 110 / 995 | dovecot-mailcow |
+| Dovecot ManageSieve  | TCP | 4190      | dovecot-mailcow |
+| HTTP / HTTPS         | TCP | 80 / 443  | nginx-mailcow   |
+
+
+#### 部署 Mailcow:dockerized {#部署-mailcow-dockerized}
 
 现在开始正式的搭建邮箱服务器
 
@@ -66,9 +91,9 @@ echo ${email_host} | ./generate_config.sh
 sed -ie "s/HTTP_PORT=.*/HTTP_PORT=${http_port}/" mailcow.conf # HTTP端口
 sed -ie "s/HTTPS_PORT=.*/HTTPS_PORT=${https_port}/" mailcow.conf # HTTPS端口
 sed -i "s/TZ=.*/TZ=Asia\/Shanghai/" mailcow.conf # 时区
-sed -i "s/SKIP_LETS_ENCRYPT=.*/SKIP_LETS_ENCRYPT=y/" mailcow.conf # 证书申请, 关闭
-sed -i "s/SKIP_SOGO=.*/SKIP_SOGO=n/" mailcow.conf # webmail, 开启
-sed -i "s/SKIP_SOLR=.*/SKIP_SOLR=n/" mailcow.conf # 搜索, 关闭
+sed -i "s/SKIP_LETS_ENCRYPT=.*/SKIP_LETS_ENCRYPT=y/" mailcow.conf # 证书申请 (不需要)
+sed -i "s/SKIP_SOGO=.*/SKIP_SOGO=y/" mailcow.conf # webmail (不需要)
+sed -i "s/SKIP_SOLR=.*/SKIP_SOLR=n/" mailcow.conf # 搜索 (不需要)
 sed -i "s/enable_ipv6: true/enable_ipv6: false/" docker-compose.yml # 关闭ipv6
 ```
 
@@ -132,12 +157,12 @@ docker-compose up -d
 ```
 
 
-### TLS {#tls}
+#### 为 Mailcow:dockerized 配置 TLS {#为-mailcow-dockerized-配置-tls}
 
 现在我们可以为SMTP与IMAP服务加入TLS, 假设我们已经对域名 `mail.example.com` 申请了证书, 对 postfix 与 dovecot 配置证书前, 我们需要根据 postfix 文档先将我们自己的证书与提供商的证书按顺序存放在同一文件下, 并且文件后缀为 **.pem**, 并存放在mailcow的ssl文件夹下
 
 ```shell
-cat ${cert_file} ${ca_file} ${root_file} > ${mailcow_path}/data/assets/ssl/cert.pem
+cat ${cert_file} ${ca_file} > ${mailcow_path}/data/assets/ssl/cert.pem
 cp ${key_file} ${mailcow_path}/data/assets/ssl/key.pem
 ```
 
@@ -161,14 +186,102 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 ```
 
 
-### 黑名单 {#黑名单}
+### Mailu.io {#mailu-dot-io}
 
-在互联网上发送邮件不是可以为所欲为的, 邮局服务有一套反垃圾邮件机制, 当你的IP上了黑名单时, 从这个IP发出去的邮件很容易进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址
+[Mailu](https://mailu.io/) 是一个使用docker搭建的轻量级标准邮件服务器, 继承自poste.io, 支持x86架构, 集成了邮局、webmail、管理以及反垃圾邮件等功能。webmail可以选用roundcube、rainloop或禁止webmail, 而数据库支持sqlite、MySQL与PostgreSQL, 最重要的是 MySQL 和 PostgreSQL 可以选择使用镜像或宿主机 (1.9开始将删除docker镜像)。
 
--   [MXToolBox](https://mxtoolbox.com/SuperTool.aspx)
--   <http://multirbl.valli.org/>
--   [Office 365](https://sender.office.com/)
--   [Barracuda](https://www.barracudacentral.org/rbl/removal-request)
+| 资源 | 需求 |
+|----|----|
+| CPU | x86  |
+| RAM | 建议2G |
+
+
+#### 生成配置文件 {#生成配置文件}
+
+Mailu官方提供了 [在线生成配置文件](https://setup.mailu.io/), 可以根据我们的需求生成配置文件, 我们将使用 Docker-Compose 搭建 master 版本, 并将生成的配置文件下载到服务器上。
+
+-   initial configuration: 进行初始化的配置, 比如路径、主域名、TLS、管理界面等, 由于我个人喜好自己生成TLS证书, 所以选择 mail 禁止mailu帮我生成证书, 但是对邮件进行TLS加密, 如果需要mailu生成TLS证书选择带有 `letsencrypt` 的选项
+    ![](/blog/Applications/images/mailu_initial_configuration.png)
+-   pick some features: 进行功能配置, 我们禁用了webmail, 可以根据个人喜好选择合适自己的webmail。剩下的三个选项分别是杀毒 (内存杀手)、WebDAV以及邮件代收, 根据自己的需求选择
+    ![](/blog/Applications/images/mailu_pick_some_features.png)
+-   expose Mailu to the world: 配置IP与主机名, 监听地址填写自己的服务器IP, hostname填写服务器的长主机名
+    ![](/blog/Applications/images/mailu_expose_Mailu_to_the_world.png)
+-   database preferences: 数据库设置, 这里我们选择使用宿主机的PostgreSQL, URL填写的是Docker在宿主机上默认开启的子网
+    ![](/blog/Applications/images/mailu_database_preferences.png)
+
+
+#### 部署 Mailu {#部署-mailu}
+
+现在开始正式的搭建邮箱服务器, 假设你已经将配置文件下载到了 `mailu_path` 中, 我们修改一下配置文件
+
+```shell
+sed -ie "s/MESSAGE_SIZE_LIMIT=.*/MESSAGE_SIZE_LIMIT=100000000/" mailu.env
+sed -i "/::1/d" docker-compose.yml
+sed -ie "s/${mail_ip}://g" docker-compose.yml
+sed -ie "s/80:80/${http_port}:80/" docker-compose.yml # HTTP端口
+sed -ie "s/443:443/${https_port}:443/" docker-compose.yml # HTTPS端口
+```
+
+因为mailu配置的TLS选项是mail, 所以我们使宿主机的Nginx反向代理到mailu-front监听的HTTP上即可
+
+```Nginx
+server {
+  listen 80;
+  listen [::]:80;
+  server_name mail.example.com;
+  return 301 https://$host$request_uri;
+}
+server {
+  listen 443 ssl http2;
+  listen [::]:443 ssl http2;
+  server_name mail.example.com;
+
+  ssl_certificate /ssl/domain/cert.pem;
+  ssl_certificate_key /ssl/domain/key.pem;
+  # See https://ssl-config.mozilla.org/#server=nginx for the latest ssl settings recommendations
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_ciphers HIGH:!aNULL:!MD5:!SHA1:!kRSA;
+  ssl_prefer_server_ciphers off;
+  ssl_session_timeout 2h;
+  ssl_session_cache shared:mailu:8m;
+  ssl_session_tickets off;
+
+  proxy_set_header Host $http_host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+
+  location / {
+    proxy_pass http://127.0.0.1:8080/;
+  }
+  location /admin {
+    proxy_pass http://127.0.0.1:8080/admin/;
+  }
+  # location /webmail {
+  #   proxy_pass http://127.0.0.1:8080/webmail/;
+  # }
+}
+```
+
+宿主机的PostgreSQL也需要稍微配置一下
+
+```shell
+sudo adduser --disabled-login --gecos 'Mailu' ${db_user}
+sudo -u postgres -H psql -d template1 -c "CREATE USER ${db_user} WITH PASSWORD '${db_passwd}' CREATEDB;"
+sudo -u postgres -H psql -d template1 -c "CREATE DATABASE ${db_name} OWNER ${db_user};"
+sudo -u postgres -H psql -h localhost -d ${db_name} -c "create extension citext;"
+echo "host    ${db_name}    ${db_user}    192.168.203.0/24    md5" >> /etc/postgresql/12/main/pg_hba.conf
+sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '0.0.0.0'/" /etc/postgresql/12/main/postgresql.conf
+systemctl restart postgresql
+```
+
+以上全部完成后 mailu 基本配置完成, 只需要根据最后一步, 启动起服务并设置管理员密码即可
+
+```shell
+cd ${mailu_path}
+docker-compose -p mailu up -d
+docker-compose -p mailu exec admin flask mailu admin admin ${mail_host#*.} PASSWORD
+```
 
 ---
 
@@ -205,14 +318,13 @@ OpenPGP标准是一种非对称的非对称密钥协议, 提供了加密、签�
 
 ## 推荐阅读 {#推荐阅读}
 
--   [Mailcow官方文档](https://mailcow.github.io/mailcow-dockerized-docs/)
 -   [Outlook 反垃圾邮件策略指南](https://sendersupport.olc.protection.outlook.com/pm/policies.aspx)
 -   [SPF 记录：原理、语法及配置方法简介](http://www.renfei.org/blog/introduction-to-spf.html)
 -   [DMARC 是什么？](https://www.cnblogs.com/dmarcly/p/10947796.html)
 -   [了解 S/MIME](https://docs.microsoft.com/zh-cn/previous-versions/exchange-server/exchange-server-2000/aa995740(v=exchg.65))
 -   [电子邮件加密指南](https://emailselfdefense.fsf.org/zh-hans/)
 -   [在 Thunderbird 中使用 OpenPGP —— 怎么做以及问题解答](https://support.mozilla.org/zh-CN/kb/thunderbird-openpgp#w%5Fthunderbird-zhi-chi-openpgp-ma)
--   [邮件服务器Poste五分钟搭建](https://newpants.top/2019/11/14/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Poste%E4%BA%94%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BA/)
--   [使用Mailcow自建邮件服务器](https://lala.im/4168.html)
+-   [Mailcow:dockerized官方文档](https://mailcow.github.io/mailcow-dockerized-docs/)
 -   [使用 mailcow:dockerized 搭建邮件服务器](https://low.bi/p/r7VbxEKo3zA)
+-   [Mailu.io官方文档](https://mailu.io/)
 

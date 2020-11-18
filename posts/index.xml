@@ -10,7 +10,7 @@
     <pubDate>Mon, 16 Nov 2020 22:43:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/mail_server/</guid>
-    <description><![CDATA[搭建一个邮箱服务器, 方便自己之后使用 (还可以装逼 Mailcow Mailcow 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮]]></description>
+    <description><![CDATA[搭建邮局服务器的想法之前一直都有, 不过一直没有尝试, 国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 postfix 和 dovecot 搭建, 尝试了大概3天被劝退了, 重新]]></description>
 </item><item>
     <title>GPG 入门指北</title>
     <link>https://blog.ginshio.org/2020/gpg_started_guide/</link>

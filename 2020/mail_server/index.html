@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/mail_server/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-16T22:43:00+08:00" />
-<meta property="article:modified_time" content="2020-11-17T21:46:58+08:00" />
+<meta property="article:modified_time" content="2020-11-18T15:38:24+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/mail_server\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  2042 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/mail_server\/","datePublished": "2020-11-16T22:43:00+08:00","dateModified": "2020-11-17T21:46:58+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  3478 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/mail_server\/","datePublished": "2020-11-16T22:43:00+08:00","dateModified": "2020-11-18T15:38:24+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -106,8 +106,8 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">搭建邮箱服务器</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-16">2020-11-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2042 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-16">2020-11-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3478 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -115,13 +115,22 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#mailcow">Mailcow</a></li>
-    <li><a href="#安装">安装</a>
+    <li><a href="#部署">部署</a>
       <ul>
         <li><a href="#dns">DNS</a></li>
-        <li><a href="#搭建">搭建</a></li>
-        <li><a href="#tls">TLS</a></li>
         <li><a href="#黑名单">黑名单</a></li>
+        <li><a href="#mailcow-dockerized">Mailcow:dockerized</a>
+          <ul>
+            <li><a href="#部署-mailcow-dockerized">部署 Mailcow:dockerized</a></li>
+            <li><a href="#为-mailcow-dockerized-配置-tls">为 Mailcow:dockerized 配置 TLS</a></li>
+          </ul>
+        </li>
+        <li><a href="#mailu-dot-io">Mailu.io</a>
+          <ul>
+            <li><a href="#生成配置文件">生成配置文件</a></li>
+            <li><a href="#部署-mailu">部署 Mailu</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#安全">安全</a>
@@ -133,36 +142,53 @@
     <li><a href="#推荐阅读">推荐阅读</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>搭建一个邮箱服务器, 方便自己之后使用 (<del>还可以装逼</del></p>
+            </div><div class="content" id="content"><p>搭建邮局服务器的想法之前一直都有, 不过一直没有尝试, 国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 <code>postfix</code> 和 <code>dovecot</code> 搭建, 尝试了大概3天被劝退了, 重新使用现成的解决方案也算终于搭建好了, 可以愉快的使用自建邮箱了 (<del>可以愉快的装逼了</del></p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>2020-11-18更新<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">更新了 mailu 的搭建, 虽然 mailu 相比 mailcow 省资源且可以使用宿主机的数据库, 不过 mailu 配置 SMTPS / IMAPS / POP3S 不如 mailcow 简单方便, 也没怎么研究, 目前没有切换到 mailu 的打算</div>
+        </div>
+    </div>
 <hr>
-<h2 id="mailcow">Mailcow</h2>
-<p><a href="https://mailcow.email/" target="_blank" rel="noopener noreffer">Mailcow</a> 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮件等功能, 过程相对全面, 不过缺点是比较吃资源, 并且不支持 <strong>Synology/QNAP</strong> 或 <strong>OpenVZ</strong> 、 <strong>LXC</strong> 等虚拟化方式, 并且不能使用 <code>CentOS 7/8</code> 源中的 Docker 包, 要求真多。。。</p>
-<table>
-<thead>
-<tr>
-<th>资源</th>
-<th>需求</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CPU</td>
-<td>1GHz</td>
-</tr>
-<tr>
-<td>RAM</td>
-<td>最少4G (包含交换空间)</td>
-</tr>
-<tr>
-<td>硬盘</td>
-<td>20GiB (不包含邮件)</td>
-</tr>
-</tbody>
-</table>
-<p>消耗资源的主要原因是 <code>ClamAV</code> 和 <code>Solr</code>, 即杀毒功能和搜索功能, 如果不需要可以关闭。</p>
-<hr>
-<h2 id="安装">安装</h2>
-<p>开始搭建服务器, 以下采用域名 <code>example.com</code>, IP <code>1.1.1.1</code>, 安装在 <code>/mailcow</code>, 使用主机的nginx反向代理, 请根据自己的需求修改</p>
+<h2 id="部署">部署</h2>
+<p>开始搭建服务器, 以下采用域名 <code>example.com</code>, IP <code>1.1.1.1</code>, 安装在 <code>/mailcow</code>, 使用主机的nginx反向代理, 部署之前我们首先定义一些Shell变量, 以便之后使用, 请根据自己的需求更改</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">path_to</span><span class="o">=</span><span class="s2">&#34;/path/to&#34;</span>
+<span class="nv">mailcow_path</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">path_to</span><span class="si">}</span><span class="s2">/mailcow&#34;</span> <span class="c1"># mailcow 所在目录</span>
+<span class="nv">mailu_path</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">path_to</span><span class="si">}</span><span class="s2">/mailu&#34;</span>
+<span class="nv">mail_host</span><span class="o">=</span><span class="s2">&#34;mail.example.com&#34;</span>
+<span class="nv">mail_ip</span><span class="o">=</span><span class="s2">&#34;1.1.1.1&#34;</span>
+<span class="nv">db_user</span><span class="o">=</span><span class="s2">&#34;example_user&#34;</span> <span class="c1"># 数据库用户 (Mailu使用宿主机PostgreSQL时使用)</span>
+<span class="nv">db_passwd</span><span class="o">=</span><span class="s2">&#34;example_password&#34;</span> <span class="c1"># 数据库密码 (Mailu使用宿主机PostgreSQL时使用)</span>
+<span class="nv">db_name</span><span class="o">=</span><span class="s2">&#34;example_db&#34;</span> <span class="c1"># 数据库名称  (Mailu使用宿主机PostgreSQL时使用)</span>
+<span class="nv">http_port</span><span class="o">=</span><span class="s2">&#34;8080&#34;</span>
+<span class="nv">https_port</span><span class="o">=</span><span class="s2">&#34;8443&#34;</span>
+<span class="nv">cert_path</span><span class="o">=</span><span class="s2">&#34;/ssl/path/to/cert/&#34;</span> <span class="c1"># 证书存放目录</span>
+<span class="nv">cert_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cert_path</span><span class="si">}</span><span class="s2">/cert.pem&#34;</span> <span class="c1"># 域名证书</span>
+<span class="nv">key_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cert_path</span><span class="si">}</span><span class="s2">/key.pem&#34;</span> <span class="c1"># 域名证书密钥</span>
+<span class="nv">ca_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cert_path</span><span class="si">}</span><span class="s2">/intermediate_CA.pem&#34;</span> <span class="c1"># 域名证书颁发者证书</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>另外, 由于webmail对 <code>S/MIME</code> 与 <code>PGP/MIME</code> 的支持并不好, 我们将在服务器上禁止webmail, 使用本地的邮件客户端收发邮件, 以便更好的使用加密、签名功能, 如有需要请自行开启webmail。</p>
 <h3 id="dns">DNS</h3>
 <p>DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮件和收到邮件, 防止邮件被拒收或者进入垃圾箱被识别成垃圾邮件等, 当然不是配置好了就不会进垃圾邮箱, 不配置肯定会有问题。</p>
 <table>
@@ -196,36 +222,90 @@
 </tr>
 </tbody>
 </table>
-<p>除了上述DNS解析之外, 还需要配置 <strong>DKIM</strong> 和 <strong>PTR</strong>, DKIM在我们搭建好服务之后配置, PTR需要向运营商提交工单申请 (阿里云和腾讯云是这样的), 当然PTR可有可无, <strong>配置了最好</strong> 。</p>
-<h3 id="搭建">搭建</h3>
-<p>在搭建之前我们首先定义一些变量, 以便之后使用, 方便根据自己的需求更改</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">path_to</span><span class="o">=</span><span class="s2">&#34;/path/to&#34;</span>
-<span class="nv">mailcow_path</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">path_to</span><span class="si">}</span><span class="s2">/mailcow&#34;</span> <span class="c1"># mailcow 所在目录</span>
-<span class="nv">mail_host</span><span class="o">=</span><span class="s2">&#34;mail.example.com&#34;</span>
-<span class="nv">http_port</span><span class="o">=</span><span class="s2">&#34;8080&#34;</span>
-<span class="nv">https_port</span><span class="o">=</span><span class="s2">&#34;8443&#34;</span>
-<span class="nv">cert_path</span><span class="o">=</span><span class="s2">&#34;/path/to/cert/&#34;</span> <span class="c1"># 证书存放目录</span>
-<span class="nv">cert_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cert_path</span><span class="si">}</span><span class="s2">/cert.pem&#34;</span> <span class="c1"># 域名证书</span>
-<span class="nv">key_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cert_path</span><span class="si">}</span><span class="s2">/key.pem&#34;</span> <span class="c1"># 域名证书密钥</span>
-<span class="nv">ca_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cert_path</span><span class="si">}</span><span class="s2">/intermediate_CA.pem&#34;</span> <span class="c1"># 域名证书颁发者证书</span>
-<span class="nv">root_file</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cert_path</span><span class="si">}</span><span class="s2">/root.pem&#34;</span> <span class="c1"># 根证书</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>现在开始正式的搭建邮箱服务器</p>
+<p>除了上述DNS解析之外, 还需要配置 <strong>DKIM</strong> 和 <strong>PTR</strong>, DKIM在我们搭建好服务之后配置, PTR需要向运营商提交工单申请 (阿里云和腾讯云是这样的), <strong>配置了最好</strong>, 如果你没有配置ptr解析那么你可能会上一些黑名单。</p>
+<h3 id="黑名单">黑名单</h3>
+<p>在互联网上发送邮件不是可以为所欲为的, 邮局服务有一套反垃圾邮件机制, 当你的IP上了黑名单时, 从这个IP发出去的邮件很容易进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址</p>
+<ul>
+<li><a href="https://mxtoolbox.com/SuperTool.aspx" target="_blank" rel="noopener noreffer">MXToolBox</a></li>
+<li><a href="http://multirbl.valli.org/">http://multirbl.valli.org/</a></li>
+<li><a href="https://sender.office.com/" target="_blank" rel="noopener noreffer">Office 365</a></li>
+<li><a href="https://www.barracudacentral.org/rbl/removal-request" target="_blank" rel="noopener noreffer">Barracuda</a></li>
+</ul>
+<h3 id="mailcow-dockerized">Mailcow:dockerized</h3>
+<p><a href="https://mailcow.email/" target="_blank" rel="noopener noreffer">Mailcow:dockerized</a> 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮件等功能, 过程相对全面, 不过缺点是比较吃资源, 并且不支持 <strong>Synology/QNAP</strong> 或 <strong>OpenVZ</strong> 、 <strong>LXC</strong> 等虚拟化方式, 并且不能使用 <code>CentOS 7/8</code> 源中的 Docker 包, 要求真多。。。消耗资源的主要原因是 <code>ClamAV</code> 和 <code>Solr</code>, 即杀毒功能和搜索功能, 如果不需要可以关闭。</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>1GHz</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>最少4G (包含交换空间)</td>
+</tr>
+<tr>
+<td>硬盘</td>
+<td>20GiB (不包含邮件)</td>
+</tr>
+</tbody>
+</table>
+<p>以下列出Mailcow:dockerized使用的端口 (HTTP和HTTPS为我们自定义的端口)</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>协议</th>
+<th>端口</th>
+<th>容器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Postfix SMTP / SMTPS</td>
+<td>TCP</td>
+<td>25 / 465</td>
+<td>postfix-mailcow</td>
+</tr>
+<tr>
+<td>Postfix Submission</td>
+<td>TCP</td>
+<td>587</td>
+<td>postfix-mailcow</td>
+</tr>
+<tr>
+<td>Dovecot IMAP / IMAPS</td>
+<td>TCP</td>
+<td>143 / 993</td>
+<td>dovecot-mailcow</td>
+</tr>
+<tr>
+<td>Dovecot POP3 / POP3S</td>
+<td>TCP</td>
+<td>110 / 995</td>
+<td>dovecot-mailcow</td>
+</tr>
+<tr>
+<td>Dovecot ManageSieve</td>
+<td>TCP</td>
+<td>4190</td>
+<td>dovecot-mailcow</td>
+</tr>
+<tr>
+<td>HTTP / HTTPS</td>
+<td>TCP</td>
+<td>80 / 443</td>
+<td>nginx-mailcow</td>
+</tr>
+</tbody>
+</table>
+<h4 id="部署-mailcow-dockerized">部署 Mailcow:dockerized</h4>
+<p>现在开始正式的搭建邮箱服务器</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -246,9 +326,9 @@ git clone https://github.com/mailcow/mailcow-dockerized mailcow <span class="o">
 sed -ie <span class="s2">&#34;s/HTTP_PORT=.*/HTTP_PORT=</span><span class="si">${</span><span class="nv">http_port</span><span class="si">}</span><span class="s2">/&#34;</span> mailcow.conf <span class="c1"># HTTP端口</span>
 sed -ie <span class="s2">&#34;s/HTTPS_PORT=.*/HTTPS_PORT=</span><span class="si">${</span><span class="nv">https_port</span><span class="si">}</span><span class="s2">/&#34;</span> mailcow.conf <span class="c1"># HTTPS端口</span>
 sed -i <span class="s2">&#34;s/TZ=.*/TZ=Asia\/Shanghai/&#34;</span> mailcow.conf <span class="c1"># 时区</span>
-sed -i <span class="s2">&#34;s/SKIP_LETS_ENCRYPT=.*/SKIP_LETS_ENCRYPT=y/&#34;</span> mailcow.conf <span class="c1"># 证书申请, 关闭</span>
-sed -i <span class="s2">&#34;s/SKIP_SOGO=.*/SKIP_SOGO=n/&#34;</span> mailcow.conf <span class="c1"># webmail, 开启</span>
-sed -i <span class="s2">&#34;s/SKIP_SOLR=.*/SKIP_SOLR=n/&#34;</span> mailcow.conf <span class="c1"># 搜索, 关闭</span>
+sed -i <span class="s2">&#34;s/SKIP_LETS_ENCRYPT=.*/SKIP_LETS_ENCRYPT=y/&#34;</span> mailcow.conf <span class="c1"># 证书申请 (不需要)</span>
+sed -i <span class="s2">&#34;s/SKIP_SOGO=.*/SKIP_SOGO=y/&#34;</span> mailcow.conf <span class="c1"># webmail (不需要)</span>
+sed -i <span class="s2">&#34;s/SKIP_SOLR=.*/SKIP_SOLR=n/&#34;</span> mailcow.conf <span class="c1"># 搜索 (不需要)</span>
 sed -i <span class="s2">&#34;s/enable_ipv6: true/enable_ipv6: false/&#34;</span> docker-compose.yml <span class="c1"># 关闭ipv6</span>
 </code></pre></td></tr></table>
 </div>
@@ -364,7 +444,7 @@ docker-compose pull
 docker-compose up -d
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="tls">TLS</h3>
+</div><h4 id="为-mailcow-dockerized-配置-tls">为 Mailcow:dockerized 配置 TLS</h4>
 <p>现在我们可以为SMTP与IMAP服务加入TLS, 假设我们已经对域名 <code>mail.example.com</code> 申请了证书, 对 postfix 与 dovecot 配置证书前, 我们需要根据 postfix 文档先将我们自己的证书与提供商的证书按顺序存放在同一文件下, 并且文件后缀为 <strong>.pem</strong>, 并存放在mailcow的ssl文件夹下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -372,7 +452,7 @@ docker-compose up -d
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">cat <span class="si">${</span><span class="nv">cert_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">ca_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">root_file</span><span class="si">}</span> &gt; <span class="si">${</span><span class="nv">mailcow_path</span><span class="si">}</span>/data/assets/ssl/cert.pem
+<pre class="chroma"><code class="language-shell" data-lang="shell">cat <span class="si">${</span><span class="nv">cert_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">ca_file</span><span class="si">}</span> &gt; <span class="si">${</span><span class="nv">mailcow_path</span><span class="si">}</span>/data/assets/ssl/cert.pem
 cp <span class="si">${</span><span class="nv">key_file</span><span class="si">}</span> <span class="si">${</span><span class="nv">mailcow_path</span><span class="si">}</span>/data/assets/ssl/key.pem
 </code></pre></td></tr></table>
 </div>
@@ -411,15 +491,198 @@ sed -i <span class="s2">&#34;s/ssl_key.*/ssl_key = &lt;\/etc\/ssl\/mail\/key.pem
 docker-compose restart postfix-mailcow dovecot-mailcow
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="黑名单">黑名单</h3>
-<p>在互联网上发送邮件不是可以为所欲为的, 邮局服务有一套反垃圾邮件机制, 当你的IP上了黑名单时, 从这个IP发出去的邮件很容易进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址</p>
+</div><h3 id="mailu-dot-io">Mailu.io</h3>
+<p><a href="https://mailu.io/" target="_blank" rel="noopener noreffer">Mailu</a> 是一个使用docker搭建的轻量级标准邮件服务器, 继承自poste.io, 支持x86架构, 集成了邮局、webmail、管理以及反垃圾邮件等功能。webmail可以选用roundcube、rainloop或禁止webmail, 而数据库支持sqlite、MySQL与PostgreSQL, 最重要的是 MySQL 和 PostgreSQL 可以选择使用镜像或宿主机 (1.9开始将删除docker镜像)。</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>x86</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>建议2G</td>
+</tr>
+</tbody>
+</table>
+<h4 id="生成配置文件">生成配置文件</h4>
+<p>Mailu官方提供了 <a href="https://setup.mailu.io/" target="_blank" rel="noopener noreffer">在线生成配置文件</a>, 可以根据我们的需求生成配置文件, 我们将使用 Docker-Compose 搭建 master 版本, 并将生成的配置文件下载到服务器上。</p>
 <ul>
-<li><a href="https://mxtoolbox.com/SuperTool.aspx" target="_blank" rel="noopener noreffer">MXToolBox</a></li>
-<li><a href="http://multirbl.valli.org/">http://multirbl.valli.org/</a></li>
-<li><a href="https://sender.office.com/" target="_blank" rel="noopener noreffer">Office 365</a></li>
-<li><a href="https://www.barracudacentral.org/rbl/removal-request" target="_blank" rel="noopener noreffer">Barracuda</a></li>
+<li>initial configuration: 进行初始化的配置, 比如路径、主域名、TLS、管理界面等, 由于我个人喜好自己生成TLS证书, 所以选择 mail 禁止mailu帮我生成证书, 但是对邮件进行TLS加密, 如果需要mailu生成TLS证书选择带有 <code>letsencrypt</code> 的选项
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/blog/Applications/images/mailu_initial_configuration.png"
+        data-srcset="/blog/Applications/images/mailu_initial_configuration.png, /blog/Applications/images/mailu_initial_configuration.png 1.5x, /blog/Applications/images/mailu_initial_configuration.png 2x"
+        data-sizes="auto"
+        alt="/blog/Applications/images/mailu_initial_configuration.png"
+        title="/blog/Applications/images/mailu_initial_configuration.png" /></li>
+<li>pick some features: 进行功能配置, 我们禁用了webmail, 可以根据个人喜好选择合适自己的webmail。剩下的三个选项分别是杀毒 (内存杀手)、WebDAV以及邮件代收, 根据自己的需求选择
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/blog/Applications/images/mailu_pick_some_features.png"
+        data-srcset="/blog/Applications/images/mailu_pick_some_features.png, /blog/Applications/images/mailu_pick_some_features.png 1.5x, /blog/Applications/images/mailu_pick_some_features.png 2x"
+        data-sizes="auto"
+        alt="/blog/Applications/images/mailu_pick_some_features.png"
+        title="/blog/Applications/images/mailu_pick_some_features.png" /></li>
+<li>expose Mailu to the world: 配置IP与主机名, 监听地址填写自己的服务器IP, hostname填写服务器的长主机名
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png"
+        data-srcset="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png, /blog/Applications/images/mailu_expose_Mailu_to_the_world.png 1.5x, /blog/Applications/images/mailu_expose_Mailu_to_the_world.png 2x"
+        data-sizes="auto"
+        alt="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png"
+        title="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png" /></li>
+<li>database preferences: 数据库设置, 这里我们选择使用宿主机的PostgreSQL, URL填写的是Docker在宿主机上默认开启的子网
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/blog/Applications/images/mailu_database_preferences.png"
+        data-srcset="/blog/Applications/images/mailu_database_preferences.png, /blog/Applications/images/mailu_database_preferences.png 1.5x, /blog/Applications/images/mailu_database_preferences.png 2x"
+        data-sizes="auto"
+        alt="/blog/Applications/images/mailu_database_preferences.png"
+        title="/blog/Applications/images/mailu_database_preferences.png" /></li>
 </ul>
-<hr>
+<h4 id="部署-mailu">部署 Mailu</h4>
+<p>现在开始正式的搭建邮箱服务器, 假设你已经将配置文件下载到了 <code>mailu_path</code> 中, 我们修改一下配置文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">sed -ie <span class="s2">&#34;s/MESSAGE_SIZE_LIMIT=.*/MESSAGE_SIZE_LIMIT=100000000/&#34;</span> mailu.env
+sed -i <span class="s2">&#34;/::1/d&#34;</span> docker-compose.yml
+sed -ie <span class="s2">&#34;s/</span><span class="si">${</span><span class="nv">mail_ip</span><span class="si">}</span><span class="s2">://g&#34;</span> docker-compose.yml
+sed -ie <span class="s2">&#34;s/80:80/</span><span class="si">${</span><span class="nv">http_port</span><span class="si">}</span><span class="s2">:80/&#34;</span> docker-compose.yml <span class="c1"># HTTP端口</span>
+sed -ie <span class="s2">&#34;s/443:443/</span><span class="si">${</span><span class="nv">https_port</span><span class="si">}</span><span class="s2">:443/&#34;</span> docker-compose.yml <span class="c1"># HTTPS端口</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>因为mailu配置的TLS选项是mail, 所以我们使宿主机的Nginx反向代理到mailu-front监听的HTTP上即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Nginx" data-lang="Nginx"><span class="k">server</span> <span class="p">{</span>
+  <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+  <span class="kn">listen</span> <span class="s">[::]:80</span><span class="p">;</span>
+  <span class="kn">server_name</span> <span class="s">mail.example.com</span><span class="p">;</span>
+  <span class="kn">return</span> <span class="mi">301</span> <span class="s">https://</span><span class="nv">$host$request_uri</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">server</span> <span class="p">{</span>
+  <span class="kn">listen</span> <span class="mi">443</span> <span class="s">ssl</span> <span class="s">http2</span><span class="p">;</span>
+  <span class="kn">listen</span> <span class="s">[::]:443</span> <span class="s">ssl</span> <span class="s">http2</span><span class="p">;</span>
+  <span class="kn">server_name</span> <span class="s">mail.example.com</span><span class="p">;</span>
+
+  <span class="kn">ssl_certificate</span> <span class="s">/ssl/domain/cert.pem</span><span class="p">;</span>
+  <span class="kn">ssl_certificate_key</span> <span class="s">/ssl/domain/key.pem</span><span class="p">;</span>
+  <span class="c1"># See https://ssl-config.mozilla.org/#server=nginx for the latest ssl settings recommendations
+</span><span class="c1"></span>  <span class="kn">ssl_protocols</span> <span class="s">TLSv1.2</span> <span class="s">TLSv1.3</span><span class="p">;</span>
+  <span class="kn">ssl_ciphers</span> <span class="s">HIGH:!aNULL:!MD5:!SHA1:!kRSA</span><span class="p">;</span>
+  <span class="kn">ssl_prefer_server_ciphers</span> <span class="no">off</span><span class="p">;</span>
+  <span class="kn">ssl_session_timeout</span> <span class="s">2h</span><span class="p">;</span>
+  <span class="kn">ssl_session_cache</span> <span class="s">shared:mailu:8m</span><span class="p">;</span>
+  <span class="kn">ssl_session_tickets</span> <span class="no">off</span><span class="p">;</span>
+
+  <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
+  <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+  <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+  <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-Proto</span> <span class="nv">$scheme</span><span class="p">;</span>
+
+  <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+    <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8080/</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kn">location</span> <span class="s">/admin</span> <span class="p">{</span>
+    <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8080/admin/</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1"># location /webmail {
+</span><span class="c1"></span>  <span class="c1">#   proxy_pass http://127.0.0.1:8080/webmail/;
+</span><span class="c1"></span>  <span class="c1"># }
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>宿主机的PostgreSQL也需要稍微配置一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">sudo adduser --disabled-login --gecos <span class="s1">&#39;Mailu&#39;</span> <span class="si">${</span><span class="nv">db_user</span><span class="si">}</span>
+sudo -u postgres -H psql -d template1 -c <span class="s2">&#34;CREATE USER </span><span class="si">${</span><span class="nv">db_user</span><span class="si">}</span><span class="s2"> WITH PASSWORD &#39;</span><span class="si">${</span><span class="nv">db_passwd</span><span class="si">}</span><span class="s2">&#39; CREATEDB;&#34;</span>
+sudo -u postgres -H psql -d template1 -c <span class="s2">&#34;CREATE DATABASE </span><span class="si">${</span><span class="nv">db_name</span><span class="si">}</span><span class="s2"> OWNER </span><span class="si">${</span><span class="nv">db_user</span><span class="si">}</span><span class="s2">;&#34;</span>
+sudo -u postgres -H psql -h localhost -d <span class="si">${</span><span class="nv">db_name</span><span class="si">}</span> -c <span class="s2">&#34;create extension citext;&#34;</span>
+<span class="nb">echo</span> <span class="s2">&#34;host    </span><span class="si">${</span><span class="nv">db_name</span><span class="si">}</span><span class="s2">    </span><span class="si">${</span><span class="nv">db_user</span><span class="si">}</span><span class="s2">    192.168.203.0/24    md5&#34;</span> &gt;&gt; /etc/postgresql/12/main/pg_hba.conf
+sed -i <span class="s2">&#34;s/#listen_addresses = &#39;localhost&#39;/listen_addresses = &#39;0.0.0.0&#39;/&#34;</span> /etc/postgresql/12/main/postgresql.conf
+systemctl restart postgresql
+</code></pre></td></tr></table>
+</div>
+</div><p>以上全部完成后 mailu 基本配置完成, 只需要根据最后一步, 启动起服务并设置管理员密码即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> <span class="si">${</span><span class="nv">mailu_path</span><span class="si">}</span>
+docker-compose -p mailu up -d
+docker-compose -p mailu <span class="nb">exec</span> admin flask mailu admin admin <span class="si">${</span><span class="nv">mail_host</span><span class="p">#*.</span><span class="si">}</span> PASSWORD
+</code></pre></td></tr></table>
+</div>
+</div><hr>
 <h2 id="安全">安全</h2>
 <p>我们已经配置了TLS, 对于邮件的传输过程来说我们的邮件是安全的, 但是对于服务提供商来说还是可以随意浏览我们的邮件内容的, 如果你希望重要的内容不被服务商所浏览, 可以尝试使用对邮件加密的方式。邮件加密并不是将邮件转换为一个带密码的文件, 而是使用非对称加密套件, 在MUA中进行加密、签名等, MTA只负责传输邮件而不能检测邮件的内容。如果你想使用加密的方式向我发送邮件, 请保存以下公钥:</p>
 <ul>
@@ -443,22 +706,21 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 <hr>
 <h2 id="推荐阅读">推荐阅读</h2>
 <ul>
-<li><a href="https://mailcow.github.io/mailcow-dockerized-docs/" target="_blank" rel="noopener noreffer">Mailcow官方文档</a></li>
 <li><a href="https://sendersupport.olc.protection.outlook.com/pm/policies.aspx" target="_blank" rel="noopener noreffer">Outlook 反垃圾邮件策略指南</a></li>
 <li><a href="http://www.renfei.org/blog/introduction-to-spf.html" target="_blank" rel="noopener noreffer">SPF 记录：原理、语法及配置方法简介</a></li>
 <li><a href="https://www.cnblogs.com/dmarcly/p/10947796.html" target="_blank" rel="noopener noreffer">DMARC 是什么？</a></li>
 <li><a href="https://docs.microsoft.com/zh-cn/previous-versions/exchange-server/exchange-server-2000/aa995740%28v=exchg.65%29" target="_blank" rel="noopener noreffer">了解 S/MIME</a></li>
 <li><a href="https://emailselfdefense.fsf.org/zh-hans/" target="_blank" rel="noopener noreffer">电子邮件加密指南</a></li>
 <li><a href="https://support.mozilla.org/zh-CN/kb/thunderbird-openpgp#w%5Fthunderbird-zhi-chi-openpgp-ma" target="_blank" rel="noopener noreffer">在 Thunderbird 中使用 OpenPGP —— 怎么做以及问题解答</a></li>
-<li><a href="https://newpants.top/2019/11/14/%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8Poste%E4%BA%94%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener noreffer">邮件服务器Poste五分钟搭建</a></li>
-<li><a href="https://lala.im/4168.html" target="_blank" rel="noopener noreffer">使用Mailcow自建邮件服务器</a></li>
+<li><a href="https://mailcow.github.io/mailcow-dockerized-docs/" target="_blank" rel="noopener noreffer">Mailcow:dockerized官方文档</a></li>
 <li><a href="https://low.bi/p/r7VbxEKo3zA" target="_blank" rel="noopener noreffer">使用 mailcow:dockerized 搭建邮件服务器</a></li>
+<li><a href="https://mailu.io/" target="_blank" rel="noopener noreffer">Mailu.io官方文档</a></li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-11-17</span>
+                <span>更新于 2020-11-18</span>
             </div>
             <div class="post-info-license"></div>
         </div>
