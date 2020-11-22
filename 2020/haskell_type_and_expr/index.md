@@ -323,8 +323,6 @@ Num是最复杂的类型类之一, 下图展示了Num与其他类型类之间的
 运算符有三种属性, **优先级** (precedence)、 **结合性** (associativity) 与 **位置** (fixity), 优先级分为了0~9共10级, 而结合性分为左结合、右结合、无结合, 函数拥有 **最高优先级** 且是左结合的。
 ![](/blog/Haskell/images/operator_precedence.svg)
 
-TODO
-
 
 ### 条件表达式 {#条件表达式}
 
@@ -369,5 +367,17 @@ my_head [] -- Exception: empty
 ```
 
 
-### 运算符与自定义运算符 {#运算符与自定义运算符}
+### 自定义运算符 {#自定义运算符}
+
+Haskell 虽然不能像C++那样重载运算符, 但是可以定义自己的运算符, 不过需要声明运算符的结合性与优先级, 我们使用关键字定义新的运算符: `infix` (无结合)、 `infixl` (左结合)、 `infixr` (右结合)。
+
+```haskell
+infixr 5 <->, <+>; (<->) x y = x - y; (<+>) x y = x + y
+:t (<->) -- Num a => a -> a -> a
+10 <-> 5 <+> 3 -- 2
+infixr 4 `foo`; foo a b = a + b
+:t foo -- Num a => a -> a -> a
+4 `foo` 6 -- 10
+foo 5 5 -- 10
+```
 
