@@ -311,7 +311,7 @@ minBound :: Int8 -- -128
 ### 数字类型类 (Num) {#数字类型类--num}
 
 Num是最复杂的类型类之一, 下图展示了Num与其他类型类之间的关系, 可以看到这是相当复杂的一个类型类, 当然也足够强大。
-![](../static/blog/Haskell/num_typeclass.png)
+![](/blog/Haskell/images/num_typeclass.png)
 
 ---
 
