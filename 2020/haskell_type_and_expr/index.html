@@ -5,32 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Haskell入门 (1) – 类型 - iris</title><meta name="Description" content="GinShio | Haskell函数式编程入门 (第二章读书笔记)"><meta property="og:title" content="Haskell入门 (1) – 类型" />
+        <title>Haskell入门 (1) – 类型与表达式 - iris</title><meta name="Description" content="GinShio | Haskell函数式编程入门 (第二章读书笔记)"><meta property="og:title" content="Haskell入门 (1) – 类型与表达式" />
 <meta property="og:description" content="GinShio | Haskell函数式编程入门 (第二章读书笔记)" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.ginshio.org/2020/haskell_type/" />
+<meta property="og:url" content="https://blog.ginshio.org/2020/haskell_type_and_expr/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-20T17:03:00+08:00" />
-<meta property="article:modified_time" content="2020-11-21T21:01:39+08:00" />
+<meta property="article:modified_time" content="2020-11-22T17:00:32+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
-<meta name="twitter:title" content="Haskell入门 (1) – 类型"/>
+<meta name="twitter:title" content="Haskell入门 (1) – 类型与表达式"/>
 <meta name="twitter:description" content="GinShio | Haskell函数式编程入门 (第二章读书笔记)"/>
 <meta name="application-name" content="iris">
 <meta name="apple-mobile-web-app-title" content="iris"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2020/haskell_type/" /><link rel="prev" href="https://blog.ginshio.org/2020/mail_server/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2020/haskell_type_and_expr/" /><link rel="prev" href="https://blog.ginshio.org/2020/mail_server/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Haskell入门 (1) – 类型",
+        "headline": "Haskell入门 (1) – 类型与表达式",
         "inLanguage": "",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/blog.ginshio.org\/2020\/haskell_type\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "笔记, FP, 编程语言","wordcount":  4271 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/haskell_type\/","datePublished": "2020-11-20T17:03:00+08:00","dateModified": "2020-11-21T21:01:39+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "https:\/\/blog.ginshio.org\/2020\/haskell_type_and_expr\/"
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "笔记, FP, 编程语言","wordcount":  4978 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/haskell_type_and_expr\/","datePublished": "2020-11-20T17:03:00+08:00","dateModified": "2020-11-22T17:00:32+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -104,10 +104,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content always-active" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Haskell入门 (1) – 类型</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Haskell入门 (1) – 类型与表达式</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/haskell/"><i class="far fa-folder fa-fw"></i>Haskell</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4271 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4978 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -137,6 +137,14 @@
         <li><a href="#数字类型类--num">数字类型类 (Num)</a></li>
       </ul>
     </li>
+    <li><a href="#表达式">表达式</a>
+      <ul>
+        <li><a href="#条件表达式">条件表达式</a></li>
+        <li><a href="#守卫表达式--guarded-expression">守卫表达式 (guarded expression)</a></li>
+        <li><a href="#模式匹配--pattern-match">模式匹配 (pattern match)</a></li>
+        <li><a href="#运算符与自定义运算符">运算符与自定义运算符</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>类型系统的三个优点:</p>
@@ -145,6 +153,7 @@
 <li><strong>对于程序抽象</strong>, 将一些不同的计算分成不同的种类, 在编写程序时使它们互不干扰</li>
 <li><strong>文档作用</strong>, 类型签名不但可以辅助定义函数, 还可以增加代码的可读性, 作为补充文档便于软件维护</li>
 </ol>
+<p>我们在学习 Haskell 时, 目前所有的操作都需要在 GHCi 解析器中进行</p>
 <hr>
 <h2 id="基础类型">基础类型</h2>
 <p>Haskell 是强类型语言, 即每一个数据或每一个函数都有非常精确、严格的类型, 在 GHCi 中可以输入 <code>:type</code> 或 <code>:t</code> 查看数据的类型, 我们现在学习以在 <code>GHCi</code> 中操作为主。</p>
@@ -422,9 +431,9 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">let</span> <span class="n">add&#39;</span> <span class="n">x</span> <span class="n">y</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="ow">::</span><span class="kt">Int</span> <span class="c1">-- 柯里化函数定义</span>
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">add&#39;</span> <span class="n">x</span> <span class="n">y</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="ow">::</span><span class="kt">Int</span> <span class="c1">-- 柯里化函数定义</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">add&#39;</span> <span class="c1">-- 函数类型: Int -&gt; Int -&gt; Int</span>
-<span class="kr">let</span> <span class="n">add5</span> <span class="ow">=</span> <span class="n">add&#39;</span> <span class="mi">5</span>
+<span class="nf">add5</span> <span class="ow">=</span> <span class="n">add&#39;</span> <span class="mi">5</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">add5</span> <span class="c1">-- Int -&gt; Int</span>
 <span class="nf">add&#39;</span> <span class="mi">1</span> <span class="mi">3</span> <span class="c1">-- 4</span>
 <span class="nf">add5</span> <span class="mi">7</span> <span class="c1">-- 12</span>
@@ -443,11 +452,11 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kr">let</span> <span class="n">curried_add</span> <span class="ow">=</span> <span class="n">curry</span> <span class="n">add</span> <span class="c1">-- 将 add 柯里化</span>
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">curried_add</span> <span class="ow">=</span> <span class="n">curry</span> <span class="n">add</span> <span class="c1">-- 将 add 柯里化</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">curried_add</span> <span class="c1">-- Int -&gt; Int -&gt; Int</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">curry</span> <span class="c1">-- ((a, b) -&gt; c) -&gt; a -&gt; b -&gt; c</span>
 <span class="nf">curried_add</span> <span class="mi">1</span> <span class="mi">2</span> <span class="c1">-- 3</span>
-<span class="kr">let</span> <span class="n">uncurried_add&#39;</span> <span class="ow">=</span> <span class="n">uncurry</span> <span class="n">add&#39;</span> <span class="c1">-- 将 add&#39; 非柯里化</span>
+<span class="nf">uncurried_add&#39;</span> <span class="ow">=</span> <span class="n">uncurry</span> <span class="n">add&#39;</span> <span class="c1">-- 将 add&#39; 非柯里化</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">uncurried_add&#39;</span> <span class="c1">-- (Int, Int) -&gt; Int</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">uncurry</span> <span class="c1">-- (a -&gt; b -&gt; c) -&gt; (a, b) -&gt; c</span>
 <span class="nf">uncurried_add&#39;</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="c1">-- 5</span>
@@ -487,7 +496,7 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kt">:</span><span class="n">t</span> <span class="mi">5</span> <span class="c1">-- Num p =&gt; p</span>
 <span class="kt">:</span><span class="n">t</span> <span class="sc">&#39;C&#39;</span> <span class="c1">-- Char</span>
-<span class="kr">let</span> <span class="n">add</span> <span class="ow">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="ow">=&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">;</span> <span class="n">add</span> <span class="n">x</span> <span class="n">y</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="c1">-- 重载类型的curried add</span>
+<span class="nf">add</span> <span class="ow">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="ow">=&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">;</span> <span class="n">add</span> <span class="n">x</span> <span class="n">y</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="c1">-- 重载类型的curried add</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">add</span> <span class="c1">-- Num a =&gt; a -&gt; a -&gt; a, 接受两个Num类型类的参数, 并返回一个Num类型类的变量</span>
 <span class="nf">add</span> <span class="mi">1</span> <span class="mi">2</span> <span class="c1">-- 3</span>
 <span class="nf">add</span> <span class="mf">3.0</span> <span class="mf">4.0</span> <span class="c1">-- 7.0</span>
@@ -535,7 +544,7 @@
 <pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kt">:</span><span class="n">t</span> <span class="p">(</span><span class="o">&lt;</span><span class="p">)</span> <span class="c1">-- Ord a =&gt; a -&gt; a -&gt; Bool</span>
 <span class="s">&#34;Hello&#34;</span> <span class="o">&lt;</span> <span class="s">&#34;World&#34;</span> <span class="c1">-- True</span>
 <span class="mi">3</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">pi</span> <span class="ow">::</span> <span class="kt">Float</span><span class="p">)</span> <span class="c1">-- True</span>
-<span class="kr">let</span> <span class="n">gt3</span> <span class="ow">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">&lt;</span><span class="p">)</span> <span class="c1">-- 定义一个判断是否大于3的函数</span>
+<span class="nf">gt3</span> <span class="ow">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">&lt;</span><span class="p">)</span> <span class="c1">-- 定义一个判断是否大于3的函数</span>
 <span class="kt">:</span><span class="n">t</span> <span class="n">gt3</span> <span class="c1">-- (Ord a, Num a) =&gt; a -&gt; Bool</span>
 <span class="nf">gt3</span> <span class="p">(</span><span class="n">pi</span> <span class="ow">::</span> <span class="kt">Float</span><span class="p">)</span> <span class="c1">-- True</span>
 </code></pre></td></tr></table>
@@ -587,25 +596,98 @@
 <img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/blog/Haskell/num_typeclass.png"
-        data-srcset="/blog/Haskell/num_typeclass.png, /blog/Haskell/num_typeclass.png 1.5x, /blog/Haskell/num_typeclass.png 2x"
+        data-src="../static/blog/Haskell/num_typeclass.png"
+        data-srcset="../static/blog/Haskell/num_typeclass.png, ../static/blog/Haskell/num_typeclass.png 1.5x, ../static/blog/Haskell/num_typeclass.png 2x"
         data-sizes="auto"
-        alt="/blog/Haskell/num_typeclass.png"
-        title="/blog/Haskell/num_typeclass.png" /></p>
+        alt="../static/blog/Haskell/num_typeclass.png"
+        title="../static/blog/Haskell/num_typeclass.png" /></p>
+<hr>
+<h2 id="表达式">表达式</h2>
+<p>表达式是又运算符与运算数构成的, Haskell 中所有的运算符都是基于函数定义的。例如 <code>(+)</code> 的类型是 <strong>Num a =&gt; a -&gt; a -&gt; a</strong>, 运算符是规定了可以放在参数中间或末尾的函数, 并且使用的特殊的符号进行表示。在GHCi中我们使用 <code>(+) 5 6</code> 与 <code>5 + 6</code> 是相同的, 或者 <code>div 5 2</code> 与 <code>5 `div` 2</code> 。</p>
+<p>运算符有三种属性, <strong>优先级</strong> (precedence)、 <strong>结合性</strong> (associativity) 与 <strong>位置</strong> (fixity), 优先级分为了0~9共10级, 而结合性分为左结合、右结合、无结合, 函数拥有 <strong>最高优先级</strong> 且是左结合的。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/blog/Haskell/images/operator_precedence.svg"
+        data-srcset="/blog/Haskell/images/operator_precedence.svg, /blog/Haskell/images/operator_precedence.svg 1.5x, /blog/Haskell/images/operator_precedence.svg 2x"
+        data-sizes="auto"
+        alt="/blog/Haskell/images/operator_precedence.svg"
+        title="/blog/Haskell/images/operator_precedence.svg" /></p>
+<p>TODO</p>
+<h3 id="条件表达式">条件表达式</h3>
+<p><code>if-then-else</code> 结构是最简单的条件表达式, 并且是可以嵌套的, 不过必须有else表达式返回不成立的结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">gt2</span> <span class="n">n</span> <span class="ow">=</span> <span class="kr">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span> <span class="kr">then</span> <span class="kt">True</span> <span class="kr">else</span> <span class="kr">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="kr">then</span> <span class="kt">False</span> <span class="kr">else</span> <span class="kt">True</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>case-of</code> 结构和其他编程语言中的 <code>switch-case</code> 类似, 不过其他语言中的 default 关键字被替换为了 <code>_</code>, 当匹配到一个条件后可以自动退出结构而不再需要 break</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">week</span> <span class="n">n</span> <span class="ow">=</span> <span class="kr">case</span> <span class="n">n</span> <span class="kr">of</span> <span class="mi">1</span> <span class="ow">-&gt;</span> <span class="s">&#34;Mon&#34;</span><span class="p">;</span> <span class="mi">2</span> <span class="ow">-&gt;</span> <span class="s">&#34;Tue&#34;</span><span class="p">;</span> <span class="mi">3</span> <span class="ow">-&gt;</span> <span class="s">&#34;Wed&#34;</span><span class="p">;</span> <span class="mi">4</span> <span class="ow">-&gt;</span> <span class="s">&#34;Thu&#34;</span><span class="p">;</span> <span class="mi">5</span> <span class="ow">-&gt;</span> <span class="s">&#34;Fri&#34;</span><span class="p">;</span> <span class="mi">6</span> <span class="ow">-&gt;</span> <span class="s">&#34;Sat&#34;</span><span class="p">;</span> <span class="mi">7</span> <span class="ow">-&gt;</span> <span class="s">&#34;Sun&#34;</span><span class="p">;</span> <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="ne">error</span> <span class="s">&#34;invalid&#34;</span>
+<span class="kt">:</span><span class="n">t</span> <span class="n">week</span> <span class="c1">-- (Eq a, Num a) =&gt; a -&gt; [Char]</span>
+<span class="nf">week</span> <span class="mi">5</span> <span class="c1">-- &#34;Fri&#34;</span>
+<span class="nf">week</span> <span class="mi">8</span> <span class="c1">-- Exception: invalid</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="守卫表达式--guarded-expression">守卫表达式 (guarded expression)</h3>
+<p>使用 <code>|</code> 将函数的参数按特定的条件分开, 如果不能满足条件则不会让不符合条件的表达式运算, 不过不同条件的守卫表达式的 | 需要对齐。守卫后跟的是一个布尔类型, 当有多个条件满足时, Haskell 只会匹配第一个, 默认的守卫使用 <strong>otherwise</strong> 表示。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">my_abs</span> <span class="n">n</span> <span class="o">|</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">=</span> <span class="n">n</span> <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">=</span> <span class="o">-</span><span class="n">n</span>
+<span class="kt">:</span><span class="n">t</span> <span class="n">my_abs</span> <span class="c1">-- (Ord p, Num p) =&gt; p -&gt; p</span>
+<span class="nf">my_abs</span> <span class="mi">5</span>  <span class="c1">-- 5</span>
+<span class="nf">my_abs</span> <span class="p">(</span><span class="o">-</span><span class="mf">3.14</span><span class="p">)</span> <span class="c1">-- 3.14</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="模式匹配--pattern-match">模式匹配 (pattern match)</h3>
+<p>模式指一个类型的值或定义成的形式, 模式匹配与 <code>case-of</code> 结构类似, 每个类型的数据都可以看作该类型的一个具体形式, 如果有多个复合的匹配, 则只有第一个匹配被执行。我们需要将所有的模式都定义好, 否则的话在函数调用时将会出现 <code>exception of non-exhaustive patterns</code> 的错误</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">my_head</span> <span class="kt">[]</span> <span class="ow">=</span> <span class="ne">error</span> <span class="s">&#34;empty&#34;</span><span class="p">;</span> <span class="n">my_head</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="kr">_</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span>
+<span class="kt">:</span><span class="n">t</span> <span class="n">my_head</span> <span class="c1">-- [p] -&gt; p</span>
+<span class="nf">my_head</span> <span class="s">&#34;String&#34;</span> <span class="c1">-- &#39;S&#39;</span>
+<span class="nf">my_head</span> <span class="p">(</span><span class="mi">1</span><span class="kt">:</span><span class="mi">2</span><span class="kt">:</span><span class="mi">3</span><span class="kt">:[]</span><span class="p">)</span> <span class="c1">-- 1</span>
+<span class="nf">my_head</span> <span class="kt">[]</span> <span class="c1">-- Exception: empty</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="运算符与自定义运算符">运算符与自定义运算符</h3>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-11-21</span>
+                <span>更新于 2020-11-22</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/2020/haskell_type/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/2020/haskell_type_and_expr/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.ginshio.org/2020/haskell_type/" data-title="Haskell入门 (1) – 类型" data-hashtags="笔记,FP,编程语言"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.ginshio.org/2020/haskell_type/" data-hashtag="笔记"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.ginshio.org/2020/haskell_type/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.ginshio.org/2020/haskell_type/" data-title="Haskell入门 (1) – 类型"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.ginshio.org/2020/haskell_type/" data-title="Haskell入门 (1) – 类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.ginshio.org/2020/haskell_type/" data-title="Haskell入门 (1) – 类型"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.ginshio.org/2020/haskell_type_and_expr/" data-title="Haskell入门 (1) – 类型与表达式" data-hashtags="笔记,FP,编程语言"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.ginshio.org/2020/haskell_type_and_expr/" data-hashtag="笔记"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.ginshio.org/2020/haskell_type_and_expr/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.ginshio.org/2020/haskell_type_and_expr/" data-title="Haskell入门 (1) – 类型与表达式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.ginshio.org/2020/haskell_type_and_expr/" data-title="Haskell入门 (1) – 类型与表达式"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.ginshio.org/2020/haskell_type_and_expr/" data-title="Haskell入门 (1) – 类型与表达式"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
@@ -633,7 +715,7 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["GinShio"],"clientID":"1ede37779b82f8d8a39e","clientSecret":"4dc775e507be852aa2805c6643495ed7178b7826","id":"2020-11-20T17:03:00+08:00","owner":"GinShio","repo":"Blog","title":"Haskell入门 (1) – 类型"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["GinShio"],"clientID":"1ede37779b82f8d8a39e","clientSecret":"4dc775e507be852aa2805c6643495ed7178b7826","id":"2020-11-20T17:03:00+08:00","owner":"GinShio","repo":"Blog","title":"Haskell入门 (1) – 类型与表达式"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
             window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
             gtag('config', 'UA-172480612-1', { 'anonymize_ip': true });
         </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-172480612-1" async></script></body>

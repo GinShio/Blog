@@ -1,4 +1,4 @@
-# Haskell入门 (1) – 类型
+# Haskell入门 (1) – 类型与表达式
 
 
 类型系统的三个优点:
@@ -6,6 +6,8 @@
 1.  **错误检查**, 类型系统是对程序的一种限定, 人是很容易犯错的, 类型检查可以辅助用户检查程序中的类型是否正确, 帮助用户检查出大部分错误
 2.  **对于程序抽象**, 将一些不同的计算分成不同的种类, 在编写程序时使它们互不干扰
 3.  **文档作用**, 类型签名不但可以辅助定义函数, 还可以增加代码的可读性, 作为补充文档便于软件维护
+
+我们在学习 Haskell 时, 目前所有的操作都需要在 GHCi 解析器中进行
 
 ---
 
@@ -191,9 +193,9 @@ add (1, 2) -- 函数调用, 3
 当函数有多个参数时, 参数可以一个一个一次输入, 参数不足时将返回一个函数作为结果, 这样的函数就是 **柯里化函数** (curried function)。这里我们定义一个柯里化的add函数, 当传递一个参数时, 它将返回 `Int -> Int` 类型的函数。
 
 ```haskell
-let add' x y = x + y ::Int -- 柯里化函数定义
+add' x y = x + y ::Int -- 柯里化函数定义
 :t add' -- 函数类型: Int -> Int -> Int
-let add5 = add' 5
+add5 = add' 5
 :t add5 -- Int -> Int
 add' 1 3 -- 4
 add5 7 -- 12
@@ -202,11 +204,11 @@ add5 7 -- 12
 当然我们可以将一个非柯里化函数转换为柯里化函数, 或者反过来转换, 都是可以的。
 
 ```haskell
-let curried_add = curry add -- 将 add 柯里化
+curried_add = curry add -- 将 add 柯里化
 :t curried_add -- Int -> Int -> Int
 :t curry -- ((a, b) -> c) -> a -> b -> c
 curried_add 1 2 -- 3
-let uncurried_add' = uncurry add' -- 将 add' 非柯里化
+uncurried_add' = uncurry add' -- 将 add' 非柯里化
 :t uncurried_add' -- (Int, Int) -> Int
 :t uncurry -- (a -> b -> c) -> (a, b) -> c
 uncurried_add' (2,3) -- 5
@@ -228,7 +230,7 @@ uncurried_add' (2,3) -- 5
     ```haskell
     :t 5 -- Num p => p
     :t 'C' -- Char
-    let add :: Num a => a -> a -> a; add x y = x + y -- 重载类型的curried add
+    add :: Num a => a -> a -> a; add x y = x + y -- 重载类型的curried add
     :t add -- Num a => a -> a -> a, 接受两个Num类型类的参数, 并返回一个Num类型类的变量
     add 1 2 -- 3
     add 3.0 4.0 -- 7.0
@@ -267,7 +269,7 @@ Haskell将类型分成了类型类, 归为一类的类型拥有着相同的属�
 :t (<) -- Ord a => a -> a -> Bool
 "Hello" < "World" -- True
 3 < (pi :: Float) -- True
-let gt3 = (3 <) -- 定义一个判断是否大于3的函数
+gt3 = (3 <) -- 定义一个判断是否大于3的函数
 :t gt3 -- (Ord a, Num a) => a -> Bool
 gt3 (pi :: Float) -- True
 ```
@@ -309,5 +311,63 @@ minBound :: Int8 -- -128
 ### 数字类型类 (Num) {#数字类型类--num}
 
 Num是最复杂的类型类之一, 下图展示了Num与其他类型类之间的关系, 可以看到这是相当复杂的一个类型类, 当然也足够强大。
-![](/blog/Haskell/num_typeclass.png)
+![](../static/blog/Haskell/num_typeclass.png)
+
+---
+
+
+## 表达式 {#表达式}
+
+表达式是又运算符与运算数构成的, Haskell 中所有的运算符都是基于函数定义的。例如 `(+)` 的类型是 **Num a => a -> a -> a**, 运算符是规定了可以放在参数中间或末尾的函数, 并且使用的特殊的符号进行表示。在GHCi中我们使用 `(+) 5 6` 与 `5 + 6` 是相同的, 或者 `div 5 2` 与 ``5 `div` 2`` 。
+
+运算符有三种属性, **优先级** (precedence)、 **结合性** (associativity) 与 **位置** (fixity), 优先级分为了0~9共10级, 而结合性分为左结合、右结合、无结合, 函数拥有 **最高优先级** 且是左结合的。
+![](/blog/Haskell/images/operator_precedence.svg)
+
+TODO
+
+
+### 条件表达式 {#条件表达式}
+
+`if-then-else` 结构是最简单的条件表达式, 并且是可以嵌套的, 不过必须有else表达式返回不成立的结果
+
+```haskell
+gt2 n = if n == 2 then True else if n < 2 then False else True
+```
+
+`case-of` 结构和其他编程语言中的 `switch-case` 类似, 不过其他语言中的 default 关键字被替换为了 `_`, 当匹配到一个条件后可以自动退出结构而不再需要 break
+
+```haskell
+week n = case n of 1 -> "Mon"; 2 -> "Tue"; 3 -> "Wed"; 4 -> "Thu"; 5 -> "Fri"; 6 -> "Sat"; 7 -> "Sun"; _ -> error "invalid"
+:t week -- (Eq a, Num a) => a -> [Char]
+week 5 -- "Fri"
+week 8 -- Exception: invalid
+```
+
+
+### 守卫表达式 (guarded expression) {#守卫表达式--guarded-expression}
+
+使用 `|` 将函数的参数按特定的条件分开, 如果不能满足条件则不会让不符合条件的表达式运算, 不过不同条件的守卫表达式的 | 需要对齐。守卫后跟的是一个布尔类型, 当有多个条件满足时, Haskell 只会匹配第一个, 默认的守卫使用 **otherwise** 表示。
+
+```haskell
+my_abs n | n > 0 = n | otherwise = -n
+:t my_abs -- (Ord p, Num p) => p -> p
+my_abs 5  -- 5
+my_abs (-3.14) -- 3.14
+```
+
+
+### 模式匹配 (pattern match) {#模式匹配--pattern-match}
+
+模式指一个类型的值或定义成的形式, 模式匹配与 `case-of` 结构类似, 每个类型的数据都可以看作该类型的一个具体形式, 如果有多个复合的匹配, 则只有第一个匹配被执行。我们需要将所有的模式都定义好, 否则的话在函数调用时将会出现 `exception of non-exhaustive patterns` 的错误
+
+```haskell
+my_head [] = error "empty"; my_head (x:_) = x
+:t my_head -- [p] -> p
+my_head "String" -- 'S'
+my_head (1:2:3:[]) -- 1
+my_head [] -- Exception: empty
+```
+
+
+### 运算符与自定义运算符 {#运算符与自定义运算符}
 
