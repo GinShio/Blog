@@ -146,3 +146,168 @@ Beta规则的形式化写法为:
 
 我们只有在不引起标识符冲突的情况下, 才可以进行Beta归约, 如果冲突我们首先需要 Alpha 替换解决冲突。
 
+---
+
+
+## 高阶函数 {#高阶函数}
+
+以其他函数为参数的函数, 或者以函数作为结果返回的函数称为高阶函数。由于以函数作为返回结果只是柯里化函数的特点而已, 所以高阶函数常常仅特指那些以函数为参数的函数。
+
+
+### 复合函数 {#复合函数}
+
+数学中常用复合函数运算将两个函数符合在一起, 如 \\(f(x)=4x+1\\) 和 \\(g(x)=x^{2}+1\\) 复合得 \\(h(x)=f(g(x))\\), 即 \\(h(x)=4g(x)+1=4(x^{2}+1)+1\\), 也就是先求得g再传递给f, Haskell中可以定义为
+
+```haskell
+f x = 4 * x + 1
+g x = x ^ 2 + 1
+h x = f $ g x -- 或 h x = f (g x)
+```
+
+Haskell 中提供了复合函数运算符 `(.)` 来符合两个函数, 可以直接写作 `h = f.g`, 数学写作 \\(f \circ g\\)
+
+```haskell
+:t (.) -- (b -> c) -> (a -> b) -> a -> c
+h = f.g
+:t h -- Num c => c -> c
+```
+
+---
+
+
+## 递归函数 {#递归函数}
+
+Haskell 中没有其他语言中的 while 或 for 这种循环结构, 函数在自己调用自己, 直到一种特殊的情况下, 递归才会停止, 利用递归来完成循环结构。
+
+递归函数可以定义为两部分 **基本条件** (base case) 与 **递归步骤** (recursive step), 递归函数会从给定的参数开始, 重复递归步骤, 期间参数不断发生变化, 向基本条件靠拢, 知道满足基本条件才停止递归。如果递归函数无法停下来, 最终会导致 **栈溢出** (stack overflow)。
+
+```haskell
+-- 求幂
+:{
+my_power :: Int -> Int -> Int
+my_power _ 0 = 1
+my_power x n
+    | n < 0 = error "n must be greater than or equal to 0"
+    | odd n = let p = my_power x ((n - 1) `div` 2) in x * p * p
+    | otherwise = let p = my_power x (n `div` 2) in p * p
+:}
+-- 将元素加入到列表的最后
+:{
+snoc :: a -> [a] -> [a]
+snoc x [] = [x]
+snoc x (y:l) = y:(snoc x l)
+:}
+```
+
+
+### 扩展递归与尾递归 {#扩展递归与尾递归}
+
+观察下面两个函数, 可以发现, 虽然都是递归实现, 但是还是有些许不同
+
+```haskell
+-- 阶乘
+:{
+factorial :: Int -> Int
+factorial n = if n == 0 then 1 else n * factorial (n - 1)
+:}
+-- 最大公约数
+:{
+my_gcd :: Int -> Int -> Int
+my_gcd x y = if y == 0 then x else my_gcd y (mod x y)
+:}
+```
+
+阶乘函数在未到达递归的基本条件前是 **一直在展开**, 并没有进行任何计算, 所有的中间结果会被临时存储在栈中, 这样的递归被称为 `扩展递归` (augmenting recursion)。最大公约数函数的递归调用不需要在其递归过程中将中间结果临时存储在栈中, 计算过程中可以不必展开, 这种递归被称为 `尾递归` (tail recursion)。尾递归是一种特殊的递归函数。
+
+
+### 互相递归 {#互相递归}
+
+互相递归 (mutual recursion) 是递归的一种特殊情形, 两个函数的定义都用到了对方。
+
+```haskell
+:{
+my_even :: Int -> Bool
+my_odd :: Int -> Bool
+my_even 0 = True
+my_even n = my_odd (n - 1)
+my_odd 0 = False
+my_odd n = my_even (n - 1)
+:}
+```
+
+
+### 多分支递归 {#多分支递归}
+
+如果你已经学习了快速排序与归并排序, 那么试试使用 Haskell 完成它们吧
+
+```haskell
+-- 快速排序
+:{
+__filter :: (a -> Bool) -> [a] -> ([a], [a])
+__filter _ [] = ([], [])
+__filter f (x:l) | f x = ((x:true_l), false_l)
+                 | otherwise = (true_l, (x:false_l))
+    where (true_l, false_l) = __filter f l
+quick_sort :: Ord a => [a] -> [a]
+quick_sort [] = []
+quick_sort [x] = [x]
+quick_sort (x:l) = (quick_sort a) ++ [x] ++ (quick_sort b)
+    where (a, b) = __filter (<x) l
+:}
+-- 归并排序
+:{
+__merge :: Ord a => [a] -> [a] -> [a]
+__merge l [] = l
+__merge [] l = l
+__merge (x:xl) (y:yl) | x > y = y:(__merge (x:xl) yl)
+                      | otherwise = x:(__merge xl (y:yl))
+merge_sort :: Ord a => [a] -> [a]
+merge_sort [] = []
+merge_sort [x] = [x]
+merge_sort l = __merge (merge_sort l1) (merge_sort l2) where
+    len = (length l) `div` 2
+    (l1, l2) = (take len l, drop len l)
+:}
+```
+
+我们可以发现, 上述函数定义中, 递归调用有多个分支, 这种结构被称作 **多分支递归** (multi-branched recursion), SICP 中称其为树形递归。
+
+
+### 递归与Y {#递归与y}
+
+{{< admonition >}}
+Y是lambda演算中的重要概念, 介于笔者水平有限, 推荐阅读 **为什么是Y?** 这篇博客 ([原文](http://goodmath.blogspot.com/2006/05/why-oh-why-y.html) / [译文](http://cgnail.github.io/academic/lambda-4/)), 如果希望有更深入的了解请学习 **lambda 演算** 与 **System F**
+{{< /admonition >}}
+
+函数式编程以 lambda 演算为基础, 但是在 lambda 演算中定义的函数并不能像 Haskell 中那样简单地通过调用自身来定义递归函数。如果我们希望递归一个 lambda 那我们需要引入一些特殊的东西, 即 **组合子**, 组合子是一种特殊的高阶函数, 它们只引用函数应用, 而Y组合子可以使lambda进行递归
+
+```haskell
+let Y = (\y -> (\x -> y (x x)) (\x -> y (x x)))
+```
+
+我们可以试着推导Y组合子是怎么递归的, 从 `(Y Y)` 开始吧
+
+1.  展开第一个Y, `(\y -> (\x -> y (x x)) (\x -> y (x x))) Y`
+2.  Beta[y:=Y], `(\x -> Y (x x)) (\x -> Y (x x))`
+3.  Alpha[x/z]应用于第二个lambda, `(\x -> Y (x x)) (\z -> Y (z z))`
+4.  Beta[x:=(\z -> Y (z z))], `Y ((\z -> Y (z z)) (\z -> Y (z z)))`
+5.  Alpha[z/a]应用于第二个lambda并 Beta[z:=(\a -> Y (a a))]: `Y (Y ((\a -> Y (a a)) (\a -> Y (a a))))`
+6.  ...
+
+现在, 仔细看看这个推导, 我们可以发现 `(Y Y) = Y(Y Y) = Y(Y(Y...))`, 它在不断创造它自身, Y组合子是惰性求值, 如果我们用急切求值, 那么上述Y组合子是导不出来的, 事实上它会永远地复制Y
+
+我们为了让lambda递归, 可以设计一个函数 G 接受并返回这个lambda, 即 \\(G(\lambda)=\lambda\\), 满足 **f(x)=x** 的x称之为函数f的 **不动点**, Y组合子的作用就是计算函数的不动点, 对于所有函数f都满足 `Y(f) = f(Y(f))`
+
+1.  展开Y, `(\y -> (\x -> y (x x)) (\x -> y (x x))) f`
+2.  Beta[y:=f], `(\x -> f (x x)) (\x -> f (x x))`
+3.  Alpha[x/a]应用于第二个lambda, 并 Beta[x:=(\x -> f (x x))] 应用于第一个lambda, `f ((\a -> f (a a)) (\a -> f (a a)))`
+4.  Alpha[a/x], `f ((\x -> f (x x)) (\x -> f (x x)))`
+5.  与第二步等价替换, `f (Y f)`
+
+那我们现在试着将Y引入一个实际问题呢, 比如阶乘, 我们以 meta 代指 lambda, 就不再写一大堆lambda了, 其中 meta 就是我们要找的函数G
+
+```haskell
+let meta = (\f -> \n -> if n == 0 then 1 else n * (f (n - 1)))
+let factorial n = (Y meta) n
+```
+

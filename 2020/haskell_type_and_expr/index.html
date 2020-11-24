@@ -5,18 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Haskell入门 (1) – 类型与表达式 - iris</title><meta name="Description" content="GinShio | Haskell函数式编程入门 (第二章读书笔记)"><meta property="og:title" content="Haskell入门 (1) – 类型与表达式" />
-<meta property="og:description" content="GinShio | Haskell函数式编程入门 (第二章读书笔记)" />
+        <title>Haskell入门 (1) – 类型与表达式 - iris</title><meta name="Description" content="GinShio | Haskell函数式编程入门 (第二、六章读书笔记)"><meta property="og:title" content="Haskell入门 (1) – 类型与表达式" />
+<meta property="og:description" content="GinShio | Haskell函数式编程入门 (第二、六章读书笔记)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.ginshio.org/2020/haskell_type_and_expr/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-20T17:03:00+08:00" />
-<meta property="article:modified_time" content="2020-11-22T17:20:09+08:00" />
+<meta property="article:modified_time" content="2020-11-24T18:22:53+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
 <meta name="twitter:title" content="Haskell入门 (1) – 类型与表达式"/>
-<meta name="twitter:description" content="GinShio | Haskell函数式编程入门 (第二章读书笔记)"/>
+<meta name="twitter:description" content="GinShio | Haskell函数式编程入门 (第二、六章读书笔记)"/>
 <meta name="application-name" content="iris">
 <meta name="apple-mobile-web-app-title" content="iris"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -29,13 +29,13 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/haskell_type_and_expr\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "笔记, FP, 编程语言","wordcount":  5131 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/haskell_type_and_expr\/","datePublished": "2020-11-20T17:03:00+08:00","dateModified": "2020-11-22T17:20:09+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "笔记, FP, 编程语言","wordcount":  5356 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/haskell_type_and_expr\/","datePublished": "2020-11-20T17:03:00+08:00","dateModified": "2020-11-24T18:22:53+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
                 "name": "GinShio"
-            },"description": "GinShio | Haskell函数式编程入门 (第二章读书笔记)"
+            },"description": "GinShio | Haskell函数式编程入门 (第二、六章读书笔记)"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -106,7 +106,7 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Haskell入门 (1) – 类型与表达式</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/haskell/"><i class="far fa-folder fa-fw"></i>Haskell</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5131 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5356 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -308,21 +308,30 @@
 <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="o">!!</span> <span class="mi">2</span> <span class="c1">-- 3</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>你可以使用 <code>:</code> (cons) 操作符将新数据附加到列表上, 从而创建一个新列表, 不过它只能 <strong>push_front</strong>, 我们常常使用方括号创建列表, 就像是cons空列表的语法糖。除了cons, 你肯定会对repeat感兴趣, 它允许你生成一个无限长的只有给定值的列表</p>
+</div><p>你可以使用 <code>:</code> (cons) 操作符将新数据附加到列表上, 从而创建一个新列表, 不过它只能 <strong>push_front</strong>, 我们常常使用方括号创建列表, 就像是cons空列表的语法糖</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="mi">0</span><span class="kt">:</span><span class="mi">1</span><span class="kt">:</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="c1">-- [-1,0,1,2,3]</span>
 <span class="c1">-- [5,6,7]:8 -- 错误</span>
 <span class="mi">9</span><span class="kt">:</span><span class="mi">8</span><span class="kt">:</span><span class="mi">7</span><span class="kt">:</span><span class="mi">6</span><span class="kt">:</span><span class="mi">5</span><span class="kt">:[]</span> <span class="c1">-- 创建一个新列表 [9,8,7,6,5]</span>
 <span class="c1">-- 4:3:2:1 -- 错误</span>
-<span class="nf">repeat</span> <span class="mi">5</span> <span class="c1">-- 生成一个只有5的无限长列表</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>cons来一个一个push_front如果觉得不爽的话, 当然可以直接 <strong>拼接</strong> 两个或多个列表, Haskell 中提供了 <code>++</code> 运算符用来拼接列表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span> <span class="c1">-- [0,1,2,3,4,5,6,7,8]</span>
+<span class="c1">-- [0,1,2] ++ 3 -- 错误</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>好消息, 列表是可以嵌套的, 当然嵌套的条件是元素类型相同</p>
@@ -356,6 +365,32 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span> <span class="c1">-- [2,6,10]</span>
 <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">y</span> <span class="ow">&lt;-</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span> <span class="c1">-- [12,18,20,30]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其中 <code>x&lt;-[1,3,5]</code> 被称为生成器, 表示x的取值为 1/3/5, 如果有多个生成器那么后边的生成器会被 <strong>先</strong> 遍历, 如果用不到产生器的值则可以使用 <code>_</code> 代替; <code>x * y &gt; 10</code> 这种结构被称为限制条件, 如果限制条件有多个, 则这些限制条件是 <strong>逻辑与</strong> 的关系</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">my_length</span> <span class="n">l</span> <span class="ow">=</span> <span class="n">sum</span> <span class="p">[</span><span class="mi">1</span> <span class="o">|</span> <span class="kr">_</span> <span class="ow">&lt;-</span> <span class="n">l</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>有时我们需要生成器是并列关系, 而不是嵌套关系, GHC为我们扩展了这一语法 (ParallelListComp), 不过如果并列的生成器产生的数量不匹配的话, 就会提前终止</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="kt">:</span><span class="n">set</span> <span class="o">-</span><span class="kt">XParallelListComp</span>
+<span class="c1">-- [(1,4,7),(2,5,8),(3,6,9)]</span>
+<span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">|</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span> <span class="o">|</span> <span class="n">z</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]]</span>
+<span class="c1">-- [(1,4,7),(1,5,8),(1,6,9)]</span>
+<span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span> <span class="o">|</span> <span class="n">z</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]]</span>
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="元组--tuple">元组 (Tuple)</h3>
@@ -698,7 +733,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-11-22</span>
+                <span>更新于 2020-11-24</span>
             </div>
             <div class="post-info-license"></div>
         </div>
