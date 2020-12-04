@@ -4,9 +4,16 @@
         <link>https://blog.ginshio.org/</link>
         <description>iris | GinShio的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 22 Nov 2020 14:09:00 &#43;0800</lastBuildDate>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 01 Dec 2020 19:42:00 &#43;0800</lastBuildDate>
             <atom:link href="https://blog.ginshio.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>C&#43;&#43; Concurrency (1) – 标准库</title>
+    <link>https://blog.ginshio.org/2020/cpp_concurrency_std/</link>
+    <pubDate>Tue, 01 Dec 2020 19:42:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2020/cpp_concurrency_std/</guid>
+    <description><![CDATA[线程管理 创建线程 新的线程会在 ::std::thread (头文件 thread 中) 对象创建的时候被启动，在函数执行完毕后，该线程也就结束了，提供的函数对象会复制到新线程的存储空间]]></description>
+</item><item>
     <title>Haskell 入门 (2) – 函数</title>
     <link>https://blog.ginshio.org/2020/haskell_function/</link>
     <pubDate>Sun, 22 Nov 2020 14:09:00 &#43;0800</pubDate>
@@ -19,62 +26,62 @@
     <pubDate>Fri, 20 Nov 2020 17:03:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/haskell_type_and_expr/</guid>
-    <description><![CDATA[类型系统的三个优点: 错误检查, 类型系统是对程序的一种限定, 人是很容易犯错的, 类型检查可以辅助用户检查程序中的类型是否正确, 帮助用户检查出大部]]></description>
+    <description><![CDATA[类型系统的三个优点: 错误检查 ，类型系统是对程序的一种限定，人是很容易犯错的，类型检查可以辅助用户检查程序中的类型是否正确，帮助用户检查出大部]]></description>
 </item><item>
     <title>搭建邮箱服务器</title>
     <link>https://blog.ginshio.org/2020/mail_server/</link>
     <pubDate>Mon, 16 Nov 2020 22:43:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/mail_server/</guid>
-    <description><![CDATA[搭建邮局服务器的想法之前一直都有, 不过一直没有尝试, 国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 postfix 和 dovecot 搭建, 尝试了大概3天被劝退了, 重新]]></description>
+    <description><![CDATA[搭建邮局服务器的想法之前一直都有，不过一直没有尝试，国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 postfix 和 dovecot 搭建，尝试了大概3天被劝退了，重新]]></description>
 </item><item>
     <title>GPG 入门指北</title>
     <link>https://blog.ginshio.org/2020/gpg_started_guide/</link>
     <pubDate>Sat, 14 Nov 2020 18:14:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/gpg_started_guide/</guid>
-    <description><![CDATA[Pretty Good Privacy (PGP), 是一套用于讯息加密、验证的应用程序, 由 Phil Zimmermann 于1991年发布, 由一系列散列、数据压缩、对称密钥加密以及公钥加密的算法组合而成。GNU Privacy]]></description>
+    <description><![CDATA[Pretty Good Privacy (PGP)，是一套用于讯息加密、验证的应用程序，由 Phil Zimmermann 于1991年发布，由一系列散列、数据压缩、对称密钥加密以及公钥加密的算法组合而成]]></description>
 </item><item>
     <title>SICP(1) – 构造过程抽象</title>
     <link>https://blog.ginshio.org/2020/sicp_001/</link>
     <pubDate>Sat, 07 Nov 2020 15:05:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/sicp_001/</guid>
-    <description><![CDATA[心智的活动, 除了尽力产生各种简单的认识之外, 主要表现在如下三个方面： 将若干简单认识组合为一个复杂认识, 由此产生出各种复杂认识 将两个认识放在一]]></description>
+    <description><![CDATA[心智的活动，除了尽力产生各种简单的认识之外，主要表现在如下三个方面： 将若干简单认识组合为一个复杂认识，由此产生出各种复杂认识 将两个认识放在一]]></description>
 </item><item>
     <title>编译原理 (4) – 语法分析1</title>
     <link>https://blog.ginshio.org/2020/compilerprinciple_004/</link>
     <pubDate>Tue, 03 Nov 2020 16:09:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_004/</guid>
-    <description><![CDATA[程序设计语言构造的语法可以使用 上下文无关文法 或者 BNF (巴库斯-瑙尔范式) 表示法来描述, 文法为语言设计者和编译器编写者提供了很大便利: 文法给出了]]></description>
+    <description><![CDATA[程序设计语言构造的语法可以使用 上下文无关文法 或者 BNF (巴库斯-瑙尔范式) 表示法来描述，文法为语言设计者和编译器编写者提供了很大便利: 文法给出了]]></description>
 </item><item>
     <title>编译原理 (3) – 词法分析2</title>
     <link>https://blog.ginshio.org/2020/compilerprinciple_003/</link>
     <pubDate>Sat, 17 Oct 2020 22:33:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_003/</guid>
-    <description><![CDATA[基于DFA的模式匹配器的优化 NFA的重要状态 如果一个 NFA 状态有一个标号非 \(\varepsilon\) 的离开转换, 那么我们称这个状态为 重要状态 (important state)。子集构造法在]]></description>
+    <description><![CDATA[基于DFA的模式匹配器的优化 NFA的重要状态 如果一个 NFA 状态有一个标号非 \(\varepsilon\) 的离开转换，那么我们称这个状态为 重要状态 (important state)。子集构造法在]]></description>
 </item><item>
     <title>在服务器上部署一些服务</title>
     <link>https://blog.ginshio.org/2020/service/</link>
     <pubDate>Tue, 13 Oct 2020 20:16:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/service/</guid>
-    <description><![CDATA[个人使用的是腾讯云的轻量服务器, 系统镜像选择的是 Ubuntu 20.04, 搭建的服务有 博客 HUGO 、私有网盘 Nextcloud 以及 Git服务器 GitLab 一下服务搭建时, 域名统一使用 example.com, 请根据自己]]></description>
+    <description><![CDATA[个人使用的是腾讯云的轻量服务器，系统镜像选择的是 Ubuntu 20.04，搭建的服务有 博客 HUGO 、私有网盘 Nextcloud 以及 Git服务器 GitLab 一下服务搭建时，域名统一使用 e]]></description>
 </item><item>
     <title>编译原理 (2) – 词法分析1</title>
     <link>https://blog.ginshio.org/2020/compilerprinciple_002/</link>
     <pubDate>Thu, 16 Jul 2020 16:47:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_002/</guid>
-    <description><![CDATA[词法分析是编译器的第一阶段, 主要负责读取源程序的输入字符, 将它们组成 词素, 生成并输出一个词法单元序列, 每个词法单元对应一个词素, 这个词法单元]]></description>
+    <description><![CDATA[词法分析是编译器的第一阶段，主要负责读取源程序的输入字符，将它们组成 词素 ，生成并输出一个词法单元序列，每个词法单元对应一个词素，这个词法单元]]></description>
 </item><item>
     <title>编译原理 (1) – 编译器与程序设计语言</title>
     <link>https://blog.ginshio.org/2020/compilerprinciple_001/</link>
     <pubDate>Tue, 14 Jul 2020 15:47:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_001/</guid>
-    <description><![CDATA[编译器 编译器, 是一个 程序, 它可以阅读以某一 源语言 编写的程序, 并把该程序翻译成一个 等价的 、 用 目标语言 编写的程序; 解释器，是另一种语言处理器, 它]]></description>
+    <description><![CDATA[编译器 编译器，是一个 程序 ，它可以阅读以某一 源语言 编写的程序，并把该程序翻译成一个 等价的 、 用 目标语言 编写的程序; 解释器，是另一种语言处理器，它]]></description>
 </item></channel>
 </rss>

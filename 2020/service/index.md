@@ -1,9 +1,9 @@
 # 在服务器上部署一些服务
 
 
-个人使用的是腾讯云的轻量服务器, 系统镜像选择的是 Ubuntu 20.04, 搭建的服务有 博客 [HUGO](https://gohugo.io/) 、私有网盘 [Nextcloud](https://nextcloud.com/) 以及 Git服务器 [GitLab](https://about.gitlab.com/)
+个人使用的是腾讯云的轻量服务器，系统镜像选择的是 Ubuntu 20.04，搭建的服务有 博客 [HUGO](https://gohugo.io/) 、私有网盘 [Nextcloud](https://nextcloud.com/) 以及 Git服务器 [GitLab](https://about.gitlab.com/)
 
-一下服务搭建时, 域名统一使用 example.com, 请根据自己的情况修改对应的配置, 用到一些基础依赖请自行安装
+一下服务搭建时，域名统一使用 example.com，请根据自己的情况修改对应的配置，用到一些基础依赖请自行安装
 
 -   Nginx
 -   Git
@@ -11,7 +11,7 @@
 -   PostgreSQL
 -   Redis
 
-我们首先定义一些变量, 以便后边使用和修改
+我们首先定义一些变量，以便后边使用和修改
 
 ```shell
 fpm_path="/etc/php/7.4/fpm" # php-fpm 根目录
@@ -31,7 +31,7 @@ gitlab_db_passwd="YourPassword" # GitLab 数据库密码
 
 ## Nextcloud {#nextcloud}
 
-Nextcloud 是 [ownCloud](https://owncloud.com/) 项目的一个分支, 一个开源的私有云盘应用, 官方提供了包括 桌面以及移动系统的客户端。
+Nextcloud 是 [ownCloud](https://owncloud.com/) 项目的一个分支，一个开源的私有云盘应用，官方提供了包括 桌面以及移动系统的客户端。
 
 
 ### Nextcloud 依赖 {#nextcloud-依赖}
@@ -78,7 +78,7 @@ apt install -y nginx postgresql \
     systemctl restart php7.4-fpm
     ```
 
--   PostgreSQL: 创建用户 **nextcloud** 和数据库 **nextcloud\_db**
+-   PostgreSQL：创建用户 **nextcloud** 和数据库 **nextcloud\_db**
 
     ```shell
     adduser --disabled-login --gecos 'Nextcloud' ${nextcloud_db_user}
@@ -86,7 +86,7 @@ apt install -y nginx postgresql \
     sudo -u postgres -H psql -c "CREATE DATABASE ${nextcloud_db_name} OWNER ${nextcloud_db_user}"
     ```
 
--   Nginx: 配置网站, 修改 [官方示例配置文件](https://docs.nextcloud.com/server/20/admin%5Fmanual/installation/nginx.html#nextcloud-in-the-webroot-of-nginx) 并保存在 `/etc/nginx/sites-available/nextcloud`
+-   Nginx：配置网站，修改 [官方示例配置文件](https://docs.nextcloud.com/server/20/admin%5Fmanual/installation/nginx.html#nextcloud-in-the-webroot-of-nginx) 并保存在 `/etc/nginx/sites-available/nextcloud`
 
     ```shell
     ln -sf /etc/nginx/sites-available/nextcloud /etc/nginx/sites-enabled/
@@ -104,12 +104,12 @@ sudo chown -R www-data:www-data ${nextcloud_path}
 sudo -u www-data -H mkdir -p ${nextcloud_path}
 ```
 
-准备工作完成后, 进入网页, 设置管理员帐号和数据库。
+准备工作完成后，进入网页，设置管理员帐号和数据库。
 
 
 ### Nextcloud 开启邮件服务 {#nextcloud-开启邮件服务}
 
-配置邮箱服务器前需要先修改nextcloud的代码, 如下
+配置邮箱服务器前需要先修改nextcloud的代码，如下
 
 ```shell
 cd /path/to/nextcloud
@@ -137,9 +137,9 @@ systemctl restart php7.4-fpm
 
 ## GitLab {#gitlab}
 
-GitLab 是开源的基于git的 web **DevOps生命周期工具**, 提供了 <span class="underline">Git仓库</span> 、 <span class="underline">问题追踪</span> 和 <span class="underline">CI/CD</span> 等功能。分为社区版和企业版, 使用相同内核, 部分功能社区版没有提供。Gitlab 相较消耗资源, 官方推荐的最低要求为 **4C4G** 可以最多支持500用户, **8C8G** 最多支持1000用户, 具体的使用受到 <span class="underline">用户的活跃程度</span> 、 <span class="underline">CI/CD</span> 、 <span class="underline">修改大小</span> 等因素影响。
+GitLab 是开源的基于git的 web **DevOps生命周期工具** ，提供了 <span class="underline">Git仓库</span> 、 <span class="underline">问题追踪</span> 和 <span class="underline">CI/CD</span> 等功能。分为社区版和企业版，使用相同内核，部分功能社区版没有提供。Gitlab 相较消耗资源，官方推荐的最低要求为 **4C4G** 可以最多支持500用户， **8C8G** 最多支持1000用户，具体的使用受到 <span class="underline">用户的活跃程度</span> 、 <span class="underline">CI/CD</span> 、 <span class="underline">修改大小</span> 等因素影响。
 
-由于暂时不需要, 没有安装 Gitlab Pages, Gitlab的安装依赖 git 用户, 以下是目录结构
+由于暂时不需要，没有安装 Gitlab Pages，Gitlab的安装依赖 git 用户，以下是目录结构
 
 ```nil
 |-- home
@@ -157,20 +157,20 @@ GitLab 是开源的基于git的 web **DevOps生命周期工具**, 提供了 <spa
 
 {{< figure src="/blog/Applications/images/gitlab_architecture_simplified.png" >}}
 
--   Gitaly: 处理所有的 git 操作
--   GitLab Shell: 处理基于 SSH 的 git 会话 与 SSH密钥
--   GitLab Workhorse: 反向代理服务器, 处理与Rails无关的请求, Git Pull/Push 请求 和 到Rails的连接, 减轻Web服务的压力, 帮助整体加快Gitlab的速度
--   Unicorn / Puma: Gitlab 自身的 Web 服务器, 提供面向用户的功能, Gitlab 13.0 起默认使用 Puma
--   Sidekiq: 后台任务服务器, 从Redis队列中提取任务并进行处理
--   GitLab Pages: 允许直接从仓库发布静态网站
--   Gitlab Runner: Gitlab CI/CD 所关联的任务处理器
--   Nginx: Web服务器
--   PostgreSQL: 数据库
+-   Gitaly：处理所有的 git 操作
+-   GitLab Shell：处理基于 SSH 的 git 会话 与 SSH密钥
+-   GitLab Workhorse：反向代理服务器，处理与Rails无关的请求，Git Pull/Push 请求 和 到Rails的连接，减轻Web服务的压力，帮助整体加快Gitlab的速度
+-   Unicorn / Puma：Gitlab 自身的 Web 服务器，提供面向用户的功能，Gitlab 13.0 起默认使用 Puma
+-   Sidekiq：后台任务服务器，从Redis队列中提取任务并进行处理
+-   GitLab Pages：允许直接从仓库发布静态网站
+-   Gitlab Runner：Gitlab CI/CD 所关联的任务处理器
+-   Nginx：Web服务器
+-   PostgreSQL：数据库
 
 
 ### Gitlab 依赖 {#gitlab-依赖}
 
-目前Gitlab最新版本为 **v13.x**, 我们安装最新版本
+目前Gitlab最新版本为 **v13.x** ，我们安装最新版本
 
 -   Ruby v2.6 or later
 -   GoLang v1.13 or later
@@ -181,7 +181,7 @@ GitLab 是开源的基于git的 web **DevOps生命周期工具**, 提供了 <spa
 -   Redis v4.0 (推荐v5.0) or later
 -   PostgreSQL v11 or later
 
-安装相关依赖, 建立数据库, 将 Redis 设置为 Unix Domain Socket (UDS) 连接
+安装相关依赖，建立数据库，将 Redis 设置为 Unix Domain Socket (UDS) 连接
 
 ```shell
 apt update -y && apt upgrade -y
@@ -223,7 +223,7 @@ sudo usermod -aG redis git
 
 ### Gitlab 安装 {#gitlab-安装}
 
-以下配置完成后, Gitlab基本配置完成, 登录网站设置默认管理员密码即可登录, 默认管理员帐号为 **root**
+以下配置完成后，Gitlab基本配置完成，登录网站设置默认管理员密码即可登录，默认管理员帐号为 **root**
 
 ```shell
 # install gitlab
@@ -305,7 +305,7 @@ sudo -u git -H bundle exec rake gitlab:check RAILS_ENV=production
 sudo systemctl start gitlab
 ```
 
-接下来安装 `Gitlab Runner` v13.4.1, 使 CI/CD 可用
+接下来安装 `Gitlab Runner` v13.4.1，使 CI/CD 可用
 
 ```shell
 curl -LJO https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb
@@ -319,7 +319,7 @@ sudo systemctl enable gitlab-runner
 
 ### GitLab 开启邮件服务 {#gitlab-开启邮件服务}
 
-我们的GitLab使用的是源码安装, 需要修改 `config/gitlab.yml` 开启 emil
+我们的GitLab使用的是源码安装，需要修改 `config/gitlab.yml` 开启 emil
 
 ```shell
 gitlab_email_from="noreply@example.com"
@@ -331,7 +331,7 @@ sed -ie "s/email_reply_to:.*/email_reply_to: ${gitlab_email_reply}" config/gitla
 cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings.rb
 ```
 
-将email启用后, 还需要配置smtp, 可以参考 [官方教程](https://docs.gitlab.com/omnibus/settings/smtp.html#mailcow), 修改配置文件 **config/initializers/smtp\_settings.rb**, 将 `ActionMailer::Base.smtp_settings` 修改为以下内容
+将email启用后，还需要配置smtp，可以参考 [官方教程](https://docs.gitlab.com/omnibus/settings/smtp.html#mailcow)，修改配置文件 **config/initializers/smtp\_settings.rb** ，将 `ActionMailer::Base.smtp_settings` 修改为以下内容
 
 ```ruby
 enable: true,
@@ -346,13 +346,13 @@ tls: true,
 openssl_verify_mode: 'none'
 ```
 
-开启对邮件的 S/MIME 签名服务, 将你的S/MIME私钥保存到 `${gitlab\_path}/.gitlab\_smime\_key`, 公钥保存到 `${gitlab_path}/.gitlab_smime_cert`
+开启对邮件的 S/MIME 签名服务，将你的S/MIME私钥保存到 `${gitlab\_path}/.gitlab\_smime\_key=，公钥保存到 =${gitlab_path}/.gitlab_smime_cert`
 
 ```shell
 sed -i "103s/# enabled:.*/enabled: true/" config/gitlab.yml
 ```
 
-配置完成后重启服务即可, 如果需要验证SMTP是否工作, 可以使用以下命令
+配置完成后重启服务即可，如果需要验证SMTP是否工作，可以使用以下命令
 
 ```shell
 echo "Notify.test_email('${gitlab_email_reply}', 'Message Subject', 'Message Body').deliver_now" | \

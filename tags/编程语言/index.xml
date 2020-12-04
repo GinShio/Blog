@@ -4,7 +4,14 @@
         <link>https://blog.ginshio.org/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</link>
         <description>编程语言 - 标签 - iris</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 22 Nov 2020 14:09:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 01 Dec 2020 19:42:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="self" type="application/rss+xml" /><item>
+    <title>C&#43;&#43; Concurrency (1) – 标准库</title>
+    <link>https://blog.ginshio.org/2020/cpp_concurrency_std/</link>
+    <pubDate>Tue, 01 Dec 2020 19:42:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2020/cpp_concurrency_std/</guid>
+    <description><![CDATA[线程管理 创建线程 新的线程会在 ::std::thread (头文件 thread 中) 对象创建的时候被启动，在函数执行完毕后，该线程也就结束了，提供的函数对象会复制到新线程的存储空间]]></description>
+</item><item>
     <title>Haskell 入门 (2) – 函数</title>
     <link>https://blog.ginshio.org/2020/haskell_function/</link>
     <pubDate>Sun, 22 Nov 2020 14:09:00 &#43;0800</pubDate>
@@ -17,6 +24,6 @@
     <pubDate>Fri, 20 Nov 2020 17:03:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/haskell_type_and_expr/</guid>
-    <description><![CDATA[类型系统的三个优点: 错误检查, 类型系统是对程序的一种限定, 人是很容易犯错的, 类型检查可以辅助用户检查程序中的类型是否正确, 帮助用户检查出大部]]></description>
+    <description><![CDATA[类型系统的三个优点: 错误检查 ，类型系统是对程序的一种限定，人是很容易犯错的，类型检查可以辅助用户检查程序中的类型是否正确，帮助用户检查出大部]]></description>
 </item></channel>
 </rss>

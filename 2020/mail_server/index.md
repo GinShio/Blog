@@ -1,10 +1,10 @@
 # 搭建邮箱服务器
 
 
-搭建邮局服务器的想法之前一直都有, 不过一直没有尝试, 国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 `postfix` 和 `dovecot` 搭建, 尝试了大概3天被劝退了, 重新使用现成的解决方案也算终于搭建好了, 可以愉快的使用自建邮箱了 (~~可以愉快的装逼了~~
+搭建邮局服务器的想法之前一直都有，不过一直没有尝试，国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 `postfix` 和 `dovecot` 搭建，尝试了大概3天被劝退了，重新使用现成的解决方案也算终于搭建好了，可以愉快的使用自建邮箱了 (~~可以愉快的装逼了~~
 
 {{< admonition info "2020-11-18更新" >}}
-更新了 mailu 的搭建, 虽然 mailu 相比 mailcow 省资源且可以使用宿主机的数据库, 不过 mailu 配置 SMTPS / IMAPS / POP3S 不如 mailcow 简单方便, 也没怎么研究, 目前没有切换到 mailu 的打算
+更新了 mailu 的搭建，虽然 mailu 相比 mailcow 可以使用宿主机的数据库，不过 mailu 配置 SMTPS / IMAPS / POP3S 不如 mailcow 简单方便，也没怎么研究，目前没有切换到 mailu 的打算
 {{< /admonition >}}
 
 ---
@@ -12,7 +12,7 @@
 
 ## 部署 {#部署}
 
-开始搭建服务器, 以下采用域名 `example.com`, IP `1.1.1.1`, 安装在 `/mailcow`, 使用主机的nginx反向代理, 部署之前我们首先定义一些Shell变量, 以便之后使用, 请根据自己的需求更改
+开始搭建服务器，以下采用域名 (`example.com`) 和 IP (`1.1.1.1`)，安装在 `/mailcow` ，使用主机的nginx反向代理，部署之前我们首先定义一些Shell变量，以便之后使用，请根据自己的需求更改
 
 ```shell
 path_to="/path/to"
@@ -31,12 +31,12 @@ key_file="${cert_path}/key.pem" # 域名证书密钥
 ca_file="${cert_path}/intermediate_CA.pem" # 域名证书颁发者证书
 ```
 
-另外, 由于webmail对 `S/MIME` 与 `PGP/MIME` 的支持并不好, 我们将在服务器上禁止webmail, 使用本地的邮件客户端收发邮件, 以便更好的使用加密、签名功能, 如有需要请自行开启webmail。
+另外，由于webmail对 `S/MIME` 与 `PGP/MIME` 的支持并不好，我们将在服务器上禁止webmail，使用本地的邮件客户端收发邮件，以便更好的使用加密、签名功能，如有需要请自行开启webmail。
 
 
 ### DNS {#dns}
 
-DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮件和收到邮件, 防止邮件被拒收或者进入垃圾箱被识别成垃圾邮件等, 当然不是配置好了就不会进垃圾邮箱, 不配置肯定会有问题。
+DNS设置是一个邮件服务器的重中之重，为了让我们可以发出邮件和收到邮件，防止邮件被拒收或者进入垃圾箱被识别成垃圾邮件等，当然不是配置好了就不会进垃圾邮箱，不配置肯定会有问题。
 
 | 类型 | 记录    | 记录值                                                                                              |
 |----|-------|--------------------------------------------------------------------------------------------------|
@@ -45,12 +45,12 @@ DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮
 | TXT | @       | v=spf1 a mx ip:1.1.1.1 -all                                                                         |
 | TXT | \_dmarc | v=DMARC1; p=reject; rua=<mailto:admin@example.com>; ruf=<mailto:admin@example.com>; adkim=s; aspf=s |
 
-除了上述DNS解析之外, 还需要配置 **DKIM** 和 **PTR**, DKIM在我们搭建好服务之后配置, PTR需要向运营商提交工单申请 (阿里云和腾讯云是这样的), **配置了最好**, 如果你没有配置ptr解析那么你可能会上一些黑名单。
+除了上述DNS解析之外，还需要配置 **DKIM** 和 **PTR** ，DKIM在我们搭建好服务之后配置，PTR需要向运营商提交工单申请 (阿里云和腾讯云是这样的)，如果你没有配置ptr解析那么你可能会上一些黑名单。
 
 
 ### 黑名单 {#黑名单}
 
-在互联网上发送邮件不是可以为所欲为的, 邮局服务有一套反垃圾邮件机制, 当你的IP上了黑名单时, 从这个IP发出去的邮件很容易进入垃圾邮箱或拒收, 请珍惜自己的IP, 不过可以尝试在检测上了哪些服务商的黑名单, 并尝试解除黑名单, 以下给出一些检测或申请去除反垃圾邮件网址
+在互联网上发送邮件不是可以为所欲为的，邮局服务有一套反垃圾邮件机制，当你的IP上了黑名单时，从这个IP发出去的邮件很容易进入垃圾邮箱或拒收，请珍惜自己的IP，不过可以尝试在检测上了哪些服务商的黑名单，并尝试解除黑名单，以下给出一些检测或申请去除反垃圾邮件网址
 
 -   [MXToolBox](https://mxtoolbox.com/SuperTool.aspx)
 -   <http://multirbl.valli.org/>
@@ -60,7 +60,7 @@ DNS设置是一个邮件服务器的重中之重, 为了让我们可以发出邮
 
 ### Mailcow:dockerized {#mailcow-dockerized}
 
-[Mailcow:dockerized](https://mailcow.email/) 是一个使用docker搭建的标准邮件服务器, 集成了邮局、webmail、管理以及反垃圾邮件等功能, 过程相对全面, 不过缺点是比较吃资源, 并且不支持 **Synology/QNAP** 或 **OpenVZ** 、 **LXC** 等虚拟化方式, 并且不能使用 `CentOS 7/8` 源中的 Docker 包, 要求真多。。。消耗资源的主要原因是 `ClamAV` 和 `Solr`, 即杀毒功能和搜索功能, 如果不需要可以关闭。
+[Mailcow:dockerized](https://mailcow.email/) 是一个使用docker搭建的标准邮件服务器，集成了邮局、webmail、管理以及反垃圾邮件等功能，过程相对全面，不过缺点是比较吃资源，并且不支持 **Synology/QNAP** 或 **OpenVZ** 、 **LXC** 等虚拟化方式，并且不能使用 `CentOS 7/8` 源中的 Docker 包，要求真多。。。消耗资源的主要原因是 `ClamAV` 和 `Solr` ，即杀毒功能和搜索功能，如果不需要可以关闭。
 
 | 资源 | 需求          |
 |----|-------------|
@@ -97,7 +97,7 @@ sed -i "s/SKIP_SOLR=.*/SKIP_SOLR=n/" mailcow.conf # 搜索 (不需要)
 sed -i "s/enable_ipv6: true/enable_ipv6: false/" docker-compose.yml # 关闭ipv6
 ```
 
-下面给出Nginx配置文件, Apache 配置文件请参见 [官方文档](https://mailcow.github.io/mailcow-dockerized-docs/firststeps-rp/#apache-24)
+下面给出Nginx配置文件，Apache 配置文件请参见 [官方文档](https://mailcow.github.io/mailcow-dockerized-docs/firststeps-rp/#apache-24)
 
 ```Nginx
 server {
@@ -148,7 +148,7 @@ server {
 }
 ```
 
-以上全部完成后, mailcow 基本配置完成, 只需要启动起服务即可, 默认用户密码 `admin` / `moohoo`
+以上全部完成后，mailcow 基本配置完成，只需要启动起服务即可，默认用户密码 `admin` / `moohoo`
 
 ```shell
 cd ${mailcow_path}
@@ -159,14 +159,14 @@ docker-compose up -d
 
 #### 为 Mailcow:dockerized 配置 TLS {#为-mailcow-dockerized-配置-tls}
 
-现在我们可以为SMTP与IMAP服务加入TLS, 假设我们已经对域名 `mail.example.com` 申请了证书, 对 postfix 与 dovecot 配置证书前, 我们需要根据 postfix 文档先将我们自己的证书与提供商的证书按顺序存放在同一文件下, 并且文件后缀为 **.pem**, 并存放在mailcow的ssl文件夹下
+现在我们可以为SMTP与IMAP服务加入TLS，假设我们已经对域名 `mail.example.com` 申请了证书，对 postfix 与 dovecot 配置证书前，我们需要根据 postfix 文档先将我们自己的证书与提供商的证书按顺序存放在同一文件下，并且文件后缀为 **.pem** ，并存放在mailcow的ssl文件夹下
 
 ```shell
 cat ${cert_file} ${ca_file} > ${mailcow_path}/data/assets/ssl/cert.pem
 cp ${key_file} ${mailcow_path}/data/assets/ssl/key.pem
 ```
 
-证书保存完毕后, 对 postfix 与 dovecot 进行配置, 配置完成重启服务即可
+证书保存完毕后，对 postfix 与 dovecot 进行配置，配置完成重启服务即可
 
 ```shell
 # postfix
@@ -188,7 +188,7 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 
 ### Mailu.io {#mailu-dot-io}
 
-[Mailu](https://mailu.io/) 是一个使用docker搭建的轻量级标准邮件服务器, 继承自poste.io, 支持x86架构, 集成了邮局、webmail、管理以及反垃圾邮件等功能。webmail可以选用roundcube、rainloop或禁止webmail, 而数据库支持sqlite、MySQL与PostgreSQL, 最重要的是 MySQL 和 PostgreSQL 可以选择使用镜像或宿主机 (1.9开始将删除docker镜像)。
+[Mailu](https://mailu.io/) 是一个使用docker搭建的轻量级标准邮件服务器，继承自poste.io，支持x86架构，集成了邮局、webmail、管理以及反垃圾邮件等功能。webmail可以选用roundcube、rainloop或禁止webmail，而数据库支持sqlite、MySQL与PostgreSQL，最重要的是 MySQL 和 PostgreSQL 可以选择使用镜像或宿主机 (1.9开始将删除docker镜像)。
 
 | 资源 | 需求 |
 |----|----|
@@ -198,21 +198,21 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 
 #### 生成配置文件 {#生成配置文件}
 
-Mailu官方提供了 [在线生成配置文件](https://setup.mailu.io/), 可以根据我们的需求生成配置文件, 我们将使用 Docker-Compose 搭建 master 版本, 并将生成的配置文件下载到服务器上。
+Mailu官方提供了 [在线生成配置文件](https://setup.mailu.io/)，可以根据我们的需求生成配置文件，我们将使用 Docker-Compose 搭建 master 版本，并将生成的配置文件下载到服务器上。
 
--   initial configuration: 进行初始化的配置, 比如路径、主域名、TLS、管理界面等, 由于我个人喜好自己生成TLS证书, 所以选择 mail 禁止mailu帮我生成证书, 但是对邮件进行TLS加密, 如果需要mailu生成TLS证书选择带有 `letsencrypt` 的选项
+-   initial configuration：进行初始化的配置，比如路径、主域名、TLS、管理界面等，由于我个人喜好自己生成TLS证书，所以选择 mail 禁止mailu帮我生成证书，但是对邮件进行TLS加密，如果需要mailu生成TLS证书选择带有 `letsencrypt` 的选项
     ![](/blog/Applications/images/mailu_initial_configuration.png)
--   pick some features: 进行功能配置, 我们禁用了webmail, 可以根据个人喜好选择合适自己的webmail。剩下的三个选项分别是杀毒 (内存杀手)、WebDAV以及邮件代收, 根据自己的需求选择
+-   pick some features：进行功能配置，我们禁用了webmail，可以根据个人喜好选择合适自己的webmail。剩下的三个选项分别是杀毒 (内存杀手)、WebDAV以及邮件代收，根据自己的需求选择
     ![](/blog/Applications/images/mailu_pick_some_features.png)
--   expose Mailu to the world: 配置IP与主机名, 监听地址填写自己的服务器IP, hostname填写服务器的长主机名
+-   expose Mailu to the world：配置IP与主机名，监听地址填写自己的服务器IP，hostname填写服务器的长主机名
     ![](/blog/Applications/images/mailu_expose_Mailu_to_the_world.png)
--   database preferences: 数据库设置, 这里我们选择使用宿主机的PostgreSQL, URL填写的是Docker在宿主机上默认开启的子网
+-   database preferences：数据库设置，这里我们选择使用宿主机的PostgreSQL，URL填写的是Docker在宿主机上默认开启的子网
     ![](/blog/Applications/images/mailu_database_preferences.png)
 
 
 #### 部署 Mailu {#部署-mailu}
 
-现在开始正式的搭建邮箱服务器, 假设你已经将配置文件下载到了 `mailu_path` 中, 我们修改一下配置文件
+现在开始正式的搭建邮箱服务器，假设你已经将配置文件下载到了 `mailu_path` 中，我们修改一下配置文件
 
 ```shell
 sed -ie "s/MESSAGE_SIZE_LIMIT=.*/MESSAGE_SIZE_LIMIT=100000000/" mailu.env
@@ -222,7 +222,7 @@ sed -ie "s/80:80/${http_port}:80/" docker-compose.yml # HTTP端口
 sed -ie "s/443:443/${https_port}:443/" docker-compose.yml # HTTPS端口
 ```
 
-因为mailu配置的TLS选项是mail, 所以我们使宿主机的Nginx反向代理到mailu-front监听的HTTP上即可
+因为mailu配置的TLS选项是mail，所以我们使宿主机的Nginx反向代理到mailu-front监听的HTTP上即可
 
 ```Nginx
 server {
@@ -275,7 +275,7 @@ sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '0.0.0.0'/" /etc/po
 systemctl restart postgresql
 ```
 
-以上全部完成后 mailu 基本配置完成, 只需要根据最后一步, 启动起服务并设置管理员密码即可
+以上全部完成后 mailu 基本配置完成，只需要根据最后一步，启动起服务并设置管理员密码即可
 
 ```shell
 cd ${mailu_path}
@@ -288,13 +288,13 @@ docker-compose -p mailu exec admin flask mailu admin admin ${mail_host#*.} PASSW
 
 ## 安全 {#安全}
 
-我们已经配置了TLS, 对于邮件的传输过程来说我们的邮件是安全的, 但是对于服务提供商来说还是可以随意浏览我们的邮件内容的, 如果你希望重要的内容不被服务商所浏览, 可以尝试使用对邮件加密的方式。邮件加密并不是将邮件转换为一个带密码的文件, 而是使用非对称加密套件, 在MUA中进行加密、签名等, MTA只负责传输邮件而不能检测邮件的内容。如果你想使用加密的方式向我发送邮件, 请保存以下公钥:
+我们已经配置了TLS，对于邮件的传输过程来说我们的邮件是安全的，但是对于服务提供商来说还是可以随意浏览我们的邮件内容的，如果你希望重要的内容不被服务商所浏览，可以尝试使用对邮件加密的方式。邮件加密并不是将邮件转换为一个带密码的文件，而是使用非对称加密套件，在MUA中进行加密、签名等，MTA只负责传输邮件而不能检测邮件的内容。如果你想使用加密的方式向我发送邮件，请保存以下公钥:
 
 -   [OpenPGP](https://github.com/GinShio/GinShio/blob/master/pgp%5Fpublic%5Fkey)
 -   [S/MIME (iris@ginshio.org)](https://github.com/GinShio/GinShio/blob/master/iris%5Fsmime%5Fpublic%5Fkey)
 -   [S/MIME (ginshio78@gmail.com)](https://github.com/GinShio/GinShio/blob/master/gmail%5Fsmime%5Fpublic%5Fkey)
 
-由于加密邮件是MUA行为, 一般情况服务提供商的Webmail并不支持加密邮件, 部分提供加密功能的提供商如果需要你上传私钥到他们的服务器, 请保持警惕, 私钥可以解密你的邮件。以下列出了常见的支持加密的MUA:
+由于加密邮件是MUA行为，一般情况服务提供商的Webmail并不支持加密邮件，部分提供加密功能的提供商如果需要你上传私钥到他们的服务器，请保持警惕，私钥可以解密你的邮件。以下列出了常见的支持加密的MUA:
 
 -   [Microsoft Outlook](https://support.microsoft.com/zh-cn/outlook) (S/MIME)
 -   [Apple Mail](https://support.apple.com/mail) (S/MIME)
@@ -306,12 +306,12 @@ docker-compose -p mailu exec admin flask mailu admin admin ${mail_host#*.} PASSW
 
 ### S/MIME {#s-mime}
 
-安全多功能互联网邮件扩展 (S/MIME) 是基于 **PKI** 的符合 **X.509** 格式的非对称密钥协议, 提供了数字签名、加密功能。发送邮件时, 数字签名会以 `smime.p7s` 的附件跟随邮件发送, 如GMail的网页端就支持验证签名, 如果是加密邮件则整封邮件被加密后以 `smime.p7m` 的附件发送。双方互发信息之前, 如果没有对方公钥那么无法加密邮件, 需要先互相发送签名的邮件用以交换公钥, 导入公钥后可以开始发送加密邮件。你可以在 [Actalis](https://www.actalis.it/) 申请为期一年的免费 S/MIME 证书, 为你邮件加密开启第一步, 请保存好申请到的证书 (.pfx文件)、密码以及CRP。
+安全多功能互联网邮件扩展 (S/MIME) 是基于 **PKI** 的符合 **X.509** 格式的非对称密钥协议，提供了数字签名、加密功能。发送邮件时，数字签名会以 `smime.p7s` 的附件跟随邮件发送，如GMail的网页端就支持验证签名，如果是加密邮件则整封邮件被加密后以 `smime.p7m` 的附件发送。双方互发信息之前，如果没有对方公钥那么无法加密邮件，需要先互相发送签名的邮件用以交换公钥，导入公钥后可以开始发送加密邮件。你可以在 [Actalis](https://www.actalis.it/) 申请为期一年的免费 S/MIME 证书，为你邮件加密开启第一步，请保存好申请到的证书 (.pfx文件)、密码以及CRP。
 
 
 ### OpenPGP {#openpgp}
 
-OpenPGP标准是一种非对称的非对称密钥协议, 提供了加密、签名等工程, OpenGPG是通过信任网络机制确保之间的密钥认证。相比于 S/MIME 而言, OpenGPG 在邮件方便被支持的更少, 比如Gmail可以在webmail中验证S/MIME签名, 但是并不支持 PGP/MIME。
+OpenPGP标准是一种非对称的非对称密钥协议，提供了加密、签名等工程，OpenGPG是通过信任网络机制确保之间的密钥认证。相比于 S/MIME 而言，OpenGPG 在邮件方便被支持的更少，比如Gmail可以在webmail中验证S/MIME签名，但是并不支持 PGP/MIME。
 
 ---
 

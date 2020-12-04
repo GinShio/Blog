@@ -17,6 +17,6 @@
     <pubDate>Fri, 20 Nov 2020 17:03:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/haskell_type_and_expr/</guid>
-    <description><![CDATA[类型系统的三个优点: 错误检查, 类型系统是对程序的一种限定, 人是很容易犯错的, 类型检查可以辅助用户检查程序中的类型是否正确, 帮助用户检查出大部]]></description>
+    <description><![CDATA[类型系统的三个优点: 错误检查 ，类型系统是对程序的一种限定，人是很容易犯错的，类型检查可以辅助用户检查程序中的类型是否正确，帮助用户检查出大部]]></description>
 </item></channel>
 </rss>

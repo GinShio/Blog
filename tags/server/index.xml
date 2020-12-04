@@ -10,13 +10,13 @@
     <pubDate>Mon, 16 Nov 2020 22:43:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/mail_server/</guid>
-    <description><![CDATA[搭建邮局服务器的想法之前一直都有, 不过一直没有尝试, 国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 postfix 和 dovecot 搭建, 尝试了大概3天被劝退了, 重新]]></description>
+    <description><![CDATA[搭建邮局服务器的想法之前一直都有，不过一直没有尝试，国庆的时候从阿里云换到了腾讯云的时候尝试直接使用 postfix 和 dovecot 搭建，尝试了大概3天被劝退了，重新]]></description>
 </item><item>
     <title>在服务器上部署一些服务</title>
     <link>https://blog.ginshio.org/2020/service/</link>
     <pubDate>Tue, 13 Oct 2020 20:16:00 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/service/</guid>
-    <description><![CDATA[个人使用的是腾讯云的轻量服务器, 系统镜像选择的是 Ubuntu 20.04, 搭建的服务有 博客 HUGO 、私有网盘 Nextcloud 以及 Git服务器 GitLab 一下服务搭建时, 域名统一使用 example.com, 请根据自己]]></description>
+    <description><![CDATA[个人使用的是腾讯云的轻量服务器，系统镜像选择的是 Ubuntu 20.04，搭建的服务有 博客 HUGO 、私有网盘 Nextcloud 以及 Git服务器 GitLab 一下服务搭建时，域名统一使用 e]]></description>
 </item></channel>
 </rss>
