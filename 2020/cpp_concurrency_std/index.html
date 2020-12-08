@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/cpp_concurrency_std/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-12-01T19:42:00+08:00" />
-<meta property="article:modified_time" content="2020-12-05T00:24:08+08:00" />
+<meta property="article:modified_time" content="2020-12-08T17:25:30+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -20,7 +20,7 @@
 <meta name="application-name" content="iris">
 <meta name="apple-mobile-web-app-title" content="iris"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2020/cpp_concurrency_std/" /><link rel="prev" href="https://blog.ginshio.org/2020/haskell_function/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2020/cpp_concurrency_std/" /><link rel="prev" href="https://blog.ginshio.org/2020/haskell_function/" /><link rel="next" href="https://blog.ginshio.org/2020/cpp_concurrency_atomic/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -30,7 +30,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/cpp_concurrency_std\/"
         },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "Concurrency, 笔记, 编程语言","wordcount":  7045 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/cpp_concurrency_std\/","datePublished": "2020-12-01T19:42:00+08:00","dateModified": "2020-12-05T00:24:08+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/blog.ginshio.org\/2020\/cpp_concurrency_std\/","datePublished": "2020-12-01T19:42:00+08:00","dateModified": "2020-12-08T17:25:30+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -810,7 +810,7 @@
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">half_an_hour</span> <span class="o">=</span> <span class="mi">30</span><span class="n">min</span><span class="p">;</span> <span class="c1">// 30分钟
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">five_seconds</span> <span class="o">=</span> <span class="mi">5</span><span class="n">s</span><span class="p">;</span> <span class="c1">// 5秒
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">one_second</span> <span class="o">=</span> <span class="mi">1000</span><span class="n">ms</span><span class="p">;</span> <span class="c1">// 1000毫秒
-</span><span class="c1"></span><span class="k">auto</span> <span class="n">ten_millis</span> <span class="o">=</span> <span class="mi">10u</span><span class="n">s</span><span class="p">;</span> <span class="c1">// 10微秒
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">ten_micros</span> <span class="o">=</span> <span class="mi">10u</span><span class="n">s</span><span class="p">;</span> <span class="c1">// 10微秒
 </span><span class="c1"></span><span class="k">auto</span> <span class="n">two_nanos</span> <span class="o">=</span> <span class="mi">2</span><span class="n">ns</span><span class="p">;</span> <span class="c1">// 2纳秒
 </span></code></pre></td></tr></table>
 </div>
@@ -852,7 +852,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-12-05</span>
+                <span>更新于 2020-12-08</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -873,7 +873,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2020/haskell_function/" class="prev" rel="prev" title="Haskell 入门 (2) – 函数"><i class="fas fa-angle-left fa-fw"></i>Haskell 入门 (2) – 函数</a></div>
+    <div class="post-nav"><a href="/2020/haskell_function/" class="prev" rel="prev" title="Haskell 入门 (2) – 函数"><i class="fas fa-angle-left fa-fw"></i>Haskell 入门 (2) – 函数</a>
+            <a href="/2020/cpp_concurrency_atomic/" class="next" rel="next" title="C&#43;&#43; Concurrency (2) – 原子操作">C&#43;&#43; Concurrency (2) – 原子操作<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="gitalk" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.

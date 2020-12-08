@@ -461,7 +461,7 @@ auto one_day = 24h; // 24小时
 auto half_an_hour = 30min; // 30分钟
 auto five_seconds = 5s; // 5秒
 auto one_second = 1000ms; // 1000毫秒
-auto ten_millis = 10us; // 10微秒
+auto ten_micros = 10us; // 10微秒
 auto two_nanos = 2ns; // 2纳秒
 ```
 
