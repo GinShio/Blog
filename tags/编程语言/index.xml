@@ -18,19 +18,5 @@
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/cpp_concurrency_std/</guid>
     <description><![CDATA[线程管理 创建线程 新的线程会在 ::std::thread (头文件 thread 中) 对象创建的时候被启动，在函数执行完毕后，该线程也就结束了，提供的函数对象会复制到新线程的存储空间]]></description>
-</item><item>
-    <title>Haskell 入门 (2) – 函数</title>
-    <link>https://blog.ginshio.org/2020/haskell_function/</link>
-    <pubDate>Sun, 22 Nov 2020 14:09:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/haskell_function/</guid>
-    <description><![CDATA[Haskell 中变量是不可变的, 当你定义一个变量之后, 它的值与类型就被固定了, 如果你重复定义, 那么编译时将会报错。如果你是在GHCi中写代码, GHCi更]]></description>
-</item><item>
-    <title>Haskell入门 (1) – 类型与表达式</title>
-    <link>https://blog.ginshio.org/2020/haskell_type_and_expr/</link>
-    <pubDate>Fri, 20 Nov 2020 17:03:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/haskell_type_and_expr/</guid>
-    <description><![CDATA[类型系统的三个优点: 错误检查 ，类型系统是对程序的一种限定，人是很容易犯错的，类型检查可以辅助用户检查程序中的类型是否正确，帮助用户检查出大部]]></description>
 </item></channel>
 </rss>
