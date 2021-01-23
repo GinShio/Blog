@@ -132,6 +132,17 @@ systemctl restart php7.4-fpm
 | 证书  | noreply@example.com  |
 | 密码  | YourPassword         |
 
+
+### Nextcloud 插件 {#nextcloud-插件}
+
+Nextcloud 不仅自带了很多功能，也提供了插件用于扩展功能，官方称作 Apps，以下个人推荐一些插件，欢迎补充
+
+-   **Announcement center** ：公告发布
+-   **Registration** ：注册功能
+-   **File access control** ：文件访问控制，可以添加规则来控制管理用户对文件的操作，参见 [工作流](https://nextcloud.com/workflow)
+-   **Music** ：音乐播放器
+-   **Full text search** ：全文搜索
+
 ---
 
 

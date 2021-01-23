@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/service/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-10-13T20:16:00+08:00" />
-<meta property="article:modified_time" content="2020-12-04T15:01:39+08:00" />
+<meta property="article:modified_time" content="2021-01-23T23:33:17+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/service\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  2484 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/service\/","datePublished": "2020-10-13T20:16:00+08:00","dateModified": "2020-12-04T15:01:39+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  2599 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/service\/","datePublished": "2020-10-13T20:16:00+08:00","dateModified": "2021-01-23T23:33:17+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -106,8 +106,8 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">在服务器上部署一些服务</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2484 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2599 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -120,6 +120,7 @@
         <li><a href="#nextcloud-依赖">Nextcloud 依赖</a></li>
         <li><a href="#nextcloud-安装">Nextcloud 安装</a></li>
         <li><a href="#nextcloud-开启邮件服务">Nextcloud 开启邮件服务</a></li>
+        <li><a href="#nextcloud-插件">Nextcloud 插件</a></li>
       </ul>
     </li>
     <li><a href="#gitlab">GitLab</a>
@@ -358,6 +359,15 @@ systemctl restart php7.4-fpm
 </tr>
 </tbody>
 </table>
+<h3 id="nextcloud-插件">Nextcloud 插件</h3>
+<p>Nextcloud 不仅自带了很多功能，也提供了插件用于扩展功能，官方称作 Apps，以下个人推荐一些插件，欢迎补充</p>
+<ul>
+<li><strong>Announcement center</strong> ：公告发布</li>
+<li><strong>Registration</strong> ：注册功能</li>
+<li><strong>File access control</strong> ：文件访问控制，可以添加规则来控制管理用户对文件的操作，参见 <a href="https://nextcloud.com/workflow" target="_blank" rel="noopener noreffer">工作流</a></li>
+<li><strong>Music</strong> ：音乐播放器</li>
+<li><strong>Full text search</strong> ：全文搜索</li>
+</ul>
 <hr>
 <h2 id="gitlab">GitLab</h2>
 <p>GitLab 是开源的基于git的 web <strong>DevOps生命周期工具</strong> ，提供了 <span class="underline">Git仓库</span> 、 <span class="underline">问题追踪</span> 和 <span class="underline">CI/CD</span> 等功能。分为社区版和企业版，使用相同内核，部分功能社区版没有提供。Gitlab 相较消耗资源，官方推荐的最低要求为 <strong>4C4G</strong> 可以最多支持500用户， <strong>8C8G</strong> 最多支持1000用户，具体的使用受到 <span class="underline">用户的活跃程度</span> 、 <span class="underline">CI/CD</span> 、 <span class="underline">修改大小</span> 等因素影响。</p>
@@ -741,7 +751,7 @@ cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-12-04</span>
+                <span>更新于 2021-01-23</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -770,7 +780,7 @@ cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings
             </noscript></div></article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.ginshio.org/" target="_blank">GinShio</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.ginshio.org/" target="_blank">GinShio</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
