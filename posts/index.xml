@@ -4,7 +4,14 @@
         <link>https://blog.ginshio.org/posts/</link>
         <description>所有文章 | iris</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 05 Dec 2020 17:46:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 16 Feb 2021 16:44:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Elixir学习笔记 001</title>
+    <link>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/</link>
+    <pubDate>Tue, 16 Feb 2021 16:44:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/</guid>
+    <description><![CDATA[好久没学习，随便写点东西，一直想学FP来着，不过之前 Haskell 整的有点难受，好难啊不太会，下次静下心来好好学一学吧，不过先试试 Erlang / Elixir ，听说也很难？ 至]]></description>
+</item><item>
     <title>C&#43;&#43; Concurrency (2) – 原子操作</title>
     <link>https://blog.ginshio.org/2020/cpp_concurrency_atomic/</link>
     <pubDate>Sat, 05 Dec 2020 17:46:00 &#43;0800</pubDate>
@@ -53,12 +60,5 @@
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_003/</guid>
     <description><![CDATA[基于DFA的模式匹配器的优化 NFA的重要状态 如果一个 NFA 状态有一个标号非 \(\varepsilon\) 的离开转换，那么我们称这个状态为 重要状态 (important state)。子集构造法在]]></description>
-</item><item>
-    <title>在服务器上部署一些服务</title>
-    <link>https://blog.ginshio.org/2020/service/</link>
-    <pubDate>Tue, 13 Oct 2020 20:16:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/service/</guid>
-    <description><![CDATA[个人使用的是腾讯云的轻量服务器，系统镜像选择的是 Ubuntu 20.04，搭建的服务有 博客 HUGO 、私有网盘 Nextcloud 以及 Git服务器 GitLab 一下服务搭建时，域名统一使用 e]]></description>
 </item></channel>
 </rss>

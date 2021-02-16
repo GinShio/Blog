@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Elixir学习笔记 001 - iris</title><meta name="Description" content="GinShio | Elixir学习笔记 (001)"><meta property="og:title" content="Elixir学习笔记 001" />
+<meta property="og:description" content="GinShio | Elixir学习笔记 (001)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/" />
+<meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
+<meta property="article:published_time" content="2021-02-16T16:44:00+08:00" />
+<meta property="article:modified_time" content="2021-02-17T01:35:13+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
+
+<meta name="twitter:title" content="Elixir学习笔记 001"/>
+<meta name="twitter:description" content="GinShio | Elixir学习笔记 (001)"/>
+<meta name="application-name" content="iris">
+<meta name="apple-mobile-web-app-title" content="iris"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/" /><link rel="prev" href="https://blog.ginshio.org/2020/cpp_concurrency_atomic/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Elixir学习笔记 001",
+        "inLanguage": "",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.ginshio.org\/2021\/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001\/"
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "FP, Elixir, 编程语言","wordcount":  5999 ,
+        "url": "https:\/\/blog.ginshio.org\/2021\/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001\/","datePublished": "2021-02-16T16:44:00+08:00","dateModified": "2021-02-17T01:35:13+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
+                "@type": "Person",
+                "name": "GinShio"
+            },"description": "GinShio | Elixir学习笔记 (001)"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/links/"><i class="fa fa-user-friends faa-wrench"></i> 友人帐 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/links/" title=""><i class="fa fa-user-friends faa-wrench"></i>友人帐</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Elixir学习笔记 001</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/erlangelixir/"><i class="far fa-folder fa-fw"></i>Erlang⁄Elixir</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-02-16">2021-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5999 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本类型">基本类型</a></li>
+    <li><a href="#基本操作">基本操作</a>
+      <ul>
+        <li><a href="#算术运算">算术运算</a></li>
+        <li><a href="#逻辑运算">逻辑运算</a></li>
+        <li><a href="#关系运算">关系运算</a></li>
+      </ul>
+    </li>
+    <li><a href="#集合">集合</a>
+      <ul>
+        <li><a href="#列表--list">列表 (List)</a></li>
+        <li><a href="#元组--tuple">元组 (Tuple)</a></li>
+        <li><a href="#关键字列表--keyword-list">关键字列表 (Keyword List)</a></li>
+        <li><a href="#映射--map">映射 (Map)</a></li>
+      </ul>
+    </li>
+    <li><a href="#语句">语句</a>
+      <ul>
+        <li><a href="#模式匹配">模式匹配</a>
+          <ul>
+            <li><a href="#匹配">匹配</a></li>
+            <li><a href="#pin">Pin</a></li>
+          </ul>
+        </li>
+        <li><a href="#控制语句">控制语句</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数">函数</a>
+      <ul>
+        <li><a href="#匿名函数">匿名函数</a></li>
+        <li><a href="#命名函数">命名函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#模块">模块</a>
+      <ul>
+        <li><a href="#结构体--struct">结构体 (Struct)</a></li>
+        <li><a href="#组合--composition">组合 (Composition)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>好久没学习，随便写点东西，一直想学FP来着，不过之前 Haskell 整的有点难受，好难啊不太会，下次静下心来好好学一学吧，不过先试试 <strong>Erlang</strong> / <strong>Elixir</strong> ，听说也很难？</p>
+<p>至于原因，莫名喜欢 Erlang，不知道为什么哈哈哈哈，得知有 Elixir 这个披着 Ruby 皮、用着 Beam 的 Lisp 觉得还不错？毕竟 <strong>Lisp</strong> 大法好！！ (虽然我不会 lisp) 不过 Elixir 名字好听 Logo 也好看</p>
+<figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Official%5FElixir%5Flogo.png"/> 
+</figure>
+
+<p>好了，前置吐槽就这么多吧，希望可以静下心好好学学 Elixir，呃，我也不知道可不可以啦，但是如果对 Elixir 感兴趣的话可以在 <a href="https://elixirschool.com/en/" target="_blank" rel="noopener noreffer">Elixir School</a> 尝试学习一下，我也才开始从这里开始学习</p>
+<hr>
+<h2 id="基本类型">基本类型</h2>
+<ul>
+<li>
+<p>整数类型：在 Erlang 和 Elixir 中，整数类型都是高精度类型，不区分类型所占的字节，有点类似 Python 中的整数
+Elixir 支持 二(0b)、八(0o)、十、十六(0x)进制的整数字面量，使用起来十分方便</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="mi">255</span> <span class="c1"># 十进制整数 255</span>
+<span class="mb">0b10001000</span> <span class="c1"># 二进制整数 136</span>
+<span class="mo">0o7654321</span> <span class="c1"># 八进制整数 2054353</span>
+<span class="mh">0xFFFF</span> <span class="c1"># 十六进制整数 65535</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>浮点类型：嗯，它是 IEEE 754，好了就这样吧，介绍完了</p>
+</li>
+<li>
+<p>布尔类型：true 和 false，不过有一点需要注意，在 Elixir 中除了 false 和 nil 之外的所有值都为 true</p>
+</li>
+<li>
+<p>原子类型：名字和代表的值相同的常量，有点像 Ruby 和 Lisp 中的 Symbol。BTW 布尔值 true / false 实际对应的是原子 :true 和 :false</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="ss">:foo</span> <span class="c1"># 符号，名为 :foo</span>
+<span class="ss">:foo</span> <span class="o">==</span> <span class="ss">:bar</span> <span class="c1"># false</span>
+<span class="n">is_atom</span><span class="p">(</span><span class="n">true</span><span class="p">)</span> <span class="c1"># true</span>
+<span class="n">is_boolean</span><span class="p">(</span><span class="ss">:false</span><span class="p">)</span> <span class="c1"># true</span>
+<span class="n">true</span> <span class="o">==</span> <span class="ss">:true</span> <span class="c1"># true</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>大写字母开始的别名也是原子，模块名 (module) 也是原子，当然也可以使用原子直接引用 Erlang 标准库的模块</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">is_atom</span><span class="p">(</span><span class="nc">MyAtom</span><span class="p">)</span> <span class="c1"># true</span>
+<span class="n">is_atom</span><span class="p">(</span><span class="nc">MyApp.MyModule</span><span class="p">)</span> <span class="c1"># true</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>字符串：这是一个 UTF-8 编码的字符串，用双引号包住，并且支持换行与转义字符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="s2">&#34;Hello&#34;</span> <span class="c1"># &#34;Hello&#34;</span>
+<span class="s2">&#34;这是一个</span><span class="se">\n</span><span class="s2">String&#34;</span> <span class="c1">#这是一个\nString</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当然要讲讲字符串的简单操作了，插值可以将变量插入到字符串中，这个操作有点类似 Ruby 和 Shell 中的操作；字符串拼接操作，可以将两个字符串拼接在一起</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;GinShio&#34;</span>
+<span class="s2">&#34;Hello </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#34;</span> <span class="c1"># &#34;Hello GinShio&#34;</span>
+<span class="s2">&#34;Hello&#34;</span> <span class="o">&lt;&gt;</span> <span class="s2">&#34; &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">name</span> <span class="c1"># &#34;Hello GinShio&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h2 id="基本操作">基本操作</h2>
+<h3 id="算术运算">算术运算</h3>
+<p>Elixir 支持基本的 加 (+) 、 减 (-) 、 乘 (*) 、 除 (/)，还有 <code>div</code> 和 <code>mod</code> 两个函数用于整数的除法和取模运算</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="c1"># 5</span>
+<span class="mi">6</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1"># 5</span>
+<span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span> <span class="c1"># 6</span>
+<span class="mi">9</span> <span class="o">/</span> <span class="mi">3</span> <span class="c1"># 3.0</span>
+<span class="mi">9</span> <span class="o">/</span> <span class="mi">2</span> <span class="c1"># 4.5</span>
+<span class="n">div</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 4</span>
+<span class="n">rem</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="逻辑运算">逻辑运算</h3>
+<p>Elixir 支持逻辑运算，和其他语言差不多的 和(<code>&amp;&amp;</code>) 、 或(<code>||</code>) 、 非(<code>!</code>)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="o">-</span><span class="mi">20</span> <span class="o">||</span> <span class="n">true</span> <span class="c1"># -20</span>
+<span class="n">false</span> <span class="o">||</span> <span class="mi">42</span> <span class="c1"># 42</span>
+<span class="n">nil</span> <span class="o">||</span> <span class="n">true</span> <span class="c1"># true</span>
+<span class="mi">42</span> <span class="o">&amp;&amp;</span> <span class="n">true</span> <span class="c1"># true</span>
+<span class="mi">42</span> <span class="o">&amp;&amp;</span> <span class="n">false</span> <span class="c1"># false</span>
+<span class="mi">42</span> <span class="o">&amp;&amp;</span> <span class="n">nil</span> <span class="c1"># nil</span>
+<span class="n">true</span> <span class="o">&amp;&amp;</span> <span class="n">false</span> <span class="c1"># false</span>
+<span class="o">!</span><span class="mi">42</span> <span class="c1"># false</span>
+<span class="o">!</span><span class="n">false</span> <span class="c1"># true</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当然还有三个操作符 <code>and</code> 、 <code>or</code> 和 <code>not</code> ，不过这些操作符的地一个参数必须是布尔类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">true</span> <span class="n">and</span> <span class="mi">42</span> <span class="c1"># 42</span>
+<span class="c1"># 42 and true # (BadBooleanError) expected a boolean on left-side of &#34;and&#34;</span>
+<span class="n">not</span> <span class="n">true</span> <span class="c1"># false</span>
+<span class="n">true</span> <span class="n">and</span> <span class="n">nil</span> <span class="c1"># nil</span>
+<span class="c1"># nil and true # (BadBooleanError) expected a boolean on left-side of &#34;and&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="关系运算">关系运算</h3>
+<p>常见的关系运算 <code>==</code> 、 <code>!=</code> 、 <code>&lt;=</code> 、 <code>&lt;</code> 、 <code>&gt;=</code> 和 <code>&gt;</code> ，这与其他语言中的关系运算符相似</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="c1"># false</span>
+<span class="mi">1</span> <span class="o">!=</span> <span class="mi">2</span> <span class="c1"># true</span>
+<span class="mi">2</span> <span class="o">==</span> <span class="mi">2</span> <span class="c1"># true</span>
+<span class="mi">2</span> <span class="o">&lt;=</span> <span class="mi">3</span> <span class="c1"># true</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Elixir 还提供了两个关系运算符 <code>===</code> 和 <code>!==</code> ，它们类似于 JS 中的严格比较</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="mi">2</span> <span class="o">==</span> <span class="mf">2.0</span> <span class="c1"># true</span>
+<span class="mi">3</span> <span class="o">==</span> <span class="mf">3.0000000000000000000000001</span> <span class="c1"># true</span>
+<span class="mi">2</span> <span class="o">===</span> <span class="mf">2.0</span> <span class="c1"># false</span>
+<span class="mi">2</span> <span class="o">===</span> <span class="mi">2</span> <span class="c1"># true</span>
+<span class="mi">3</span> <span class="o">===</span> <span class="mf">3.0000000000000000000000001</span> <span class="c1"># false</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Elixir 中有一个很重要的特性，任意类型之间都可以比较，因为类型都有一个优先级，支持它们之间互相比较</p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><strong>number &lt; atom &lt; reference &lt; function &lt; port &lt; pid &lt; tuple &lt; map &lt; list &lt; bitstring</strong></div>
+        </div>
+    </div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="mi">3</span> <span class="o">&lt;</span> <span class="ss">:foo</span> <span class="c1"># true</span>
+<span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="ss">:world</span><span class="p">}</span> <span class="o">&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># false</span>
+<span class="mi">9</span> <span class="o">&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># false</span>
+<span class="ss">:bar</span> <span class="o">&lt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># true</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="集合">集合</h2>
+<h3 id="列表--list">列表 (List)</h3>
+<p>列表是简单的集合，可以包含不同的数据类型，并且可以包含相同的值，内部使用 <strong>链表</strong> 实现，头插相较于尾插更快，获取长度也是 O(n) 的</p>
+<p>头插使用 <code>|</code> (cons) 进行操作，可以将元素插入到列表的头部，而拼接操作 <code>++</code> 可以将两个列表拼接成一个，而减法操作 <code>--</code> 是基于严格比较的依照顺序的删除元素</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">[</span><span class="mf">3.14</span><span class="p">,</span> <span class="ss">:pie</span><span class="p">,</span> <span class="s2">&#34;Apple&#34;</span><span class="p">]</span> <span class="c1"># [3.14, :pie, &#34;Apple&#34;]</span>
+<span class="p">[</span><span class="s2">&#34;π&#34;</span> <span class="o">|</span> <span class="p">[</span><span class="mf">3.14</span><span class="p">,</span> <span class="ss">:pie</span><span class="p">]]</span> <span class="c1"># [&#34;π&#34;, 3.14, :pie]</span>
+<span class="p">[[</span><span class="ss">:foo</span><span class="p">,</span> <span class="s2">&#34;hello&#34;</span><span class="p">]</span> <span class="o">|</span> <span class="p">[</span><span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="ss">:world</span><span class="p">]]</span> <span class="c1"># [[:foo, &#34;hello&#34;], &#34;bar&#34;, :world]</span>
+<span class="p">[</span><span class="mf">3.14</span><span class="p">,</span> <span class="ss">:pie</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="s2">&#34;Cherry&#34;</span><span class="p">]</span> <span class="c1"># [3.14, :pie, &#34;Cherry&#34;]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">--</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># [2, 3]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">--</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="c1"># [2]</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">--</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">]</span> <span class="c1"># [2]</span>
+<span class="p">[</span><span class="mf">2.0</span><span class="p">]</span> <span class="o">--</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">]</span> <span class="c1"># []</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>列表可以选取 <strong>头</strong> (head) 和 <strong>尾</strong> (tail)，头是列表的第一个元素，尾是除去第一个元素剩下的列表，也可以和 cons 结合起来获取列表的头部与尾部</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">hd</span> <span class="p">[</span><span class="mf">3.14</span><span class="p">,</span> <span class="ss">:pie</span><span class="p">,</span> <span class="s2">&#34;Apple&#34;</span><span class="p">]</span> <span class="c1"># 3.14</span>
+<span class="n">tl</span> <span class="p">[</span><span class="mf">3.14</span><span class="p">,</span> <span class="ss">:pie</span><span class="p">,</span> <span class="s2">&#34;Apple&#34;</span><span class="p">]</span> <span class="c1"># [:pie, &#34;Apple&#34;]</span>
+<span class="p">[</span><span class="n">head</span> <span class="o">|</span> <span class="n">tail</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.14</span><span class="p">,</span> <span class="ss">:pie</span><span class="p">,</span> <span class="s2">&#34;Apple&#34;</span><span class="p">]</span>
+<span class="c1"># head = 3.14</span>
+<span class="c1"># tail = [:pie, &#34;Apple&#34;]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="元组--tuple">元组 (Tuple)</h3>
+<p>元组与列表类似，不过元组使用的是连续内存实现，获取元组的长度很快，但修改很麻烦 (新的元组必须重新在内存中拷贝一份)</p>
+<p>元组相较于列表没有那么多操作，元组更倾向于做一个不可变的数据类型，我们常常把二元组称为 <strong>pair</strong> ，三元组称为 <strong>triple</strong> ，而其他长度为n的元组称其为 N 元组 (n-tuple)，这个概念在其他语言中也很常见</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="mf">3.14</span><span class="p">,</span> <span class="ss">:pie</span><span class="p">,</span> <span class="s2">&#34;Apple&#34;</span><span class="p">}</span> <span class="c1"># {3.14, :pie, &#34;Apple&#34;}</span>
+<span class="p">{</span><span class="ss">:foo</span><span class="p">,</span> <span class="s2">&#34;bar&#34;</span><span class="p">}</span> <span class="c1"># pair</span>
+<span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">,</span> <span class="ss">:test</span><span class="p">}</span> <span class="c1"># triple</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="关键字列表--keyword-list">关键字列表 (Keyword List)</h3>
+<p>keywords 是一种特殊的列表，列表的元素是 pair，且 pair 的第一个元素必须是原子，其他行为与列表完全一致，不过 keywords 的语法可以不用写 pair 那么复杂，而是简便的 <code>key: value</code> 形式即可</p>
+<p>keywords 有一些特殊的特性</p>
+<ol>
+<li>键是 <strong>原子的</strong></li>
+<li>键是 <strong>有序的</strong> ，即定义后顺序不会改变</li>
+<li>键 <strong>不必唯一</strong></li>
+</ol>
+<!--listend-->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">[</span><span class="ss">foo</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="ss">hello</span><span class="p">:</span> <span class="s2">&#34;world&#34;</span><span class="p">,</span> <span class="ss">pi</span><span class="p">:</span> <span class="mf">3.14</span><span class="p">]</span> <span class="c1"># [foo: &#34;bar&#34;, hello: &#34;world&#34;, pi: 3.14]</span>
+<span class="p">[{</span><span class="ss">:foo</span><span class="p">,</span> <span class="s2">&#34;bar&#34;</span><span class="p">},</span> <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="s2">&#34;world&#34;</span><span class="p">},</span> <span class="p">{</span><span class="ss">:pi</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">}]</span> <span class="c1"># [foo: &#34;bar&#34;, hello: &#34;world&#34;, pi: 3.14]</span>
+<span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span><span class="ss">foo</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="ss">foo</span><span class="p">:</span> <span class="s2">&#34;baz&#34;</span><span class="p">,</span> <span class="ss">hello</span><span class="p">:</span> <span class="s2">&#34;world&#34;</span><span class="p">]</span>
+<span class="n">keywords</span><span class="p">[</span><span class="ss">:foo</span><span class="p">]</span> <span class="c1"># &#34;bar&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="映射--map">映射 (Map)</h3>
+<p>映射也是键值对结构，与 keywords 类似，可以任意类型的数据为键，数据并不严格排序，但是键不能重复，重复的键会覆盖已有的键值对</p>
+<p>map 的语法相对麻烦些，以 <code>key =&gt; value</code> 形式书写，好消息是如果键全是原子那么可以与 keywords 的语法类似。map可以像C++一样可以使用 <code>operator[]</code> 读取值，也可以使用 <code>operator.</code> 来读取值 (只可以用于读取原子键)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">map1</span> <span class="o">=</span> <span class="p">%{</span><span class="ss">:foo</span> <span class="o">=&gt;</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="s2">&#34;hello&#34;</span> <span class="o">=&gt;</span> <span class="ss">:world</span><span class="p">}</span>
+<span class="p">%{</span><span class="ss">foo</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="ss">hello</span><span class="p">:</span> <span class="s2">&#34;world&#34;</span><span class="p">}</span> <span class="o">==</span> <span class="p">%{</span><span class="ss">:foo</span> <span class="o">=&gt;</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="ss">:hello</span> <span class="o">=&gt;</span> <span class="s2">&#34;world&#34;</span><span class="p">}</span> <span class="c1"># true</span>
+<span class="n">map2</span> <span class="o">=</span> <span class="p">%{</span><span class="ss">foo</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="ss">hello</span><span class="p">:</span> <span class="s2">&#34;world&#34;</span><span class="p">}</span>
+<span class="n">map1</span><span class="p">[</span><span class="s2">&#34;hello&#34;</span><span class="p">]</span> <span class="c1"># :world</span>
+<span class="c1"># map1.hello # (KeyError) key :hello not found</span>
+<span class="n">map1</span><span class="o">.</span><span class="n">foo</span> <span class="c1"># &#34;bar&#34;</span>
+<span class="n">map2</span><span class="p">[</span><span class="ss">:foo</span><span class="p">]</span> <span class="c1"># &#34;bar&#34;</span>
+<span class="n">map2</span><span class="o">.</span><span class="n">hello</span> <span class="c1"># &#34;world&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>map 提供了 <code>operator|</code> 来更新一个键值对，但仅限于已存在的键值对，如果要添加一个新的键值对则需要用到 <strong>put</strong> 方法，当然 put 也可以用于更新</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">map3</span> <span class="o">=</span> <span class="p">%{</span><span class="ss">foo</span><span class="p">:</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="ss">hello</span><span class="p">:</span> <span class="s2">&#34;world&#34;</span><span class="p">}</span>
+<span class="p">%{</span><span class="n">map3</span> <span class="o">|</span> <span class="ss">foo</span><span class="p">:</span> <span class="s2">&#34;baz&#34;</span><span class="p">}</span> <span class="c1"># %{foo: &#34;baz&#34;, hello: &#34;world&#34;}</span>
+<span class="c1"># %{map3 | a: &#34;b&#34;} # (KeyError) key :a not found</span>
+<span class="nc">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">map3</span><span class="p">,</span> <span class="ss">:a</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">)</span> <span class="c1"># %{a: &#34;b&#34;, foo: &#34;bar&#34;, hello: &#34;world&#34;}</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="语句">语句</h2>
+<p>小小的吐槽下，本身想把模式匹配放在控制语句之后，毕竟控制语句如果学过其他热门语言肯定是认识的，不过看到 case 时，它依赖模式匹配，好吧&hellip;那就先记模式匹配的笔记，好了，开始吧</p>
+<h3 id="模式匹配">模式匹配</h3>
+<p>模式匹配经常被用于函数、case等地方，用的还是蛮多的，且方便，模式匹配中必须穷尽示例用以匹配，如果默认值需要使用变量 <strong>_</strong> 来接收默认情况，类似 C 语言的 switch 语句中的 default</p>
+<h4 id="匹配">匹配</h4>
+<p>我们一直没有将 <code>=</code> 这个其他语言中的赋值符号，在 Erlang/Elixir 中这不止是赋值，准确的将，这是 <strong>匹配</strong> ，接下来我们写一点 Erlang 的语句来体验一下匹配，不要害怕，这和我们已经学会的 Elixir 几乎一样，如果要一直学习 Elixir 的话 Erlang 是逃不掉的，Lisp 不知道能逃掉不</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-erlang" data-lang="erlang"><span class="nv">Var</span> <span class="o">=</span> <span class="mi">10</span><span class="p">.</span> <span class="c">% 将 var 与 10 匹配
+</span><span class="c">% Var = 5. % exception error: no match of right hand side value 5
+</span><span class="c"></span><span class="mi">10</span> <span class="o">=</span> <span class="nv">Var</span><span class="p">.</span> <span class="c">% 10
+</span><span class="c">% 5 = Var. % exception error: no match of right hand side value 10
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Erlang 中可以看到变量 Var 与 10 匹配，匹配之后便不能与 5 匹配了，与 5 匹配将出现错误，这与 Elixir 中是类似的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># [1, 2, 3]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span> <span class="c1"># [1, 2, 3]</span>
+<span class="c1"># [] = list # (MatchError) no match of right hand side value: [1, 2, 3]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>现在想想之前学习 list 时使用的 <code>operator|</code> ，取 head 和 tail 时其实也是匹配，匹配时对于不关注的变量可以使用变量 <strong>_</strong> 替代</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">[</span><span class="n">head</span> <span class="o">|</span> <span class="n">tail</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># haed = 1, tail = [2, 3]</span>
+<span class="p">[</span><span class="n">head</span> <span class="o">|</span> <span class="n">_</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="c1"># head = 1</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">value</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&#34;Successful&#34;</span><span class="p">}</span> <span class="c1"># value = &#34;Successful&#34;</span>
+<span class="c1"># {:ok, value} = {:error, &#34;Error&#34;} # (MatchError) no match of right hand side value</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="pin">Pin</h4>
+<p>Elixir 在匹配时，匹配操作会同时做赋值操作，但 Erlang 中不会，我们可以使用 <strong>Pin</strong> 操作符 <code>^</code> 来保持与 Erlang 中行为的一致</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">var</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># OK, var = 10</span>
+<span class="o">^</span><span class="n">var</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># NO, (MatchError) no match of right hand side value</span>
+<span class="n">var</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># OK, var = 5</span>
+<span class="mi">5</span> <span class="o">=</span> <span class="n">var</span> <span class="c1"># OK, match</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>pin 也可以被用于常见的数据结构中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="o">^</span><span class="n">x</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span> <span class="c1"># x = 2</span>
+<span class="c1"># {^x, x} = {2, 1} # (MatchError) no match of right hand side value</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span>
+<span class="p">%{</span><span class="o">^</span><span class="n">key</span> <span class="o">=&gt;</span> <span class="n">value</span><span class="p">}</span> <span class="o">=</span> <span class="p">%{</span><span class="s2">&#34;hello&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;world&#34;</span><span class="p">}</span> <span class="c1"># value = &#34;world&#34;</span>
+<span class="c1"># %{^key =&gt; value} = %{:hello =&gt; &#34;world&#34;} # (MatchError) no match of right hand side value</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="控制语句">控制语句</h3>
+<p>控制语句主要分为3种</p>
+<ul>
+<li>
+<p><strong>if / unless</strong> ：
+if 与 unless 是条件语句，与其他语言的 if 语句类似，if 与 unless 语义相反，在 Elixir 中都是宏定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">if</span> <span class="nc">String</span><span class="o">.</span><span class="n">valid?</span><span class="p">(</span><span class="s2">&#34;Hello&#34;</span><span class="p">)</span> <span class="n">do</span>
+  <span class="s2">&#34;Valid String&#34;</span>
+<span class="n">else</span>
+  <span class="s2">&#34;Invalid String&#34;</span>
+<span class="n">end</span>
+<span class="c1"># &#34;Valid String&#34;</span>
+<span class="n">unless</span> <span class="nc">String</span><span class="o">.</span><span class="n">valid?</span><span class="p">(</span><span class="s2">&#34;World&#34;</span><span class="p">)</span> <span class="n">do</span>
+  <span class="s2">&#34;Invalid String&#34;</span>
+<span class="n">else</span>
+  <span class="s2">&#34;Valid String&#34;</span>
+<span class="n">end</span>
+<span class="c1"># &#34;Valid String&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>case</strong> ：
+case 是一种匹配语句，基于模式匹配</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">case</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&#34;Hello World&#34;</span><span class="p">}</span> <span class="n">do</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="n">result</span>
+  <span class="p">{</span><span class="ss">:error</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="s2">&#34;Uh oh!&#34;</span>
+  <span class="n">_</span> <span class="o">-&gt;</span> <span class="s2">&#34;Catch all&#34;</span>
+<span class="n">end</span>
+<span class="c1"># Hello World</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>cond</strong> ：当我们需要匹配条件而不是值的时候，可以使用 cond，它的语法很像 case，按顺序匹配每一个条件，必须有一个为真的表达式，所以一般在结尾设置 <code>true</code> 匹配，有些像 Haskell 中的 <strong>守卫</strong> 表达式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">cond</span> <span class="n">do</span>
+  <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">5</span> <span class="o">-&gt;</span> <span class="s2">&#34;2+2==5&#34;</span>
+  <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">8</span> <span class="o">-&gt;</span> <span class="s2">&#34;2*2==8&#34;</span>
+  <span class="n">true</span> <span class="o">-&gt;</span> <span class="s2">&#34;All Error&#34;</span>
+<span class="n">end</span>
+<span class="c1"># &#34;All Error&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>with</strong> ：
+with 类似于 case 语句，适用于嵌套的 case 语句，按照顺序一次匹配表达式，当失败时会返回对应的返回值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">user</span> <span class="o">=</span> <span class="p">%{</span><span class="ss">first</span><span class="p">:</span> <span class="s2">&#34;Xin&#34;</span><span class="p">,</span> <span class="ss">last</span><span class="p">:</span> <span class="s2">&#34;Liu&#34;</span><span class="p">}</span>
+<span class="n">with</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">first</span><span class="p">}</span> <span class="o">&lt;-</span> <span class="nc">Map</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="ss">:first</span><span class="p">),</span>
+     <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">last</span><span class="p">}</span> <span class="o">&lt;-</span> <span class="nc">Map</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="ss">:last</span><span class="p">)</span> <span class="n">do</span>
+  <span class="n">last</span> <span class="o">&lt;&gt;</span> <span class="s2">&#34;, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">first</span>
+<span class="n">end</span>
+<span class="c1"># &#34;Liu, Xin&#34;</span>
+<span class="n">with</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">first</span><span class="p">}</span> <span class="o">&lt;-</span> <span class="nc">Map</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="ss">:first</span><span class="p">),</span>
+     <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">hello</span><span class="p">}</span> <span class="o">&lt;-</span> <span class="nc">Map</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">)</span> <span class="n">do</span>
+  <span class="n">hello</span> <span class="o">&lt;&gt;</span> <span class="s2">&#34;, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">first</span>
+<span class="n">end</span>
+<span class="c1"># :error</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>with 支持 else 语句，当 with 出现不匹配时，将其返回值在 else 中进行匹配，else 是类似 case 语法的模式匹配，需要穷尽匹配</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">with</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">number</span><span class="p">}</span> <span class="o">&lt;-</span> <span class="nc">Map</span><span class="o">.</span><span class="n">fetch</span><span class="p">(%{</span><span class="ss">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">b</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span> <span class="ss">:a</span><span class="p">),</span>
+     <span class="n">true</span> <span class="o">&lt;-</span> <span class="n">is_even</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="n">do</span>
+  <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&#34;</span><span class="si">#{</span><span class="n">number</span><span class="si">}</span><span class="s2"> divided by 2 is </span><span class="si">#{</span><span class="n">div</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span>
+  <span class="ss">:even</span>
+<span class="n">else</span>
+  <span class="ss">:error</span> <span class="o">-&gt;</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;We don&#39;t have this item in map&#34;</span><span class="p">)</span>
+  <span class="ss">:error</span>
+  <span class="n">_</span> <span class="o">-&gt;</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;It&#39;s odd&#34;</span><span class="p">)</span>
+  <span class="ss">:odd</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h2 id="函数">函数</h2>
+<h3 id="匿名函数">匿名函数</h3>
+<p>先说说匿名函数吧，lambda 表达式是函数式编程语言的基础， <strong>lambda 演算</strong> 与 <strong>图灵机</strong> 堪称计算机程序设计语言的两大支柱，这里我们不学习那么深入，有兴趣嘛那就加油吧，我们简单说说 Elixir 中的 lambda，Elixir 中函数是一等公民，它们可以像变量一样使用与传递，威力十足！</p>
+<p>简单的语法即 <code>fn (params) -&gt; statements</code> ，这便会定义一个匿名函数，这个函数可以赋值给一个对象，或者传递进一个参数中；如果需要使用，则需要 <code>name.(param)</code> 来调用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">sum</span> <span class="o">=</span> <span class="n">fn</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="n">end</span>
+<span class="n">sum</span><span class="o">.</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># 5</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>很简单吧，这更像是一个完整的函数定义，还有一种做法是像 Shell 中使用函数参数，即使用参数的顺序来确定形式参数的使用；这就让 lambda 简单多了，当然也更难理解参数的含义了。我们在此简单的说明下， <code>&amp;()</code> 这是一个匿名函数， <code>&amp;1</code> 这是这个函数接收的第一个参数，以此类推</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">sum</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">+</span> <span class="ni">&amp;2</span><span class="p">)</span>
+<span class="n">sum</span><span class="o">.</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># 5</span>
+<span class="c1"># sum.(&#34;String&#34;, 666) # 错误: (ArithmeticError) bad argument in arithmetic expression: &#34;String&#34; + 666</span>
+<span class="c1"># sum.(2, 3, 4) # 错误: (BadArityError) &amp;:erlang.+/2 with arity 2 called with 3 arguments</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>模式匹配可以用在函数中，我们先来看看匿名函数中的模式匹配，和 case 差不多，不过这是个函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">handle_result</span> <span class="o">=</span> <span class="n">fn</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;Handling result...&#34;</span><span class="p">)</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">_</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;This would be never run as previous will be matched beforehand.&#34;</span><span class="p">)</span>
+  <span class="p">{</span><span class="ss">:error</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;An error has occurred!&#34;</span><span class="p">)</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="命名函数">命名函数</h3>
+<p>命名函数一般被定义在模块中，使用关键字 <strong>def</strong> 定义，如果函数体与头在一行的使用可以使用 <code>do:</code> 来简单的书写</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyModule</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello1</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">do</span>
+    <span class="s2">&#34;Hello&#34;</span> <span class="o">&lt;&gt;</span> <span class="s2">&#34;, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">name</span>
+  <span class="n">end</span>
+  <span class="n">def</span> <span class="n">hello2</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello&#34;</span> <span class="o">&lt;&gt;</span> <span class="s2">&#34;. &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">name</span>
+<span class="n">end</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello1</span><span class="p">(</span><span class="s2">&#34;GinShio&#34;</span><span class="p">)</span> <span class="c1"># Hello, GinShio</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello2</span><span class="p">(</span><span class="s2">&#34;GinShio&#34;</span><span class="p">)</span> <span class="c1"># Hello. GinShio</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>函数式语言往往也可以进行函数重载，不过他们一般只按照函数参数的个数进行重载，这在 Elixir 中也适用，在 Elixir 中函数的全程一般是 <code>name/param_num</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyModule</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello, Everybody&#34;</span> <span class="c1"># hello/0</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello&#34;</span> <span class="o">&lt;&gt;</span> <span class="s2">&#34;, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">name</span> <span class="c1"># hello/1</span>
+<span class="n">end</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">()</span> <span class="c1"># &#34;Hello, Everybody&#34;</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;iris&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hello, iris&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>命名函数当然也可以很好的支持模式匹配，这样我们递归的实现会很简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyLength</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">of</span><span class="p">([]),</span> <span class="ss">do</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="n">def</span> <span class="n">of</span><span class="p">([</span><span class="n">_</span> <span class="o">|</span> <span class="n">tail</span><span class="p">]),</span> <span class="ss">do</span><span class="p">:</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">of</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+<span class="n">end</span>
+<span class="nc">MyLength</span><span class="o">.</span><span class="n">of</span><span class="p">([])</span> <span class="c1"># 0</span>
+<span class="nc">MyLength</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="c1"># 5</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当然模式匹配与 Map 结合在一起，示例函数 hello/1 展示了只关注指定键的用法，当然我们也可以在关注指定键时接受整个 Map，即用模式匹配来接受</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyModule</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(%{</span><span class="ss">name</span><span class="p">:</span> <span class="n">person</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">person</span>
+  <span class="n">def</span> <span class="n">all_map</span><span class="p">(%{</span><span class="ss">name</span><span class="p">:</span> <span class="n">person_name</span><span class="p">}</span> <span class="o">=</span> <span class="n">person</span><span class="p">)</span> <span class="n">do</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&#34;Hello, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">person_name</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">inspect</span> <span class="n">person</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">(%{</span><span class="ss">name</span><span class="p">:</span> <span class="s2">&#34;Fred&#34;</span><span class="p">,</span> <span class="ss">age</span><span class="p">:</span> <span class="mi">95</span><span class="p">})</span> <span class="c1"># &#34;Hello, Fred&#34;</span>
+<span class="c1"># MyModule.hello(%{age: 95}) # (FunctionClauseError) no function clause matching in MyModule.hello/1</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">all_map</span><span class="p">(%{</span><span class="ss">name</span><span class="p">:</span> <span class="s2">&#34;Fred&#34;</span><span class="p">,</span> <span class="ss">age</span><span class="p">:</span> <span class="mi">95</span><span class="p">})</span>
+<span class="c1"># Hello, Fred</span>
+<span class="c1"># %{age: 95, name: &#34;Fred&#34;}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p><strong>Private</strong> (私有函数)：如果你不希望模块外调用某些函数，你可以使用 <code>defp</code> 来定义私有函数，这样定义的函数只能在模块内使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyFibonacci</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">fib</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="n">def</span> <span class="n">fib</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">def</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">fib</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+  <span class="n">defp</span> <span class="n">fib</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">ans</span>
+  <span class="n">defp</span> <span class="n">fib</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">fib</span><span class="p">(</span><span class="n">ans</span> <span class="o">+</span> <span class="n">pre</span><span class="p">,</span> <span class="n">ans</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">end</span>
+<span class="nc">MyFibonacci</span><span class="o">.</span><span class="n">fib</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># 55</span>
+<span class="nc">MyFibonacci</span><span class="o">.</span><span class="n">fib</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># 354224848179261915075</span>
+<span class="c1"># MyFibonacci.fib(1, 1, 5) # (UndefinedFunctionError) function MyFibonacci.fib/3 is undefined or private.</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>Pipe</strong> <code>|&gt;</code> (管道操作)：没错你没听错，就是 pipe，有没有想起使用 *nix 时使用的管道，Elixir 中的 pipe 与 *nix 中的类似，都是将前一个调用的结果传递给后一个，这就很爽了，我们来对比一下，管道简直是嵌套调用的救星</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">(</span><span class="n">baz</span><span class="p">(</span><span class="n">do_something</span><span class="p">())))</span> <span class="c1"># Normal</span>
+<span class="n">do_something</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="n">baz</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="n">bar</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="n">foo</span><span class="p">()</span> <span class="c1"># Pipe</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>那如果参数数量大于1怎么办，这些问题不大，带上参数就行，从 Pipe 来的参数优先入栈</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="s2">&#34;Hello, World&#34;</span> <span class="o">|&gt;</span> <span class="nc">String</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="c1"># [&#34;Hello,&#34;, &#34;World&#34;]</span>
+<span class="s2">&#34;Hello, World&#34;</span> <span class="o">|&gt;</span> <span class="nc">String</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span> <span class="c1"># [&#34;Hello&#34;, &#34;World&#34;]</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>Guard</strong> (守卫表达式)：可以被用于 <code>函数</code> 和 <code>case</code> 当中，比方说我们现在有两个签名相同的函数 <code>hello/1</code> ，我们需要通过 guard 来确定应该调用哪个函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyModule</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">when</span> <span class="n">is_list</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">names</span> <span class="o">|&gt;</span> <span class="nc">Enum</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="n">hello</span><span class="p">()</span>
+  <span class="n">end</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">when</span> <span class="n">is_binary</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">do</span>
+    <span class="s2">&#34;Hello, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">names</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;GinShio&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hello, GinShio&#34;</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">([</span><span class="s2">&#34;GinShio&#34;</span><span class="p">,</span> <span class="s2">&#34;iris&#34;</span><span class="p">])</span> <span class="c1"># &#34;Hello, GinShio, iris&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们试试在 case 中使用 guard，更多用法请查看 <a href="https://hexdocs.pm/elixir/guards.html#list-of-allowed-expressions" target="_blank" rel="noopener noreffer">Guard clauses</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">case</span> <span class="n">x</span> <span class="n">do</span>
+  <span class="mi">1</span> <span class="o">-&gt;</span> <span class="ss">:one</span>
+  <span class="mi">2</span> <span class="o">-&gt;</span> <span class="ss">:two</span>
+  <span class="n">n</span> <span class="n">when</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="n">and</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">-&gt;</span> <span class="ss">:larger_than_two</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>Default</strong> (默认参数)：我们可以为函数设置一些默认值，使用语法 <code>argument \\ value</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">MyModule</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">language_code</span> <span class="p">\\</span> <span class="s2">&#34;en&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">phrase</span><span class="p">(</span><span class="n">language_code</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="n">name</span>
+  <span class="n">defp</span> <span class="n">phrase</span><span class="p">(</span><span class="s2">&#34;en&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello, &#34;</span>
+  <span class="n">defp</span> <span class="n">phrase</span><span class="p">(</span><span class="s2">&#34;es&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hola, &#34;</span>
+  <span class="n">defp</span> <span class="n">phrase</span><span class="p">(</span><span class="s2">&#34;zh&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;你好，&#34;</span>
+<span class="n">end</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;iris&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hello, iris&#34;</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;iris&#34;</span><span class="p">,</span> <span class="s2">&#34;en&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hello, iris&#34;</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;iris&#34;</span><span class="p">,</span> <span class="s2">&#34;es&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hola, iris&#34;</span>
+<span class="nc">MyModule</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;iris&#34;</span><span class="p">,</span> <span class="s2">&#34;zh&#34;</span><span class="p">)</span> <span class="c1"># &#34;你好，iris&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>不过我们在默认参数与守卫表达式一起使用时，往往会出现一些问题，先来看看问题代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Greeter</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">language_code</span> <span class="p">\\</span> <span class="s2">&#34;en&#34;</span><span class="p">)</span> <span class="n">when</span> <span class="n">is_list</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">names</span> <span class="o">|&gt;</span> <span class="nc">Enum</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="n">hello</span><span class="p">()</span>
+  <span class="n">end</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">language_code</span> <span class="p">\\</span> <span class="s2">&#34;en&#34;</span><span class="p">)</span> <span class="n">when</span> <span class="n">is_binary</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">phrase</span><span class="p">(</span><span class="n">language_code</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="n">names</span>
+  <span class="n">end</span>
+  <span class="n">defp</span> <span class="n">phrase</span><span class="p">(</span><span class="s2">&#34;en&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello, &#34;</span>
+  <span class="n">defp</span> <span class="n">phrase</span><span class="p">(</span><span class="s2">&#34;es&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hola, &#34;</span>
+<span class="n">end</span>
+<span class="c1"># (CompileError): def hello/2 defines defaults multiple times.</span>
+<span class="c1"># Elixir allows defaults to be declared once per definition. Instead of:</span>
+<span class="c1">#     def foo(:first_clause, b \\ :default) do ... end</span>
+<span class="c1">#     def foo(:second_clause, b \\ :default) do ... end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>有多个函数同时匹配时，默认参数这种模式很容易混淆，它不被 Elixir 喜欢，至于解决方法嘛还是有的，我们需要先声明这个函数，有点像 C++ 使用默认参数的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Greeter</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">language_code</span> <span class="p">\\</span> <span class="s2">&#34;en&#34;</span><span class="p">)</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">language_code</span><span class="p">)</span> <span class="n">when</span> <span class="n">is_list</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">names</span> <span class="o">|&gt;</span> <span class="nc">Enum</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="n">hello</span><span class="p">()</span>
+  <span class="n">end</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">language_code</span><span class="p">)</span> <span class="n">when</span> <span class="n">is_binary</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">phrase</span><span class="p">(</span><span class="n">language_code</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="n">names</span>
+  <span class="n">end</span>
+  <span class="n">defp</span> <span class="n">phrase</span><span class="p">(</span><span class="s2">&#34;en&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello, &#34;</span>
+  <span class="n">defp</span> <span class="n">phrase</span><span class="p">(</span><span class="s2">&#34;es&#34;</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hola, &#34;</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<hr>
+<h2 id="模块">模块</h2>
+<p>之前函数的时候也简单的见过模块了，Elixir 允许嵌套模块，这样可以轻松定义多层命名空间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Greeter.Greeting</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">morning</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Good morning, </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#34;</span>
+  <span class="n">def</span> <span class="n">evening</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Good evening, </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="n">end</span>
+<span class="nc">Greeter.Greeting</span><span class="o">.</span><span class="n">morning</span><span class="p">(</span><span class="s2">&#34;iris&#34;</span><span class="p">)</span> <span class="c1"># &#34;Good morning, iris&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>模块通常还会有一些属性，这些属性通常被用作常量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="na">@greeting</span> <span class="s2">&#34;Hello&#34;</span>
+  <span class="n">def</span> <span class="n">greeting</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">do</span>
+    <span class="sx">~s(</span><span class="si">#{</span><span class="na">@greeting</span><span class="si">}</span><span class="sx">, </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="sx">.)</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="nc">Example</span><span class="o">.</span><span class="n">greeting</span><span class="p">(</span><span class="s2">&#34;iris&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hello, iris.&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当然还有一些的属性，用于保留功能，比如 <code>moduledoc</code> 和 <code>doc</code> 作为文档，文档可以用 <strong>ExDoc</strong> 生成 HTML，而 <strong>ExMark</strong> 是一个 Markdown 分析器，最终我们可以使用 mix 来生成文档</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="na">@moduledoc</span> <span class="sh">&#34;&#34;&#34;
+</span><span class="sh">  This is the Hello module.
+</span><span class="sh">  &#34;&#34;&#34;</span>
+  <span class="na">@moduledoc</span> <span class="ss">since</span><span class="p">:</span> <span class="s2">&#34;1.0.0&#34;</span>
+
+  <span class="na">@doc</span> <span class="sh">&#34;&#34;&#34;
+</span><span class="sh">  Says hello to the given `name`.
+</span><span class="sh">  Returns `:ok`.
+</span><span class="sh">  </span><span class="err">##</span><span class="sh"> Examples
+</span><span class="sh">      iex&gt; Example.world(:john)
+</span><span class="sh">      :ok
+</span><span class="sh">  &#34;&#34;&#34;</span>
+  <span class="na">@doc</span> <span class="ss">since</span><span class="p">:</span> <span class="s2">&#34;1.3.0&#34;</span>
+  <span class="n">def</span> <span class="n">world</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="n">do</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;hello </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="结构体--struct">结构体 (Struct)</h3>
+<p>在 Elixir 中结构体 Struct 是 Map 的特殊形式，它的键是预定义的，一般都有默认值，不过有个限制，Struct 只能定义在 Module 中，一般一个模块定义一个结构体</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example.User</span> <span class="n">do</span>
+  <span class="n">defstruct</span> <span class="ss">name</span><span class="p">:</span> <span class="s2">&#34;GinShio&#34;</span><span class="p">,</span> <span class="ss">roles</span><span class="p">:</span> <span class="p">[]</span>
+<span class="n">end</span>
+<span class="n">default</span> <span class="o">=</span> <span class="p">%</span><span class="nc">Example.User</span><span class="p">{}</span> <span class="c1"># %Example.User{name: &#34;GinShio&#34;, roles: []}</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="p">%{</span><span class="n">default</span> <span class="o">|</span> <span class="ss">name</span><span class="p">:</span> <span class="s2">&#34;iris&#34;</span><span class="p">}</span> <span class="c1"># %Example.User{name: &#34;iris&#34;, roles: []}</span>
+<span class="n">inspect</span><span class="p">(</span><span class="n">default</span><span class="p">)</span> <span class="c1"># &#34;%Example.User{name: \&#34;GinShio\&#34;, roles: []}&#34;</span>
+<span class="p">%</span><span class="nc">Example.User</span><span class="p">{</span><span class="ss">name</span><span class="p">:</span> <span class="s2">&#34;iris&#34;</span><span class="p">}</span> <span class="o">=</span> <span class="n">iris</span> <span class="c1"># pattern</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到 inspect 展示了 Struct 中的所有字段，如果我们想排除保护字段，可以使用 <code>@derive</code> 注解来实现这一功能</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example.User</span> <span class="n">do</span>
+  <span class="na">@derive</span> <span class="p">{</span><span class="nc">Inspect</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="p">[</span><span class="ss">:name</span><span class="p">]}</span> <span class="c1"># 只打印 :only 中的字段</span>
+  <span class="c1"># @derive {Inspect, except: [:roles]} # 排除 :except 中的字段</span>
+  <span class="n">defstruct</span> <span class="ss">name</span><span class="p">:</span> <span class="n">nil</span><span class="p">,</span> <span class="ss">roles</span><span class="p">:</span> <span class="p">[]</span>
+<span class="n">end</span>
+<span class="n">inspect</span><span class="p">(</span><span class="n">default</span><span class="p">)</span> <span class="c1"># &#34;#Example.User&lt;name: \&#34;GinShio\&#34;, ...&gt;&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="组合--composition">组合 (Composition)</h3>
+<p>Elixir 以组合的方式为模块添加全新的功能，并且也为我们提供了多种访问其他模块的方式</p>
+<ul>
+<li>
+<p><strong>alias</strong> (别名)：通过别名访问其他模块，当别名有冲突时还可以使用 <code>as</code> 来设置别名解决冲突，当然也可以一次指定多个别名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example.Source</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hello, </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="s2">!&#34;</span>
+<span class="n">end</span>
+<span class="n">defmodule</span> <span class="nc">Example.Alias</span> <span class="n">do</span>
+  <span class="n">alias</span> <span class="nc">Example.Source</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">Source</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;FooBar&#34;</span><span class="p">)</span>
+<span class="n">end</span>
+<span class="n">defmodule</span> <span class="nc">Example.AliasMulti</span> <span class="n">do</span>
+  <span class="n">alias</span> <span class="nc">Example</span><span class="o">.</span><span class="p">{</span><span class="nc">Source</span><span class="p">,</span> <span class="nc">Alias</span><span class="p">}</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">Source</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;Src&#34;</span><span class="p">)</span>
+<span class="n">end</span>
+<span class="n">defmodule</span> <span class="nc">Other.Alias</span> <span class="n">do</span>
+  <span class="n">alias</span> <span class="nc">Example.Alias</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="nc">ExAlias</span>
+  <span class="n">def</span> <span class="n">hello</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">ExAlias</span><span class="o">.</span><span class="n">hello</span><span class="p">()</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>import</strong> (导入)：我们可以从其他模块导入函数，不过这有些污染名称空间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="c1"># last([1, 2, 3]) # (CompileError): undefined function last/1</span>
+<span class="nc">List</span><span class="o">.</span><span class="n">last</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># 3</span>
+<span class="n">import</span> <span class="nc">List</span>
+<span class="n">last</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># 3</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>好消息是，就像之前学习 Struct 时控制 inspect 输出一样， <code>:only</code> 与 <code>:except</code> 是我们控制 import 导出的好帮手</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">import</span> <span class="nc">List</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="p">[</span><span class="ss">last</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span> <span class="c1"># only import `last/1&#39;</span>
+<span class="n">first</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># (CompileError): undefined function first/1</span>
+<span class="n">last</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># 3</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们如果想导出所有的函数呢，这样太麻烦了吧，好在 Elixir 提供了一种特殊的方法， <code>:functions</code> 和 <code>:macros</code> 分别代表函数和宏，不过不能除外就是了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">import</span> <span class="nc">List</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="ss">:functions</span> <span class="c1"># 导出 List 中的所有函数</span>
+<span class="n">import</span> <span class="nc">List</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="ss">:macros</span> <span class="c1"># 导出 List 中的所有宏</span>
+<span class="c1"># import List, except: :functions</span>
+<span class="c1"># (CompileError): invalid :except option for import, expected value to be a list literal, got: :functions</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>require</strong> (请求)：这是一个只对宏有效的指令，虽然不知道宏是什么，不过只要知道它只 import 模块中的宏而不是函数，目前来说就行了</p>
+</li>
+<li>
+<p><strong>use</strong> (使用)：这是一个修改当前模块的指令，我们在调用 <code>use</code> 时会执行指定模块中所定义的 <code>__using__</code> 宏进行回调，当然现在不懂没关系，在学习了宏之后再来学习这里吧 (反正我也不懂</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Hello</span> <span class="n">do</span>
+  <span class="n">defmacro</span> <span class="n">__using__</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">quote</span> <span class="n">do</span>
+      <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&#34;Hi, </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#34;</span>
+    <span class="n">end</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">Hello</span>
+<span class="n">end</span>
+<span class="nc">Example</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;GinShio&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hi, GinShio&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>非常的神奇，当然宏还是可以带参数的，比如下面这个从 Elixir School 抄来的示例 (这个更看不懂了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Hello</span> <span class="n">do</span>
+  <span class="n">defmacro</span> <span class="n">__using__</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">greeting</span> <span class="o">=</span> <span class="nc">Keyword</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="ss">:greeting</span><span class="p">,</span> <span class="s2">&#34;Hi&#34;</span><span class="p">)</span>
+    <span class="n">quote</span> <span class="n">do</span>
+      <span class="n">def</span> <span class="n">hello</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">unquote</span><span class="p">(</span><span class="n">greeting</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="s2">&#34;, &#34;</span> <span class="o">&lt;&gt;</span> <span class="n">name</span>
+    <span class="n">end</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="n">defmodule</span> <span class="nc">Example.En</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">Hello</span>
+<span class="n">end</span>
+<span class="n">defmodule</span> <span class="nc">Example.Es</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">Hello</span><span class="p">,</span> <span class="ss">greeting</span><span class="p">:</span> <span class="s2">&#34;Hola&#34;</span>
+<span class="n">end</span>
+<span class="nc">Example.En</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;GinShio&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hi, GinShio&#34;</span>
+<span class="nc">Example.Es</span><span class="o">.</span><span class="n">hello</span><span class="p">(</span><span class="s2">&#34;GinShio&#34;</span><span class="p">)</span> <span class="c1"># &#34;Hola, GinShio&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-02-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/" data-title="Elixir学习笔记 001" data-hashtags="FP,Elixir,编程语言"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/" data-hashtag="FP"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/" data-title="Elixir学习笔记 001"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/" data-title="Elixir学习笔记 001"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/" data-title="Elixir学习笔记 001"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/fp/">FP</a>,&nbsp;<a href="/tags/elixir/">Elixir</a>,&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/cpp_concurrency_atomic/" class="prev" rel="prev" title="C&#43;&#43; Concurrency (2) – 原子操作"><i class="fas fa-angle-left fa-fw"></i>C&#43;&#43; Concurrency (2) – 原子操作</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.ginshio.org/" target="_blank">GinShio</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["GinShio"],"clientID":"1ede37779b82f8d8a39e","clientSecret":"4dc775e507be852aa2805c6643495ed7178b7826","id":"2021-02-16T16:44:00+08:00","owner":"GinShio","repo":"Blog","title":"Elixir学习笔记 001"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-172480612-1', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-172480612-1" async></script></body>
+</html>
