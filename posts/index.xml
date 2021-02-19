@@ -4,7 +4,14 @@
         <link>https://blog.ginshio.org/posts/</link>
         <description>所有文章 | iris</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 16 Feb 2021 16:44:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 19 Feb 2021 14:31:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Elixir学习笔记 002</title>
+    <link>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_002/</link>
+    <pubDate>Fri, 19 Feb 2021 14:31:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_002/</guid>
+    <description><![CDATA[模块 之前函数的时候也简单的见过模块了，Elixir 允许嵌套模块，这样可以轻松定义多层命名空间 1 2 3 4 5 defmodule Greeter.Greeting do def morning(name), do: &#34;Good morning, #{name}&#34; def evening(name), do: &#34;Good evening, #{name}&#34; end Greeter.Greeting.morning(&#34;iris&#34;) # &#34;Good]]></description>
+</item><item>
     <title>Elixir学习笔记 001</title>
     <link>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/</link>
     <pubDate>Tue, 16 Feb 2021 16:44:00 &#43;0800</pubDate>
@@ -53,12 +60,5 @@
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_004/</guid>
     <description><![CDATA[程序设计语言构造的语法可以使用 上下文无关文法 或者 BNF (巴库斯-瑙尔范式) 表示法来描述，文法为语言设计者和编译器编写者提供了很大便利: 文法给出了]]></description>
-</item><item>
-    <title>编译原理 (3) – 词法分析2</title>
-    <link>https://blog.ginshio.org/2020/compilerprinciple_003/</link>
-    <pubDate>Sat, 17 Oct 2020 22:33:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/compilerprinciple_003/</guid>
-    <description><![CDATA[基于DFA的模式匹配器的优化 NFA的重要状态 如果一个 NFA 状态有一个标号非 \(\varepsilon\) 的离开转换，那么我们称这个状态为 重要状态 (important state)。子集构造法在]]></description>
 </item></channel>
 </rss>
