@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Elixir学习笔记 003 - iris</title><meta name="Description" content="GinShio | Elixir学习笔记 003"><meta property="og:title" content="Elixir学习笔记 003" />
+<meta property="og:description" content="GinShio | Elixir学习笔记 003" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/" />
+<meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
+<meta property="article:published_time" content="2021-02-21T20:25:00+08:00" />
+<meta property="article:modified_time" content="2021-02-21T20:25:42+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
+
+<meta name="twitter:title" content="Elixir学习笔记 003"/>
+<meta name="twitter:description" content="GinShio | Elixir学习笔记 003"/>
+<meta name="application-name" content="iris">
+<meta name="apple-mobile-web-app-title" content="iris"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/" /><link rel="prev" href="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_002/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><meta name="google-site-verification" content="3DtrOvI7RNNMN-_7YHUNA58kZEgHJ5Qxh4nPZaCmLHk" /><meta name="msvalidate.01" content="62D7DBD61D766DFB9EFEBFD7930695B8" /><meta name="baidu-site-verification" content="tSdWk62L4KBQIcLW" /><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Elixir学习笔记 003",
+        "inLanguage": "",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.ginshio.org\/2021\/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003\/"
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "FP, Elixir, 编程语言","wordcount":  4382 ,
+        "url": "https:\/\/blog.ginshio.org\/2021\/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003\/","datePublished": "2021-02-21T20:25:00+08:00","dateModified": "2021-02-21T20:25:42+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
+                "@type": "Person",
+                "name": "GinShio"
+            },"description": "GinShio | Elixir学习笔记 003"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"><i class="fa fa-archive faa-wrench"></i> 归档 </a><a class="menu-item" href="/tags/"><i class="fa fa-tag faa-wrench"></i> 标签 </a><a class="menu-item" href="/categories/"><i class="fa fa-folder-open faa-wrench"></i> 分类 </a><a class="menu-item" href="/about/"><i class="fa fa-info-circle faa-wrench"></i> 关于 </a><a class="menu-item" href="/links/"><i class="fa fa-user-friends faa-wrench"></i> 友人帐 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="iris"><span class="header-title-pre"><i class='fas fa-terminal fa-fw'></i></span>iris</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title=""><i class="fa fa-archive faa-wrench"></i>归档</a><a class="menu-item" href="/tags/" title=""><i class="fa fa-tag faa-wrench"></i>标签</a><a class="menu-item" href="/categories/" title=""><i class="fa fa-folder-open faa-wrench"></i>分类</a><a class="menu-item" href="/about/" title=""><i class="fa fa-info-circle faa-wrench"></i>关于</a><a class="menu-item" href="/links/" title=""><i class="fa fa-user-friends faa-wrench"></i>友人帐</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content always-active" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Elixir学习笔记 003</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/erlangelixir/"><i class="far fa-folder fa-fw"></i>Erlang⁄Elixir</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-02-21">2021-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4382 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#mix">Mix</a>
+      <ul>
+        <li><a href="#管理依赖-环境">管理依赖、环境</a></li>
+        <li><a href="#测试">测试</a></li>
+      </ul>
+    </li>
+    <li><a href="#与-erlang-互操作">与 Erlang 互操作</a></li>
+    <li><a href="#错误处理">错误处理</a>
+      <ul>
+        <li><a href="#raise">raise</a></li>
+        <li><a href="#throw">throw</a></li>
+        <li><a href="#exiting">Exiting</a></li>
+        <li><a href="#new-errors">New Errors</a></li>
+      </ul>
+    </li>
+    <li><a href="#并发">并发</a>
+      <ul>
+        <li><a href="#进程">进程</a>
+          <ul>
+            <li><a href="#消息传递">消息传递</a></li>
+            <li><a href="#进程链接">进程链接</a></li>
+            <li><a href="#进程监控">进程监控</a></li>
+          </ul>
+        </li>
+        <li><a href="#promise-future">Promise/Future</a></li>
+        <li><a href="#genserver">GenServer</a></li>
+        <li><a href="#otp-supervisors">OTP Supervisors</a>
+          <ul>
+            <li><a href="#子进程-specification">子进程 Specification</a></li>
+            <li><a href="#dynamicsupervisor">DynamicSupervisor</a></li>
+            <li><a href="#task-supervisor">Task Supervisor</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="mix">Mix</h2>
+<p>Mix 是 Elixir 社区开发的集包管理、依赖管理、构建工具于一身的开发工具，扩展性极好，功能强大，自带对 Erlang 的支持，可以类比 Golang 自带的 go，详细的使用方式请参考 <code>mix help</code> 以及 <a href="https://hexdocs.pm/mix/Mix.html" target="_blank" rel="noopener noreffer">mix</a></p>
+<p>我们如果需要创建一个新项目，使用 <code>mix new</code> 命令即可，详细使用方法可以使用 <strong>mix help new</strong> 查看，对于新建项目，mix 会很友好的创建一系列文件 (其中还包含 .gitignore)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">mix new example
+</code></pre></td></tr></table>
+</div>
+</div><p>我们目前只需要关注其中的 <strong>mix.exs</strong> 就行了，它包含了配置应用、依赖、环境信息、版本等功能， <code>project</code> 函数设置项目相关信息， <code>application</code> 函数在生产应用文件的时候会用到， <code>deps</code> 函数则是定义项目的依赖项</p>
+<h3 id="管理依赖-环境">管理依赖、环境</h3>
+<p>我们需要把所需的依赖全部列入 deps 中，deps 返回一个列表，每一项依赖都写在元组中，格式如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="n">app</span><span class="p">,</span> <span class="n">requirement</span><span class="p">}</span>
+<span class="p">{</span><span class="n">app</span><span class="p">,</span> <span class="n">opts</span><span class="p">}</span>
+<span class="p">{</span><span class="n">app</span><span class="p">,</span> <span class="n">requirement</span><span class="p">,</span> <span class="n">opts</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>app</code> 是一个原子，是依赖项的名称</li>
+<li><code>requirement</code> 是一个字符串或正则表达式，用以设定版本</li>
+<li><code>opts</code> 是一个 keyword list，设置依赖相关操作</li>
+</ul>
+<p>下面列出常用的添加依赖方式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="ss">:plug</span><span class="p">,</span> <span class="s2">&#34;&gt;= 0.4.0&#34;</span><span class="p">},</span> <span class="c1"># 从 hex.pm 安装版本大于等于 0.4.0 的依赖</span>
+<span class="p">{</span><span class="ss">:gettext</span><span class="p">,</span> <span class="ss">git</span><span class="p">:</span> <span class="s2">&#34;https://github.com/elixir-lang/gettext.git&#34;</span><span class="p">,</span> <span class="ss">tag</span><span class="p">:</span> <span class="s2">&#34;0.1&#34;</span><span class="p">},</span> <span class="c1"># 从指定git仓库下载依赖</span>
+<span class="p">{</span><span class="ss">:local_dep</span><span class="p">,</span> <span class="ss">path</span><span class="p">:</span> <span class="s2">&#34;/path/to/local/deps&#34;</span><span class="p">},</span> <span class="c1"># 本地依赖项</span>
+<span class="p">{</span><span class="ss">:telemetry</span><span class="p">,</span> <span class="s2">&#34;~&gt; 0.4&#34;</span><span class="p">},</span> <span class="c1"># 从 hex.pm 安装版本 0.4 的依赖项</span>
+<span class="p">{</span><span class="ss">:phoenix_view</span><span class="p">,</span> <span class="ss">github</span><span class="p">:</span> <span class="s2">&#34;phoenixframework/phoenix_view&#34;</span><span class="p">,</span> <span class="ss">branch</span><span class="p">:</span> <span class="s2">&#34;master&#34;</span><span class="p">},</span> <span class="c1"># 从 github 下载依赖 master 分支</span>
+<span class="p">{</span><span class="ss">:cowboy</span><span class="p">,</span> <span class="s2">&#34;~&gt; 1.0&#34;</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="p">[</span><span class="ss">:dev</span><span class="p">,</span> <span class="ss">:test</span><span class="p">]},</span> <span class="c1"># 安装依赖，并只在 dev 与 tst 环境启用</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当依赖项写好之后，我们只需要执行命令获取依赖就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">mix deps.get
+</code></pre></td></tr></table>
+</div>
+</div><p>至于环境，mix 默认支持三种</p>
+<ul>
+<li><code>:dev</code> 开发环境，默认的环境</li>
+<li><code>:test</code> 测试环境，使用 mix test</li>
+<li><code>:prod</code> 生产环境，把应用上线到生产环境下的配置项</li>
+</ul>
+<p>可以写一个 mix.env 文件，来让 mix 从中获取环境，也可以在命令行中使用 <strong>MIX_ENV</strong> 来配置环境</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">MIX_ENV</span><span class="o">=</span>prod mix compile
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="测试">测试</h3>
+<p>Elixir 社区提供了相当多的工具，其中之前讲过了文档使用的 <strong>ExDoc</strong> ，今天我们主要说一说测试工具 <strong>ExUnit</strong></p>
+<p>测试是通过 Elixir 脚本来执行的，所以测试文件的后缀必须是 <strong>.exs</strong> ，在测试之前需要使用 <code>ExUnit.start()</code> 启动 ExUnit (一般 mix 中的 <code>test/test_helper.exs</code> 已经帮我们做了这一步)。当执行 <code>mix test</code> 时，就开始运行项目测试了，测试时除了 case 之外，还会执行文档测试</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="c1"># test/example_test.exs</span>
+<span class="n">defmodule</span> <span class="nc">ExampleTest</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">ExUnit.Case</span>
+  <span class="n">doctest</span> <span class="nc">Example</span>
+  <span class="n">test</span> <span class="s2">&#34;greets the world&#34;</span> <span class="n">do</span>
+    <span class="n">assert</span> <span class="nc">Example</span><span class="o">.</span><span class="n">hello</span><span class="p">()</span> <span class="o">==</span> <span class="ss">:world</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>断言 (assert) 一般用于测试中检查表达式的值是否为真，表达式为假是则会抛出异常，测试失败，下面我们让表达式为假看看测试结果</li>
+</ul>
+<!--listend-->
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">  1) test greets the world (ExampleTest)
+     test/example_test.exs:4
+     Assertion with != failed, both sides are exactly equal
+     code: assert Example.hello() != :world
+     left: :world
+     stacktrace:
+       test/example_test.exs:5: (test)
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>refute 与 assert 的关系就像 unless 与 if，所以它们正好是一对语义相反的断言</li>
+<li>assert_raise 是错误处理中断言某个错误是否被抛出，而 assert_receive 则是并发当中断言小时是否被发送</li>
+<li>capture_io 和 capture_log 都是检查应用是否正确输出，不过 <code>_io</code> 检查的是IO输出， <code>_log</code> 检查的是logger输出</li>
+</ul>
+<hr>
+<h2 id="与-erlang-互操作">与 Erlang 互操作</h2>
+<p>Elixir 构建于 BEAM (Erlang VM) 之上，可以直接使用 Erlang 大量的库。Erlang 的模块用小写的原子变量表示，比如 <code>:os</code> 和 <code>:timer</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="c1"># 使用 Erlang 的模块计算函数运行时间</span>
+<span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">time</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="n">do</span>
+    <span class="p">{</span><span class="n">time</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:timer</span><span class="o">.</span><span class="n">tc</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;Time: </span><span class="si">#{</span><span class="n">time</span><span class="si">}</span><span class="s2"> μs</span><span class="se">\n</span><span class="s2">Result: </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="nc">Example</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">*</span> <span class="ni">&amp;1</span> <span class="o">*</span> <span class="ni">&amp;1</span><span class="p">),</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
+<span class="c1"># Time: 9 μs</span>
+<span class="c1"># Result: 1000000</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>至于 Erlang 的第三方模块，我们使用 mix 管理，如果模块不在 <a href="https://hex.pm/" target="_blank" rel="noopener noreffer">hex</a> 中，我们可以将依赖的 git 仓库添加进来，之后就可以愉快的使用这些模块了</p>
+<p>需要注意的是，有一些小坑需要注意，比如字符串, Elixir 的字符串是 UTF-8 编码的二进制数据，而 Erlang 的是字符列表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">is_list</span><span class="p">(</span><span class="s1">&#39;Example&#39;</span><span class="p">)</span> <span class="c1"># true</span>
+<span class="n">is_list</span><span class="p">(</span><span class="s2">&#34;Example&#34;</span><span class="p">)</span> <span class="c1"># false</span>
+<span class="n">is_binary</span><span class="p">(</span><span class="s2">&#34;Example&#34;</span><span class="p">)</span> <span class="c1"># true</span>
+<span class="p">&lt;&lt;</span><span class="s2">&#34;Example&#34;</span><span class="p">&gt;&gt;</span> <span class="o">===</span> <span class="s2">&#34;Example&#34;</span> <span class="c1"># true</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-erlang" data-lang="erlang"><span class="nb">is_list</span><span class="p">(</span><span class="n">&#39;Example&#39;</span><span class="p">).</span> <span class="c">%% false
+</span><span class="c"></span><span class="nb">is_list</span><span class="p">(</span><span class="s">&#34;Example&#34;</span><span class="p">).</span> <span class="c">%% true
+</span><span class="c"></span><span class="nb">is_binary</span><span class="p">(</span><span class="s">&#34;Example&#34;</span><span class="p">).</span> <span class="c">%% false
+</span><span class="c"></span><span class="nb">is_binary</span><span class="p">(</span><span class="o">&lt;&lt;</span><span class="s">&#34;Example&#34;</span><span class="o">&gt;&gt;</span><span class="p">).</span> <span class="c">%% true
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="错误处理">错误处理</h2>
+<p>Elixir 通常会返回 <code>{:ok, result}</code> 或 <code>{:error, reason}</code> 来表示错误，或者抛出异常，Elixir 社区在返回错误方面有一些约定</p>
+<ul>
+<li>对于那些作为一个函数功能相关的错误，这个函数应当相应地返回元组表示错误，如用户输入了一个错误的日期类型值</li>
+<li>对于那些和函数功能无关的错误，则需要抛出异常，如无法正确解析配置的参数</li>
+</ul>
+<p>通常一些公开的 API 中会有一个带感叹号的版本，这些函数返回一个未封包的结果，或者抛出异常</p>
+<h3 id="raise">raise</h3>
+<p>在学习如何处理异常之前，我们应该学习如何产生一个错误，最简单的方式就是 <code>raise</code> ，它接收错误消息，并产生一个错误；对于产生的错误，我们使用 <code>try/rescue</code> 与模式匹配来处理</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">try</span> <span class="n">do</span>
+  <span class="n">if</span> <span class="n">elixir</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">raise</span> <span class="s2">&#34;Oh NO!!!&#34;</span> <span class="c1"># (RuntimeError) Oh NO!!!</span>
+  <span class="c1"># (ArgumentError) the argument value is invalid</span>
+  <span class="n">raise</span> <span class="nc">ArgumentError</span><span class="p">,</span> <span class="ss">message</span><span class="p">:</span> <span class="s2">&#34;the argument value is invalid&#34;</span>
+<span class="n">rescue</span>
+  <span class="n">e</span> <span class="n">in</span> <span class="nc">RuntimeError</span> <span class="o">-&gt;</span> <span class="s2">&#34;A Runtime Error occurred: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&#34;</span>
+  <span class="n">e</span> <span class="n">in</span> <span class="nc">ArgumentError</span> <span class="o">-&gt;</span> <span class="s2">&#34;An Argument Error occurred: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对于无论是否产生错误，都需要在 <code>try/rescue</code> 之后进行的操作，我们使用 <strong>after</strong> 来执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">try</span> <span class="n">do</span>
+  <span class="n">if</span> <span class="n">elixir</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">raise</span> <span class="s2">&#34;Oh NO!!!&#34;</span>
+<span class="n">rescue</span>
+  <span class="n">e</span> <span class="n">in</span> <span class="nc">RuntimeError</span> <span class="o">-&gt;</span> <span class="s2">&#34;A Runtime Error occurred: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="n">after</span>
+  <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;The End!!!&#34;</span><span class="p">)</span>
+<span class="n">end</span>
+<span class="c1"># when elixir==true:</span>
+<span class="c1">#     The End!!!</span>
+<span class="c1">#     &#34;A Runtime Error occurred: Oh NO!!!&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这种情况比较常见的用法是关闭文件、连接等（突然怀念 RAII</p>
+<h3 id="throw">throw</h3>
+<p>感觉遇到了老熟人， <code>throw</code> 和 <code>try/catch</code> ，这种错误处理可以直接抛出一个值，并从当前执行的流程中退出，catch 可以直接使用这个抛出的值，不过在 Elixir 新代码中用的很少了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">try</span> <span class="n">do</span>
+  <span class="n">for</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="n">do</span>
+    <span class="n">if</span> <span class="n">rem</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">throw</span> <span class="n">x</span>
+  <span class="n">end</span>
+<span class="n">catch</span>
+  <span class="n">x</span> <span class="o">-&gt;</span> <span class="s2">&#34;Caught: </span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span>
+<span class="n">end</span>
+<span class="c1"># &#34;Caught: 3&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="exiting">Exiting</h3>
+<p>Exiting 是 Elixir 提供的最后一种产生错误的方式，产生退出信号直接挂掉，这是 Elixir 容错机制的一部分</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">fn</span> <span class="o">-&gt;</span> <span class="n">exit</span> <span class="s2">&#34;Oops&#34;</span> <span class="n">end</span><span class="o">.</span><span class="p">()</span> <span class="c1"># (exit) &#34;Oops&#34;</span>
+<span class="n">try</span> <span class="n">do</span>
+  <span class="n">exit</span> <span class="s2">&#34;Oops&#34;</span>
+<span class="n">catch</span>
+  <span class="ss">:exit</span><span class="p">,</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="s2">&#34;EXIT!!!&#34;</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>虽然 exit 可以被捕获，但是请不要这样做，把它交给 <strong>supervisor</strong> 去处理</p>
+<h3 id="new-errors">New Errors</h3>
+<p>Elixir 提供了相当的内建错误类型，不过 Elixir 还是提供了自建错误类型的方法，使用 <strong>defexception/1</strong> 来创建新的错误类型，并通过 <code>:message</code> 来设置默认的错误消息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">ExampleError</span> <span class="n">do</span>
+  <span class="n">defexception</span> <span class="ss">message</span><span class="p">:</span> <span class="s2">&#34;an example error&#34;</span>
+<span class="n">end</span>
+<span class="n">try</span> <span class="n">do</span>
+  <span class="n">raise</span> <span class="nc">ExampleError</span>
+<span class="n">rescue</span>
+  <span class="n">e</span> <span class="n">in</span> <span class="nc">ExampleError</span> <span class="o">-&gt;</span> <span class="n">e</span><span class="o">.</span><span class="n">message</span>
+<span class="n">end</span>
+<span class="c1"># &#34;an example error&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="并发">并发</h2>
+<p>得益于 BEAM (Erlang VM)，Elixir 对并发的支持很棒，并发模型是 <strong>Actors</strong> ，通过消息传递交互的进程，BEAM 的进程是轻量级的，可以运行在所有 CPU 之上，类似于现在所说的协程。</p>
+<p>创建新进程的方式很简单，和 Golang 中的 go 有异曲同工之妙，使用 <code>spawn</code> 即可完成，并且返回一个 <strong>pid</strong> (进程标识符)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">end</span>
+<span class="nc">Example</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># 5</span>
+<span class="n">spawn</span><span class="p">(</span><span class="nc">Example</span><span class="p">,</span> <span class="ss">:add</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># #PID&lt;0.124.0&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="进程">进程</h3>
+<h4 id="消息传递">消息传递</h4>
+<p>BEAM 中的进程间方式仅有消息传递， <code>send</code> 允许我们向 PID 发送消息，而 <code>receive</code> 监听和匹配消息，如果没有匹配的消息，进程会被阻塞。如果你用过 Golang，那你一定熟悉它，因为这和 Golang 中的 chan 很像，但是消息传递中发送方不会被阻塞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">listen</span> <span class="n">do</span>
+    <span class="n">receive</span> <span class="n">do</span>
+      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&#34;hello&#34;</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;world&#34;</span><span class="p">)</span>
+    <span class="n">end</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;receive end&#34;</span><span class="p">)</span>
+    <span class="n">listen</span><span class="p">()</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="n">spawn</span><span class="p">(</span><span class="nc">Example</span><span class="p">,</span> <span class="ss">:listen</span><span class="p">,</span> <span class="p">[])</span>
+<span class="n">send</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&#34;hello&#34;</span><span class="p">})</span>
+<span class="c1"># world</span>
+<span class="c1"># receive end</span>
+<span class="n">send</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:ok</span><span class="p">)</span>
+<span class="c1"># :ok</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="进程链接">进程链接</h4>
+<p>如果进程崩溃了，spawn 就会有问题，因为父进程不会知道子进程出错而导致程序异常，为了解决这个问题，我们需要将父子进程连接起来，这样它们可以收到相互退出的通知</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">explode</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">exit</span> <span class="ss">:iris</span>
+<span class="n">end</span>
+<span class="n">spawn</span><span class="p">(</span><span class="nc">Example</span><span class="p">,</span> <span class="ss">:explode</span><span class="p">,</span> <span class="p">[])</span> <span class="c1"># #PID&lt;0.150.0&gt;</span>
+<span class="n">spawn_link</span><span class="p">(</span><span class="nc">Example</span><span class="p">,</span> <span class="ss">:explode</span><span class="p">,</span> <span class="p">[])</span> <span class="c1"># (EXIT from #PID&lt;0.107.0&gt;) shell process exited with reason: :iris</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>有时候我们不希望链接的进程导致当前进程跟着崩溃，这时候就要通过 <code>Process.flag/2</code> 函数捕捉进程的错误退出，这个函数用 Erlang 的 process_flag/2 的 trap_exit 信号。当捕获到被链接的进程发生错误退出时 (trap_exit 设为 true), 就会收到像 {:EXIT, from_pid, reason} 这样的三元组形式的退出信号</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">explode</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">exit</span> <span class="ss">:iris</span>
+  <span class="n">def</span> <span class="n">run</span> <span class="n">do</span>
+    <span class="nc">Process</span><span class="o">.</span><span class="n">flag</span><span class="p">(</span><span class="ss">:trap_exit</span><span class="p">,</span> <span class="n">true</span><span class="p">)</span>
+    <span class="n">spawn_link</span><span class="p">(</span><span class="nc">Example</span><span class="p">,</span> <span class="ss">:explode</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">receive</span> <span class="n">do</span>
+      <span class="p">{</span><span class="ss">:EXIT</span><span class="p">,</span> <span class="n">_from_pid</span><span class="p">,</span> <span class="n">reason</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;Exit reason: </span><span class="si">#{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">end</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="nc">Example</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># Exit reason: iris</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="进程监控">进程监控</h4>
+<p>如果不希望链接两个进程，但是仍然希望获得错误信息通知，那么就需要监控这个进程，即 <code>spawn_monitor</code> ，不需要捕获进程，也不会导致当前进程崩溃</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">explode</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">exit</span> <span class="ss">:iris</span>
+  <span class="n">def</span> <span class="n">run</span> <span class="n">do</span>
+    <span class="n">spawn_monitor</span><span class="p">(</span><span class="nc">Example</span><span class="p">,</span> <span class="ss">:explode</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">receive</span> <span class="n">do</span>
+      <span class="p">{</span><span class="ss">:DOWN</span><span class="p">,</span> <span class="n">_ref</span><span class="p">,</span> <span class="ss">:process</span><span class="p">,</span> <span class="n">_from_pid</span><span class="p">,</span> <span class="n">reason</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="nc">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">&#34;Exit reason: </span><span class="si">#{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">end</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="nc">Example</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># Exit reason: iris</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="promise-future">Promise/Future</h3>
+<p>Agent 是 <strong>同步的</strong> Promise/Future 的抽象，函数的返回值就是 Agent 的状态，我们可以通过 PID 来获取它，当然也可以通过命名来获取</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">agent</span><span class="p">}</span> <span class="o">=</span> <span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">fn</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="n">end</span><span class="p">)</span> <span class="c1"># {:ok, #PID&lt;0.109.0&gt;}</span>
+<span class="nc">Agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">fn</span> <span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">state</span> <span class="o">++</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="n">end</span><span class="p">)</span>
+<span class="nc">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span><span class="p">))</span> <span class="c1"># [1, 2, 3, 4, 5]</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">agent</span><span class="p">}</span> <span class="o">=</span> <span class="nc">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">fn</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="n">end</span><span class="p">,</span> <span class="ss">name</span><span class="p">:</span> <span class="nc">Numbers</span><span class="p">)</span>
+<span class="nc">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nc">Numbers</span><span class="p">,</span> <span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span><span class="p">))</span> <span class="c1"># [1, 2, 3]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Task 是 <strong>异步的</strong> Promise/Future 抽象，与 Agent 类似，但是提供了更多的异步操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">Example</span> <span class="n">do</span>
+  <span class="n">def</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="n">do</span>
+    <span class="ss">:timer</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span> <span class="c1"># sleep 3 s</span>
+    <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+<span class="n">task</span> <span class="o">=</span> <span class="nc">Task</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="nc">Example</span><span class="p">,</span> <span class="ss">:add</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span> <span class="c1"># 异步执行 Example.add</span>
+<span class="ss">:timer</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+<span class="nc">Task</span><span class="o">.</span><span class="n">await</span><span class="p">(</span><span class="n">task</span><span class="p">)</span> <span class="c1"># 获取 Example.add 的运行结果</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="genserver">GenServer</h3>
+<p>OTP server 包含了 GenServer 的主要行为和一系列 callbacks，GenServer 是一个专门监控和控制进程状态、启停等的抽象，属于 BEAM/OTP 的一部分，它是一个循环，每次迭代都会处理一个带有目标状态的请求</p>
+<p>我们先学习最简单的 GenServer 的使用，即启动与初始化，我们使用 GenServer 简单的实现一个队列</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">SimpleQueue</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">GenServer</span>
+  <span class="na">@doc</span> <span class="sh">&#34;&#34;&#34;
+</span><span class="sh">  Start our queue and link it. This is a helper function
+</span><span class="sh">  &#34;&#34;&#34;</span>
+  <span class="n">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">state</span> <span class="p">\\</span> <span class="p">[])</span> <span class="n">do</span>
+    <span class="nc">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">__MODULE__</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="ss">name</span><span class="p">:</span> <span class="n">__MODULE__</span><span class="p">)</span>
+  <span class="n">end</span>
+
+  <span class="na">@doc</span> <span class="sh">&#34;&#34;&#34;
+</span><span class="sh">  GenServer.init/1 callback
+</span><span class="sh">  &#34;&#34;&#34;</span>
+  <span class="n">def</span> <span class="n">init</span><span class="p">(</span><span class="n">state</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们如果需要使用 GenServer 同步调用，则需要实现 <code>GenServer.handle_call/3</code> 函数，接受请求、调用者PID以及初始状态，期望的返回值为 <code>{:reply, response, state}</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="na">@doc</span> <span class="sh">&#34;&#34;&#34;
+</span><span class="sh">GenServer.handle_call/3 callback
+</span><span class="sh">&#34;&#34;&#34;</span>
+<span class="n">def</span> <span class="n">handle_call</span><span class="p">(</span><span class="ss">:dequeue</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="p">[</span><span class="n">value</span> <span class="o">|</span> <span class="n">state</span><span class="p">]),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="ss">:reply</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+<span class="n">def</span> <span class="n">handle_call</span><span class="p">(</span><span class="ss">:dequeue</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="p">[]),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="ss">:reply</span><span class="p">,</span> <span class="n">nil</span><span class="p">,</span> <span class="p">[]}</span>
+<span class="n">def</span> <span class="n">handle_call</span><span class="p">(</span><span class="ss">:queue</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="n">state</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="ss">:reply</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+
+<span class="n">def</span> <span class="n">queue</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">__MODULE__</span><span class="p">,</span> <span class="ss">:queue</span><span class="p">)</span>
+<span class="n">def</span> <span class="n">dequeue</span><span class="p">(),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">__MODULE__</span><span class="p">,</span> <span class="ss">:dequeue</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>同步操作时，当调用 :dequeue 函数，就会从队列中取出头部，并将尾部保存为状态等待下一次使用，最终返回头部，当队列为空时则什么都不做。:queue 函数则只会展示当前状态，不会改变状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="nc">SimpleQueue</span><span class="o">.</span><span class="n">start_link</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1"># {:ok, #PID&lt;0.136.0&gt;}</span>
+<span class="nc">SimpleQueue</span><span class="o">.</span><span class="n">dequeue</span><span class="p">()</span> <span class="c1"># 1</span>
+<span class="nc">SimpleQueue</span><span class="o">.</span><span class="n">queue</span><span class="p">()</span> <span class="c1"># [2, 3]</span>
+<span class="nc">SimpleQueue</span><span class="o">.</span><span class="n">dequeue</span><span class="p">()</span> <span class="c1"># 2</span>
+<span class="nc">SimpleQueue</span><span class="o">.</span><span class="n">dequeue</span><span class="p">()</span> <span class="c1"># 3</span>
+<span class="nc">SimpleQueue</span><span class="o">.</span><span class="n">queue</span><span class="p">()</span> <span class="c1"># []</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果想实现异步操作，那么需要实现类似的 <code>handle_cast/2</code> 函数，它不接受调用者为参数，且没有返回值，剩下的与同步调用时几乎一致</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="na">@doc</span> <span class="sh">&#34;&#34;&#34;
+</span><span class="sh">GenServer.handle_cast/2 callback
+</span><span class="sh">&#34;&#34;&#34;</span>
+<span class="n">def</span> <span class="n">handle_cast</span><span class="p">({</span><span class="ss">:enqueue</span><span class="p">,</span> <span class="n">value</span><span class="p">},</span> <span class="n">state</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="n">state</span> <span class="o">++</span> <span class="p">[</span><span class="n">value</span><span class="p">]}</span>
+
+<span class="n">def</span> <span class="n">enqueue</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">GenServer</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">__MODULE__</span><span class="p">,</span> <span class="p">{</span><span class="ss">:enqueue</span><span class="p">,</span> <span class="n">value</span><span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="otp-supervisors">OTP Supervisors</h3>
+<p>Supervisors 是一种特殊的进程，它专门监控其他进程，并自动重启出错的子进程，从而实现容错性高的程序。Supervisors 的魔力主要在 <code>Supervisor.start_link/2</code> 函数，这个函数除了能启动 supervisor 和子进程之外，它还允许我们设置管理子进程的策略</p>
+<p>使用 <code>mix new simple_queue --sup</code> 命令，我们创建了拥有 supervisor 树的新项目，SimpleQueue 的代码放在 lib/simple_queue.ex，supervisor 的代码我们将添加到 lib/simple_queue/application.ex 中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">defmodule</span> <span class="nc">SimpleQueue.Application</span> <span class="n">do</span>
+  <span class="n">use</span> <span class="nc">Application</span>
+  <span class="n">def</span> <span class="n">start</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">_args</span><span class="p">)</span> <span class="n">do</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="nc">SimpleQueue</span><span class="p">]</span>
+    <span class="c1"># 如果有配置项，可以使用元组来配置 children</span>
+    <span class="c1"># children = [{SimpleQueue, [1, 2, 3]}]</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="p">[</span><span class="ss">strategy</span><span class="p">:</span> <span class="ss">:one_for_one</span><span class="p">,</span> <span class="ss">name</span><span class="p">:</span> <span class="nc">SimpleQueue.Supervisor</span><span class="p">]</span>
+    <span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果我们的 SimpleQueue 进程崩溃了，或者被终止了，Supervisor 会自动重启这个进程，重启策略有三种</p>
+<ul>
+<li><strong>:one_for_one</strong> ：只重启失败的子进程</li>
+<li><strong>:one_for_all</strong> ：当错误事件出现时，重启所有子进程</li>
+<li><strong>:rest_for_one</strong> ：重启失败的子进程，以及所有在它后面启动的进程</li>
+</ul>
+<h4 id="子进程-specification">子进程 Specification</h4>
+<p>当 Supervisor 进程启动后，它必须知道如何操作子进程，所以每个子模块都应该有 <code>child_spec/1</code> 函数来定义操作行为，不过幸运的是，如果使用了 <code>use GenServer</code> / <code>use Supervisor</code> 和 <code>use Agent</code> 会自动帮我们定义好这些行为，如果需要自己定义的话</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">def</span> <span class="n">child_spec</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="n">do</span>
+  <span class="p">%{</span>
+    <span class="ss">id</span><span class="p">:</span> <span class="nc">SimpleQueue</span><span class="p">,</span>
+    <span class="ss">start</span><span class="p">:</span> <span class="p">{</span><span class="n">__MODULE__</span><span class="p">,</span> <span class="ss">:start_link</span><span class="p">,</span> <span class="p">[</span><span class="n">opts</span><span class="p">]},</span>
+    <span class="ss">shutdown</span><span class="p">:</span> <span class="mi">5_000</span><span class="p">,</span>
+    <span class="ss">restart</span><span class="p">:</span> <span class="ss">:permanent</span><span class="p">,</span>
+    <span class="ss">type</span><span class="p">:</span> <span class="ss">:worker</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="n">end</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们下来来说说这些参数都是什么</p>
+<ul>
+<li>id：Supervisor 用于定位子进程的 specification，必选</li>
+<li>start：被 Supervisor 启动时，需要调用的 Module / Function / Arguments，必选</li>
+<li>shutdown：子进程关闭时的行为，可选
+<ul>
+<li><code>:brutal_kill</code> 子进程立即停止</li>
+<li><code>:infinity</code> Supervisor 将会无限期等待，这是 :supervisor 进程类型的默认值</li>
+<li>任意正整数，以 ms 为单位的等待时间，超时后将杀掉子进程， :work 进程类型的默认值为 5000</li>
+</ul>
+</li>
+<li>restart：子进程崩溃时的处理方式，可选
+<ul>
+<li><code>:permanent</code> 总是重启子进程，这是默认值</li>
+<li><code>:temporary</code> 绝不重启子进程</li>
+<li><code>:transient</code> 只有在非正常中止的时候才重启子进程</li>
+</ul>
+</li>
+<li>type：进程的类型 <code>:worker</code> 或 <code>:supervisor</code> ，默认 :worker，可选</li>
+</ul>
+<h4 id="dynamicsupervisor">DynamicSupervisor</h4>
+<p>Supervisor 通常在应用启动时伴随子进程启动，但有时候被监管的子进程在应用启动时还是 <strong>未知的</strong> (如 web 应用中启动了一个新进程处理用户连接)，我们需要一个能按需启动子进程的 Supervisor，这正是 DynamicSupervisor 的使用场景</p>
+<p>我们不指定子进程，我们只要定义好运行时的选项即可，不过 DynamicSupervisor 只支持 <code>:one_for_one</code> 这一种监管策略</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="ss">strategy</span><span class="p">:</span> <span class="ss">:one_for_one</span><span class="p">,</span> <span class="ss">name</span><span class="p">:</span> <span class="nc">SimpleQueue.Supervisor</span><span class="p">]</span>
+<span class="nc">DynamicSupervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们需要使用 start_child/2 函数来动态启动新的 SimpleQueue 子进程，这个函数接收一个 supervisor 和子进程 specification 作为参数 (SimpleQueue 使用了 use GenServer，所以子进程的 specification 已经定义好了)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="nc">DynamicSupervisor</span><span class="o">.</span><span class="n">start_child</span><span class="p">(</span><span class="nc">SimpleQueue.Supervisor</span><span class="p">,</span> <span class="nc">SimpleQueue</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="task-supervisor">Task Supervisor</h4>
+<p>Task 有自己特殊的 Supervisor，它是专门为动态创建的任务而设计的 supervisor，内部实际使用的是 DynamicSupervisor</p>
+<p>Task.Supervisor 与其他 Supervisor 在使用上没有什么区别，与 Supervisor 主要的区别时默认重启策略的不同，Task.Supervisor 默认重启策略为 <strong>:temporary</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="nc">Task.Supervisor</span><span class="p">,</span> <span class="ss">name</span><span class="p">:</span> <span class="nc">ExampleApp.TaskSupervisor</span><span class="p">,</span> <span class="ss">restart</span><span class="p">:</span> <span class="ss">:transient</span><span class="p">}</span>
+<span class="p">]</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="nc">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="p">[</span><span class="ss">strategy</span><span class="p">:</span> <span class="ss">:one_for_one</span><span class="p">])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>当创建好 Task.Supervisor 后，我们可以使用 <code>start_child/2</code> 来创建受监管的 task。如果我们的任务过早地崩溃掉，它会被自动启动。这个功能在处理大量涌来的请求或者后台工作的时候非常有用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="nc">Task.Supervisor</span><span class="o">.</span><span class="n">start_child</span><span class="p">(</span><span class="nc">ExampleApp.TaskSupervisor</span><span class="p">,</span> <span class="n">fn</span> <span class="o">-&gt;</span> <span class="n">background_work</span><span class="p">()</span> <span class="n">end</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-02-21</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/" data-title="Elixir学习笔记 003" data-hashtags="FP,Elixir,编程语言"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/" data-hashtag="FP"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/" data-title="Elixir学习笔记 003"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/" data-title="Elixir学习笔记 003"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/" data-title="Elixir学习笔记 003"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/fp/">FP</a>,&nbsp;<a href="/tags/elixir/">Elixir</a>,&nbsp;<a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_002/" class="prev" rel="prev" title="Elixir学习笔记 002"><i class="fas fa-angle-left fa-fw"></i>Elixir学习笔记 002</a></div>
+</div>
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.74.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://blog.ginshio.org/" target="_blank">GinShio</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":12},"comment":{"gitalk":{"admin":["GinShio"],"clientID":"1ede37779b82f8d8a39e","clientSecret":"4dc775e507be852aa2805c6643495ed7178b7826","id":"2021-02-21T20:25:00+08:00","owner":"GinShio","repo":"Blog","title":"Elixir学习笔记 003"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"},{"display":false,"left":"$","right":"$"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-172480612-1', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-172480612-1" async></script></body>
+</html>

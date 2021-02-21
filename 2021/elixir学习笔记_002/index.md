@@ -161,6 +161,50 @@ Elixir 以组合的方式为模块添加全新的功能，并且也为我们提�
     Example.Es.hello("GinShio") # "Hola, GinShio"
     ```
 
+
+### 注解 {#注解}
+
+Elixir 是一个动态语言，类型信息会被编译器忽略，这样完成一个程序会很麻烦，因此我们往往会寄希望于其他工具帮助我们来完成检查，降低复杂度，这时就需要注解来帮助我们。
+
+Specification 可以理解为一个接口 (**interface**)，用于定义了函数的参数与返回值的类型，语法 `@spec name(param list) :: return` ，简单用例子看一下怎么用吧
+
+```elixir
+@spec sum_product(integer) :: integer
+def sum_product(a) do
+  [1, 2, 3] |> Enum.map(fn e -> e * a end) |> Enum.sum()
+end
+```
+
+我们可以正常的使用这个函数，毕竟它不被编译器所关注， `Enum.sum()` 将会返回一个 number 而不是 integer，如果想发现这些问题的话，我们需要使用 Dialyzer 这类静态分析器来帮我们解决这些问题
+
+当我们使用一个 spec 时我们可能需要有一些很复杂的结构，如果每次都定义一遍实在太麻烦了，这时我们就需要类型相关的注解，好在 Elixir 提供了
+
+-   `@type` 公开类型，类型的内部结构是公开的
+-   `@typep` 私有类型，只能在模块定义的地方使用
+-   `@opaque` 公开类型，但内部结构是私有的
+
+当然类型也是可以带参数的 (有 Haskell 那味了)，当然别忘了和模块文档相似的 `@typedoc` (类型文档)，我们看看怎么用
+
+```elixir
+defmodule Example.Type do
+  defstruct first: nil, last: nil
+  @type t(first, last) :: %Example.Type{first: first, last: last}
+  @typedoc """
+  Type that represents Example struct with :first(integer) and :last(integer)
+  """
+  @type t :: %Example.Type{first: integer, last: integer}
+end
+defmodule Example do
+  @spec sum_times(integer, Example.Type.t()) :: integer
+  def sum_times(a, params) do
+    for i <- params.first..params.last do
+      i
+    end
+    |> Enum.map(fn(e) -> e * a end) |> Enum.sum() |> round
+  end
+end
+```
+
 ---
 
 

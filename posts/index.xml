@@ -4,7 +4,14 @@
         <link>https://blog.ginshio.org/posts/</link>
         <description>所有文章 | iris</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 19 Feb 2021 14:31:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 21 Feb 2021 20:25:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Elixir学习笔记 003</title>
+    <link>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/</link>
+    <pubDate>Sun, 21 Feb 2021 20:25:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/</guid>
+    <description><![CDATA[Mix Mix 是 Elixir 社区开发的集包管理、依赖管理、构建工具于一身的开发工具，扩展性极好，功能强大，自带对 Erlang 的支持，可以类比 Golang 自带的 go，详细的使用方式请]]></description>
+</item><item>
     <title>Elixir学习笔记 002</title>
     <link>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_002/</link>
     <pubDate>Fri, 19 Feb 2021 14:31:00 &#43;0800</pubDate>
@@ -53,12 +60,5 @@
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/sicp_001/</guid>
     <description><![CDATA[心智的活动，除了尽力产生各种简单的认识之外，主要表现在如下三个方面： 将若干简单认识组合为一个复杂认识，由此产生出各种复杂认识 将两个认识放在一]]></description>
-</item><item>
-    <title>编译原理 (4) – 语法分析1</title>
-    <link>https://blog.ginshio.org/2020/compilerprinciple_004/</link>
-    <pubDate>Tue, 03 Nov 2020 16:09:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/compilerprinciple_004/</guid>
-    <description><![CDATA[程序设计语言构造的语法可以使用 上下文无关文法 或者 BNF (巴库斯-瑙尔范式) 表示法来描述，文法为语言设计者和编译器编写者提供了很大便利: 文法给出了]]></description>
 </item></channel>
 </rss>
