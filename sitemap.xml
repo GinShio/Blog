@@ -2,14 +2,19 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.ginshio.org/categories/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/application/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/categories/apps/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/categories/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/posts/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/server/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/steam/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/2021/steam_apps/</loc><lastmod>2021-02-22T22:24:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/tags/elixir/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_003/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/categories/erlangelixir/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/tags/fp/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/posts/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc><lastmod>2021-02-21T20:25:42&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_002/</loc><lastmod>2021-02-21T20:18:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.ginshio.org/2021/elixir%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_001/</loc><lastmod>2021-02-19T19:20:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -18,9 +23,6 @@
             <loc>https://blog.ginshio.org/tags/concurrency/</loc><lastmod>2020-12-08T20:38:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.ginshio.org/tags/%E7%AC%94%E8%AE%B0/</loc><lastmod>2020-12-08T20:38:18&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.ginshio.org/2020/cpp_concurrency_std/</loc><lastmod>2020-12-08T17:25:30&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/application/</loc><lastmod>2021-01-23T23:33:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://blog.ginshio.org/categories/apps/</loc><lastmod>2021-01-23T23:33:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/server/</loc><lastmod>2021-01-23T23:33:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
             <loc>https://blog.ginshio.org/2020/mail_server/</loc><lastmod>2020-12-04T14:58:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.ginshio.org/2020/gpg_started_guide/</loc><lastmod>2020-12-04T14:55:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.ginshio.org/tags/linux/</loc><lastmod>2020-12-04T14:55:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
