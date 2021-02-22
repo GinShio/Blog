@@ -9,11 +9,17 @@
 steam=/home/steam
 group_id=123456789
 l4d2=${steam}/l4d2
+l4d2_server_name="L4D2 Server"
 l4d2_port=1024
+valheim=${steam}/valheim
+valheim_server_name="Valheim Server"
+valheim_world="World"
+valheim_port=1024
+valheim_passwd=valheim_password
 ```
 
 
-## steamcmd {#steamcmd}
+## SteamCMD {#steamcmd}
 
 顾名思义，steamcmd 是一个命令行工具，同时支持 linux，是我们搭建服务器的好帮手，然而我不会用，不过这不重要，安装跑起来就好
 
@@ -73,9 +79,9 @@ sudo -u steam -H ln -s /home/steam/.steam/steamcmd/linux32/steamclient.so /home/
 安装并对服务器进行配置，配置文件是 `${l4d2}/left4dead2/cfg/server.cfg`
 
 ```shell
-sudo -u steam -H /home/steam/steamcmd +login anonymous +force_install_dir ${l4d2} +app_update 222860 +quit
+sudo -u steam -H ${steam}/steamcmd +login anonymous +force_install_dir ${l4d2} +app_update 222860 validate +quit
 sudo -u steam -H cat <<- EOF > ${l4d2}/left4dead2/cfg/server.cfg
-hostname "GinShio's L4D2 Server"     // 服务器名
+hostname "${l4d2_server_name}"       // 服务器名
 hostport ${l4d2_port}                // 服务器端口
 sv_tags "hidde,GinShio"              // 隐藏服务器
 sv_gametypes "versus,survival,coop,realism,teamversus,teamscavenge" // 游戏类型
@@ -120,12 +126,47 @@ RestartPreventExitStatus=23
 WantedBy=multi-user.target
 ```
 
-到这里，纯净的 l4d2 服务器就搭建好了，我并没有弄插件，所以就到这里！
+到这里，纯净的 l4d2 服务器就搭建好了，我并没有弄插件，也没有弄管理员，所以就到这里！
 
 ---
 
 
 ## Valheim: 英灵神殿 {#valheim-英灵神殿}
 
-TODO
+首先我们配置服务器，不过和 L4D2 的方式差不多，毕竟都是 SteamCMD，不废话，直接上 Shell 指令。需要注意的是，Valheim 将占用三个端口，即 `valheim_port` 到 `valheim_port + 2` ，请在防火墙开启需要的全部三个端口
+
+```shell
+sudo -u steam -H ${steam}/steamcmd +login anonymous +force_install_dir ${valheim} +app_update 896660 validate +quit
+sudo -u steam -H cp ${valheim}/start_server.sh ${valheim}/start_server.sh.bkp
+sudo -u steam -H cat <<- EOF > ${valheim}/start_server.sh
+export templdpath=${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${valheim}/linux64:${LD_LIBRARY_PATH}
+export SteamAppId=892970
+echo "Starting server PRESS CTRL-C to exit"
+${valheim}/valheim_server.x86_64 -name "${valheim_server_name}" -port ${valheim_port} -world "${valheim_world}" -password "${valheim_passwd}"
+export LD_LIBRARY_PATH=$templdpath
+EOF
+```
+
+搞定，整一个 service 让 systemd 帮我们管理服务器
+
+```nil
+[Unit]
+Description=Valheim Server
+After=network.target
+
+[Service]
+Type=simple
+User=steam
+WorkingDirectory=/home/steam/valheim
+ExecStart=bash /home/steam/valheim/start_server.sh
+ExecReload=/bin/kill -HUP
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+```
+
+好了，现在问题就是，你的服务器配置，请务必 **2C4G5Mbps** 及以上配置，要求真tm高，听说开发者只有5个人，，，
 
