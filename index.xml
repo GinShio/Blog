@@ -4,9 +4,16 @@
         <link>https://blog.ginshio.org/</link>
         <description>iris | GinShio的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 22 Feb 2021 22:23:00 &#43;0800</lastBuildDate>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 23 Feb 2021 19:52:00 &#43;0800</lastBuildDate>
             <atom:link href="https://blog.ginshio.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Elixir Phoenix Framework 001 – 初识</title>
+    <link>https://blog.ginshio.org/2021/elixir_phoenix_framework_notes_001/</link>
+    <pubDate>Tue, 23 Feb 2021 19:52:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2021/elixir_phoenix_framework_notes_001/</guid>
+    <description><![CDATA[Phoenix Framework 是一个 MVC web 框架，与 Ruby 的 Rails 和 Python 的 Django 类似，是整个 Elixir 社区的核心项目之一，推荐阅读 Phoenix 文档 安装 我们使用 Phoenix (v1.5.7) 前，需要安装相关依赖与 mix Elixir (&gt;= v1.6) Erlang (&gt;= 20) node.js [optional]]]></description>
+</item><item>
     <title>使用 steamcmd 搭建游戏服务器</title>
     <link>https://blog.ginshio.org/2021/steam_apps/</link>
     <pubDate>Mon, 22 Feb 2021 22:23:00 &#43;0800</pubDate>
@@ -83,12 +90,5 @@
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_003/</guid>
     <description><![CDATA[基于DFA的模式匹配器的优化 NFA的重要状态 如果一个 NFA 状态有一个标号非 \(\varepsilon\) 的离开转换，那么我们称这个状态为 重要状态 (important state)。子集构造法在]]></description>
-</item><item>
-    <title>在服务器上部署一些服务</title>
-    <link>https://blog.ginshio.org/2020/service/</link>
-    <pubDate>Tue, 13 Oct 2020 20:16:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/service/</guid>
-    <description><![CDATA[个人使用的是腾讯云的轻量服务器，系统镜像选择的是 Ubuntu 20.04，搭建的服务有 博客 HUGO 、私有网盘 Nextcloud 以及 Git服务器 GitLab 一下服务搭建时，域名统一使用 e]]></description>
 </item></channel>
 </rss>
