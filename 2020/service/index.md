@@ -24,6 +24,12 @@ gitlab_path="/home/git/gitlab"
 gitaly_path="/home/git/gitaly"
 gitlab_host="example.com"
 gitlab_db_passwd="YourPassword" # GitLab 数据库密码
+lychee_path="/path/to/lychee" # Lychee 所在目录
+lychee_version="v4.0.8" # Lychee 版本
+lychee_host="example.com"
+lychee_db_user="lychee" # Lychee 数据库用户
+lychee_db_passwd="YourPassword" # Lychee 数据库密码
+lychee_db_name="lychee" # Lychee 数据库名称
 ```
 
 ---
@@ -81,8 +87,8 @@ apt install -y nginx postgresql \
 -   PostgreSQL：创建用户 **nextcloud** 和数据库 **nextcloud\_db**
 
     ```shell
-    adduser --disabled-login --gecos 'Nextcloud' ${nextcloud_db_user}
-    sudo -u postgres -H psql -c "CREATE USER ${nextcloud_db_user} WITH PASSWORD ${nextcloud_db_passwd}'"
+    sudo adduser --disabled-login --gecos 'Nextcloud' ${nextcloud_db_user}
+    sudo -u postgres -H psql -c "CREATE USER ${nextcloud_db_user} WITH PASSWORD '${nextcloud_db_passwd}'"
     sudo -u postgres -H psql -c "CREATE DATABASE ${nextcloud_db_name} OWNER ${nextcloud_db_user}"
     ```
 
@@ -369,4 +375,114 @@ sed -i "103s/# enabled:.*/enabled: true/" config/gitlab.yml
 echo "Notify.test_email('${gitlab_email_reply}', 'Message Subject', 'Message Body').deliver_now" | \
 sudo -u git -H bundle exec rails console -e production
 ```
+
+---
+
+
+## Lychee {#lychee}
+
+Lychee 现在是由 LycheeOrg 维护的开源项目，旨在实现一个简单易用的照片管理系统，我们搭建服务将使用 4.x 版本作为示例
+
+Lychee 是目前为数不多的支持 PostgreSQL 的图床，不过遗憾的是不支持 SVG 图片
+
+
+### Lychee 依赖 {#lychee-依赖}
+
+由于 Lychee 同样也是 PHP 开发的服务，所以已经安装 Nextcloud 的情况下，并不需要再安装 PHP 相关的其他 package (当然除了 PHP 的依赖管理器 composer)
+
+PHP >= 7.4，依赖的扩展 (可以使用命令 `php -m` 查看已安装的扩展)
+
+-   BCMath
+-   Ctype
+-   Exif
+-   Ffmpeg (optional — to generate video thumbnails)
+-   Fileinfo
+-   GD
+-   Imagick (optional — to generate better thumbnails)
+-   JSON
+-   Mbstring
+-   OpenSSL
+-   PDO
+-   Tokenizer
+-   XML
+-   ZIP
+
+
+### Lychee 安装 {#lychee-安装}
+
+我们先创建数据库用户，Lychee 支持 MySQL (> 5.7.8) / MariaDB (> 10.2) / PostgreSQL (> 9.2)，我们继续使用 PostgreSQL 就好
+
+```shell
+sudo adduser --disabled-login --gecos 'Lychee' ${lychee_db_user}
+sudo -u postgres -H psql -c "CREATE USER ${lychee_db_user} WITH PASSWORD '${lychee_db_passwd}'"
+sudo -u postgres -H psql -c "CREATE DATABASE ${lychee_db_name} OWNER ${lychee_db_user}"
+```
+
+我们将安装 v4.0.8，更多详细版本信息请浏览 [更新日志](https://lycheeorg.github.io/docs/releases.html)
+
+```shell
+git clone https://www.github.com/LycheeOrg/Lychee -b ${lychee_version} ${lychee_path}
+cd ${lychee_path}
+composer install --no-dev
+chown -R www-data:www-data ${lychee_path}
+```
+
+关于 Web 服务器的配置官方已经给出了 [Nginx](https://lycheeorg.github.io/docs/#nginx) 和 [Apache](https://lycheeorg.github.io/docs/#apache) 的相关配置
+
+
+### Lychee 配置 {#lychee-配置}
+
+Lychee 相关的环境配置在 `.env` 中
+
+```shell
+cat <<- EOF > ${lychee_path}/.env
+APP_NAME=Lychee
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=http://${lychee_host}
+APP_KEY=
+
+DEBUGBAR_ENABLED=false
+LOG_CHANNEL=stack
+
+DB_CONNECTION=pgsql
+DB_HOST=localhost
+DB_PORT=5432
+DB_DATABASE=${lychee_db_name}
+DB_USERNAME=${lychee_db_user}
+DB_PASSWORD=${lychee_db_passwd}
+DB_LOG_SQL=false
+
+TIMEZONE=Asia/Shanghai
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+QUEUE_DRIVER=sync
+
+REDIS_HOST=/var/run/redis/redis.sock
+REDIS_PASSWORD=null
+REDIS_PORT=0
+
+MAIL_DRIVER=smtp
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=
+
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
+
+MIX_PUSHER_APP_KEY="\${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="\${PUSHER_APP_CLUSTER}"
+EOF
+chown www-data:www-data ${lychee_path}/.env
+sudo -u www-data php artisan key:generate
+```
+
+最后只需要配置 Nginx 相关内容即可
 

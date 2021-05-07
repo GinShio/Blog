@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/service/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-10-13T20:16:00+08:00" />
-<meta property="article:modified_time" content="2021-01-23T23:33:17+08:00" />
+<meta property="article:modified_time" content="2021-05-07T17:25:22+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/service\/"
-        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  2599 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/service\/","datePublished": "2020-10-13T20:16:00+08:00","dateModified": "2021-01-23T23:33:17+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  3102 ,
+        "url": "https:\/\/blog.ginshio.org\/2020\/service\/","datePublished": "2020-10-13T20:16:00+08:00","dateModified": "2021-05-07T17:25:22+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -106,8 +106,8 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">在服务器上部署一些服务</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://blog.ginshio.org/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>GinShio</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/apps/"><i class="far fa-folder fa-fw"></i>Apps</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2599 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3102 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -129,6 +129,13 @@
         <li><a href="#gitlab-依赖">Gitlab 依赖</a></li>
         <li><a href="#gitlab-安装">Gitlab 安装</a></li>
         <li><a href="#gitlab-开启邮件服务">GitLab 开启邮件服务</a></li>
+      </ul>
+    </li>
+    <li><a href="#lychee">Lychee</a>
+      <ul>
+        <li><a href="#lychee-依赖">Lychee 依赖</a></li>
+        <li><a href="#lychee-安装">Lychee 安装</a></li>
+        <li><a href="#lychee-配置">Lychee 配置</a></li>
       </ul>
     </li>
   </ul>
@@ -155,6 +162,12 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">fpm_path</span><span class="o">=</span><span class="s2">&#34;/etc/php/7.4/fpm&#34;</span> <span class="c1"># php-fpm 根目录</span>
@@ -167,6 +180,12 @@
 <span class="nv">gitaly_path</span><span class="o">=</span><span class="s2">&#34;/home/git/gitaly&#34;</span>
 <span class="nv">gitlab_host</span><span class="o">=</span><span class="s2">&#34;example.com&#34;</span>
 <span class="nv">gitlab_db_passwd</span><span class="o">=</span><span class="s2">&#34;YourPassword&#34;</span> <span class="c1"># GitLab 数据库密码</span>
+<span class="nv">lychee_path</span><span class="o">=</span><span class="s2">&#34;/path/to/lychee&#34;</span> <span class="c1"># Lychee 所在目录</span>
+<span class="nv">lychee_version</span><span class="o">=</span><span class="s2">&#34;v4.0.8&#34;</span> <span class="c1"># Lychee 版本</span>
+<span class="nv">lychee_host</span><span class="o">=</span><span class="s2">&#34;example.com&#34;</span>
+<span class="nv">lychee_db_user</span><span class="o">=</span><span class="s2">&#34;lychee&#34;</span> <span class="c1"># Lychee 数据库用户</span>
+<span class="nv">lychee_db_passwd</span><span class="o">=</span><span class="s2">&#34;YourPassword&#34;</span> <span class="c1"># Lychee 数据库密码</span>
+<span class="nv">lychee_db_name</span><span class="o">=</span><span class="s2">&#34;lychee&#34;</span> <span class="c1"># Lychee 数据库名称</span>
 </code></pre></td></tr></table>
 </div>
 </div><hr>
@@ -263,8 +282,8 @@ systemctl restart php7.4-fpm
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">adduser --disabled-login --gecos <span class="s1">&#39;Nextcloud&#39;</span> <span class="si">${</span><span class="nv">nextcloud_db_user</span><span class="si">}</span>
-sudo -u postgres -H psql -c <span class="s2">&#34;CREATE USER </span><span class="si">${</span><span class="nv">nextcloud_db_user</span><span class="si">}</span><span class="s2"> WITH PASSWORD </span><span class="si">${</span><span class="nv">nextcloud_db_passwd</span><span class="si">}</span><span class="s2">&#39;&#34;</span>
+<pre class="chroma"><code class="language-shell" data-lang="shell">sudo adduser --disabled-login --gecos <span class="s1">&#39;Nextcloud&#39;</span> <span class="si">${</span><span class="nv">nextcloud_db_user</span><span class="si">}</span>
+sudo -u postgres -H psql -c <span class="s2">&#34;CREATE USER </span><span class="si">${</span><span class="nv">nextcloud_db_user</span><span class="si">}</span><span class="s2"> WITH PASSWORD &#39;</span><span class="si">${</span><span class="nv">nextcloud_db_passwd</span><span class="si">}</span><span class="s2">&#39;&#34;</span>
 sudo -u postgres -H psql -c <span class="s2">&#34;CREATE DATABASE </span><span class="si">${</span><span class="nv">nextcloud_db_name</span><span class="si">}</span><span class="s2"> OWNER </span><span class="si">${</span><span class="nv">nextcloud_db_user</span><span class="si">}</span><span class="s2">&#34;</span>
 </code></pre></td></tr></table>
 </div>
@@ -747,11 +766,167 @@ cp config/initializers/smtp_settings.rb.sample config/initializers/smtp_settings
 </span><span class="se"></span>sudo -u git -H bundle <span class="nb">exec</span> rails console -e production
 </code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><hr>
+<h2 id="lychee">Lychee</h2>
+<p>Lychee 现在是由 LycheeOrg 维护的开源项目，旨在实现一个简单易用的照片管理系统，我们搭建服务将使用 4.x 版本作为示例</p>
+<p>Lychee 是目前为数不多的支持 PostgreSQL 的图床，不过遗憾的是不支持 SVG 图片</p>
+<h3 id="lychee-依赖">Lychee 依赖</h3>
+<p>由于 Lychee 同样也是 PHP 开发的服务，所以已经安装 Nextcloud 的情况下，并不需要再安装 PHP 相关的其他 package (当然除了 PHP 的依赖管理器 composer)</p>
+<p>PHP &gt;= 7.4，依赖的扩展 (可以使用命令 <code>php -m</code> 查看已安装的扩展)</p>
+<ul>
+<li>BCMath</li>
+<li>Ctype</li>
+<li>Exif</li>
+<li>Ffmpeg (optional — to generate video thumbnails)</li>
+<li>Fileinfo</li>
+<li>GD</li>
+<li>Imagick (optional — to generate better thumbnails)</li>
+<li>JSON</li>
+<li>Mbstring</li>
+<li>OpenSSL</li>
+<li>PDO</li>
+<li>Tokenizer</li>
+<li>XML</li>
+<li>ZIP</li>
+</ul>
+<h3 id="lychee-安装">Lychee 安装</h3>
+<p>我们先创建数据库用户，Lychee 支持 MySQL (&gt; 5.7.8) / MariaDB (&gt; 10.2) / PostgreSQL (&gt; 9.2)，我们继续使用 PostgreSQL 就好</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">sudo adduser --disabled-login --gecos <span class="s1">&#39;Lychee&#39;</span> <span class="si">${</span><span class="nv">lychee_db_user</span><span class="si">}</span>
+sudo -u postgres -H psql -c <span class="s2">&#34;CREATE USER </span><span class="si">${</span><span class="nv">lychee_db_user</span><span class="si">}</span><span class="s2"> WITH PASSWORD &#39;</span><span class="si">${</span><span class="nv">lychee_db_passwd</span><span class="si">}</span><span class="s2">&#39;&#34;</span>
+sudo -u postgres -H psql -c <span class="s2">&#34;CREATE DATABASE </span><span class="si">${</span><span class="nv">lychee_db_name</span><span class="si">}</span><span class="s2"> OWNER </span><span class="si">${</span><span class="nv">lychee_db_user</span><span class="si">}</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我们将安装 v4.0.8，更多详细版本信息请浏览 <a href="https://lycheeorg.github.io/docs/releases.html" target="_blank" rel="noopener noreffer">更新日志</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://www.github.com/LycheeOrg/Lychee -b <span class="si">${</span><span class="nv">lychee_version</span><span class="si">}</span> <span class="si">${</span><span class="nv">lychee_path</span><span class="si">}</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">lychee_path</span><span class="si">}</span>
+composer install --no-dev
+chown -R www-data:www-data <span class="si">${</span><span class="nv">lychee_path</span><span class="si">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>关于 Web 服务器的配置官方已经给出了 <a href="https://lycheeorg.github.io/docs/#nginx" target="_blank" rel="noopener noreffer">Nginx</a> 和 <a href="https://lycheeorg.github.io/docs/#apache" target="_blank" rel="noopener noreffer">Apache</a> 的相关配置</p>
+<h3 id="lychee-配置">Lychee 配置</h3>
+<p>Lychee 相关的环境配置在 <code>.env</code> 中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">cat <span class="s">&lt;&lt;- EOF &gt; ${lychee_path}/.env
+</span><span class="s">APP_NAME=Lychee
+</span><span class="s">APP_ENV=production
+</span><span class="s">APP_DEBUG=false
+</span><span class="s">APP_URL=http://${lychee_host}
+</span><span class="s">APP_KEY=
+</span><span class="s">
+</span><span class="s">DEBUGBAR_ENABLED=false
+</span><span class="s">LOG_CHANNEL=stack
+</span><span class="s">
+</span><span class="s">DB_CONNECTION=pgsql
+</span><span class="s">DB_HOST=localhost
+</span><span class="s">DB_PORT=5432
+</span><span class="s">DB_DATABASE=${lychee_db_name}
+</span><span class="s">DB_USERNAME=${lychee_db_user}
+</span><span class="s">DB_PASSWORD=${lychee_db_passwd}
+</span><span class="s">DB_LOG_SQL=false
+</span><span class="s">
+</span><span class="s">TIMEZONE=Asia/Shanghai
+</span><span class="s">
+</span><span class="s">BROADCAST_DRIVER=log
+</span><span class="s">CACHE_DRIVER=file
+</span><span class="s">SESSION_DRIVER=file
+</span><span class="s">SESSION_LIFETIME=120
+</span><span class="s">QUEUE_DRIVER=sync
+</span><span class="s">
+</span><span class="s">REDIS_HOST=/var/run/redis/redis.sock
+</span><span class="s">REDIS_PASSWORD=null
+</span><span class="s">REDIS_PORT=0
+</span><span class="s">
+</span><span class="s">MAIL_DRIVER=smtp
+</span><span class="s">MAIL_HOST=
+</span><span class="s">MAIL_PORT=
+</span><span class="s">MAIL_USERNAME=
+</span><span class="s">MAIL_PASSWORD=
+</span><span class="s">MAIL_ENCRYPTION=
+</span><span class="s">
+</span><span class="s">PUSHER_APP_ID=
+</span><span class="s">PUSHER_APP_KEY=
+</span><span class="s">PUSHER_APP_SECRET=
+</span><span class="s">PUSHER_APP_CLUSTER=mt1
+</span><span class="s">
+</span><span class="s">MIX_PUSHER_APP_KEY=&#34;\${PUSHER_APP_KEY}&#34;
+</span><span class="s">MIX_PUSHER_APP_CLUSTER=&#34;\${PUSHER_APP_CLUSTER}&#34;
+</span><span class="s">EOF</span>
+chown www-data:www-data <span class="si">${</span><span class="nv">lychee_path</span><span class="si">}</span>/.env
+sudo -u www-data php artisan key:generate
+</code></pre></td></tr></table>
+</div>
+</div><p>最后只需要配置 Nginx 相关内容即可</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-01-23</span>
+                <span>更新于 2021-05-07</span>
             </div>
             <div class="post-info-license"></div>
         </div>
