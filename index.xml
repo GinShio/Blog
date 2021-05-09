@@ -4,9 +4,16 @@
         <link>https://blog.ginshio.org/</link>
         <description>iris | GinShio的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 23 Feb 2021 19:52:00 &#43;0800</lastBuildDate>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 09 May 2021 18:28:00 &#43;0800</lastBuildDate>
             <atom:link href="https://blog.ginshio.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>使用 KMS 激活 Microsoft 软件</title>
+    <link>https://blog.ginshio.org/2021/kms/</link>
+    <pubDate>Sun, 09 May 2021 18:28:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2021/kms/</guid>
+    <description><![CDATA[微软的软件主要可以通过以下三个渠道获取: 零售 原始设备制造商 (OEM) 批量许可协议 OEM 在工厂执行激活，比如说新买的笔记本电脑自带的系统就是这种方式。零售]]></description>
+</item><item>
     <title>Elixir Phoenix Framework 001 – 初识</title>
     <link>https://blog.ginshio.org/2021/elixir_phoenix_framework_notes_001/</link>
     <pubDate>Tue, 23 Feb 2021 19:52:00 &#43;0800</pubDate>
@@ -83,12 +90,5 @@
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/compilerprinciple_004/</guid>
     <description><![CDATA[程序设计语言构造的语法可以使用 上下文无关文法 或者 BNF (巴库斯-瑙尔范式) 表示法来描述，文法为语言设计者和编译器编写者提供了很大便利: 文法给出了]]></description>
-</item><item>
-    <title>编译原理 (3) – 词法分析2</title>
-    <link>https://blog.ginshio.org/2020/compilerprinciple_003/</link>
-    <pubDate>Sat, 17 Oct 2020 22:33:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/compilerprinciple_003/</guid>
-    <description><![CDATA[基于DFA的模式匹配器的优化 NFA的重要状态 如果一个 NFA 状态有一个标号非 \(\varepsilon\) 的离开转换，那么我们称这个状态为 重要状态 (important state)。子集构造法在]]></description>
 </item></channel>
 </rss>

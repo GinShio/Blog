@@ -4,7 +4,14 @@
         <link>https://blog.ginshio.org/tags/server/</link>
         <description>server - 标签 - iris</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 22 Feb 2021 22:23:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/tags/server/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 09 May 2021 18:28:00 &#43;0800</lastBuildDate><atom:link href="https://blog.ginshio.org/tags/server/" rel="self" type="application/rss+xml" /><item>
+    <title>使用 KMS 激活 Microsoft 软件</title>
+    <link>https://blog.ginshio.org/2021/kms/</link>
+    <pubDate>Sun, 09 May 2021 18:28:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2021/kms/</guid>
+    <description><![CDATA[微软的软件主要可以通过以下三个渠道获取: 零售 原始设备制造商 (OEM) 批量许可协议 OEM 在工厂执行激活，比如说新买的笔记本电脑自带的系统就是这种方式。零售]]></description>
+</item><item>
     <title>使用 steamcmd 搭建游戏服务器</title>
     <link>https://blog.ginshio.org/2021/steam_apps/</link>
     <pubDate>Mon, 22 Feb 2021 22:23:00 &#43;0800</pubDate>
