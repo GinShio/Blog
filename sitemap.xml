@@ -2,16 +2,16 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.ginshio.org/tags/application/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/categories/apps/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/categories/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/kms/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/posts/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/server/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/tags/windows/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.ginshio.org/2021/kms/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/application/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/categories/apps/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/categories/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/kms/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/posts/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/server/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/tags/windows/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
+            <loc>https://blog.ginshio.org/2021/kms/</loc><lastmod>2021-05-10T00:53:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/tags/elixir/</loc><lastmod>2021-02-27T21:01:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/2021/elixir_phoenix_framework_notes_001/</loc><lastmod>2021-02-27T21:01:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/categories/erlangelixir/</loc><lastmod>2021-02-27T21:01:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
@@ -39,7 +39,7 @@
             <loc>https://blog.ginshio.org/2020/compilerprinciple_004/</loc><lastmod>2020-12-04T15:29:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/tags/%E9%BE%99%E4%B9%A6/</loc><lastmod>2020-12-04T15:29:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/2020/compilerprinciple_003/</loc><lastmod>2020-12-04T15:21:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
-            <loc>https://blog.ginshio.org/2020/service/</loc><lastmod>2021-05-07T17:25:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.ginshio.org/2020/service/</loc><lastmod>2021-05-07T17:25:22&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/2020/compilerprinciple_002/</loc><lastmod>2020-12-04T15:14:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/2020/compilerprinciple_001/</loc><lastmod>2020-12-04T15:06:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url><url>
             <loc>https://blog.ginshio.org/about/</loc><priority>0</priority></url><url>
