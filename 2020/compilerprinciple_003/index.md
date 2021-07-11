@@ -22,10 +22,11 @@
 
 抽象语法树的叶子结点对应于运算分量，内部结点表示运算符。标号为 `连接运算符` (\\(\circ\\)) 的内部结点被称为 **cat结点** ， `并运算符` (\\(|\\)) 的内部结点被称为 **or结点** ， `星号运算符` (\\(\*\\)) 的内部结点被称为 **star结点** ，我们构建正则表达式 \\((a|b)^{\*}abb\\#\\) 的抽象语法树。
 
-{{< figure src="/blog/CompilerPrinciple/images/ast_example.svg" >}}
+{{< figure src="/blog/CompilerPrinciple/ast-example.svg" >}}
 
 抽象语法树的叶子结点可以标号为 \\(\varepsilon\\) ，也可以用字母表中的符号作为标号，对于每个标号不为 \\(\varepsilon\\) 的叶子结点，我们赋予一个独立的整数，我们将这个整数称作叶子结点的 **位置** ，同时也表示和它对应的符号的位置，当然一个符号可以有多个位置。抽象语法树中的这些位置对应构造出的 NFA 中的重要状态。
-![](/blog/CompilerPrinciple/images/NFA_with_ast_example.svg)
+
+{{< figure src="/blog/CompilerPrinciple/NFA-with-ast-example.svg" >}}
 
 
 ### 计算函数 {#计算函数}
@@ -53,7 +54,8 @@ followpos 的概念有些复杂，我们先来了解如何计算 followpos，只
 2.  如果 n 是 star 结点，且 i 是 \\(lastpos(n)\\) 中的一个位置，那么 \\(firstpos(n)\\) 中的所有位置都在 \\(followpos(i)\\) 中
 
 四个函数如何计算都已经给出，现在我们用正则表达式 \\((a|b)^{\*}abb\\#\\) 练练手，下图给出构建出的语法分析树，结点左边给出其 **firstpos\*，结点右边给出其 \*lastpos**
-![](/blog/CompilerPrinciple/images/ast_with_firstpos_and_lastpos.svg)
+
+{{< figure src="/blog/CompilerPrinciple/ast-with-firstpos-and-lastpos.svg" >}}
 
 followpos 的计算规则1要求我们查看每个cat结点，并将它的右子结点的firstpos中的每个位置放到它的左子结点的lastpos中各个位置的followpos中；计算规则2要求我们查看每个 star 结点，并将它的firstpos中的所有位置放到它的lastpos中各个位置的followpos中。例如上图中最下面的一个 cat 结点，根据规则1，将位置3加入到 `followpos(1)` 和 `followpos(2)` 中。
 
@@ -72,7 +74,7 @@ followpos 的计算规则1要求我们查看每个cat结点，并将它的右子
 2.  在每条从i到j的有向边上添加位置i上的符号作为标号
 3.  把和结尾 `#` 相关的位置当作唯一的接收状态
 
-{{< figure src="/blog/CompilerPrinciple/images/followpos_directed_graph.svg" >}}
+{{< figure src="/blog/CompilerPrinciple/followpos-directed-graph.svg" >}}
 
 
 ### 从正则表达式构造DFA {#从正则表达式构造dfa}
@@ -114,7 +116,7 @@ while Dstates 中存在未标记的状态S:
 | C  | {1,2,3,5} | B | D |
 | D  | {1,2,3,6} | B | A |
 
-{{< figure src="/blog/CompilerPrinciple/images/reg2DFA.svg" >}}
+{{< figure src="/blog/CompilerPrinciple/reg2DFA.svg" >}}
 
 
 ### 最小化DFA {#最小化dfa}
@@ -124,7 +126,8 @@ while Dstates 中存在未标记的状态S:
 状态名如果不同，但只改变状态名就可以将一个自动机转换为另一个自动机，那么这两个自动机是 **同构的** ，反之则不是。有一个重要结论：任何正则语言都有一个 **唯一的** 且 **状态数目最少** 的DFA，而且从任意接受相同正则语言的DFA出发，通过分组合并等价状态，我们总可以构造出状态数最少的DFA。
 
 我们以正则表达式 \\((a|b)^{\*}abb\\) 的两个已经构造出的DFA来讲解最小化，其中最小化的DFA是本篇中由正则表达式直接构造出的DFA，另一个非同构DFA是上一篇中由NFA转换来的DFA。
-![](/blog/CompilerPrinciple/images/DFA_minimization_example.svg)
+
+{{< figure src="/blog/CompilerPrinciple/DFA-minimization-example.svg" >}}
 
 在最小化DFA之前，先说明输入串是如何区分各个状态的，如果分别从状态s和t出发，沿着标号为x的路径到达的两个状态只有一个是接受状态，则串x `区分状态` s 和 t；如果状态 s 和 t 存在能够区分它们的串，那么它们就是 **可区分的** 。空串 \\(\varepsilon\\) 可以区分如何一个接受状态和非接受状态。串 `bb` 区分状态 A 和 B，因为从 A 出发经过标号 bb 的路径会到达非接受状态 C，而从B出发可以到达接受状态。
 

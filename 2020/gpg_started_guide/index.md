@@ -24,7 +24,7 @@ GPG的基于现代密码学，主要是对非对称加密的应用，由于自�
 
 我们生成了一个密钥对，可以看到一些关于新生成的密钥的信息，包括了密钥长度、uid、指纹，我们一般使用指纹来分别不同的密钥，指纹是用40位16进制数字表示的串，我们一般使用 **邮箱** 、 **整串** 或 **串的最后16位** 区分密钥。
 
-{{< figure src="/blog/Applications/images/generate_gpg_key.png" >}}
+{{< figure src="/blog/Applications/generate-gpg-key.png" >}}
 
 
 ### 备份 {#备份}

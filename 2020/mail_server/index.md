@@ -201,13 +201,13 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 Mailu官方提供了 [在线生成配置文件](https://setup.mailu.io/)，可以根据我们的需求生成配置文件，我们将使用 Docker-Compose 搭建 master 版本，并将生成的配置文件下载到服务器上。
 
 -   initial configuration：进行初始化的配置，比如路径、主域名、TLS、管理界面等，由于我个人喜好自己生成TLS证书，所以选择 mail 禁止mailu帮我生成证书，但是对邮件进行TLS加密，如果需要mailu生成TLS证书选择带有 `letsencrypt` 的选项
-    ![](/blog/Applications/images/mailu_initial_configuration.png)
+    {{< figure src="/blog/Applications/mailu-initial-configuration.png" >}}
 -   pick some features：进行功能配置，我们禁用了webmail，可以根据个人喜好选择合适自己的webmail。剩下的三个选项分别是杀毒 (内存杀手)、WebDAV以及邮件代收，根据自己的需求选择
-    ![](/blog/Applications/images/mailu_pick_some_features.png)
+    {{< figure src="/blog/Applications/mailu-pick-some-features.png" >}}
 -   expose Mailu to the world：配置IP与主机名，监听地址填写自己的服务器IP，hostname填写服务器的长主机名
-    ![](/blog/Applications/images/mailu_expose_Mailu_to_the_world.png)
+    {{< figure src="/blog/Applications/mailu-expose-Mailu-to-the-world.png" >}}
 -   database preferences：数据库设置，这里我们选择使用宿主机的PostgreSQL，URL填写的是Docker在宿主机上默认开启的子网
-    ![](/blog/Applications/images/mailu_database_preferences.png)
+    {{< figure src="/blog/Applications/mailu-database-preferences.png" >}}
 
 
 #### 部署 Mailu {#部署-mailu}

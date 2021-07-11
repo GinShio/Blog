@@ -98,7 +98,7 @@
                  (fib (- n 2))))))
 ```
 
-{{< figure src="/blog/SICP/images/fibonacci_recursion.png" >}}
+{{< figure src="/blog/SICP/fibonacci-recursion.png" >}}
 
 由于这种计算斐波那契数列的方法很糟糕，做了很多冗余计算，其递归次数跟随n的大小指数增加，因此我们需要使用迭代的方法来优化这个求解过程
 

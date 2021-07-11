@@ -42,7 +42,8 @@ mix archive.install hex phx_new
 webpack 用于管理静态资源，添加 tag `--no-webpack` 即可禁止使用 webpack， `--no-html` 则会不生成HTML视图层，我们在完成 Rest API 程序时可以使用到这两个参数
 
 配置完成之后，使用 `mix phx.server` 即可运行服务器了！
-![](/blog/Erlang⁄Elixir/images/welcome-to-phoenix.png)
+
+{{< figure src="/blog/Erlang⁄Elixir/welcome-to-phoenix.png" >}}
 
 我们要写这个网站，首先要搞清楚目录关系，有关这个网站的所有的代码将在 `lib/awesome_web` 中实现，简单的做一个了解
 
@@ -82,7 +83,7 @@ end
 </div>
 ```
 
-{{< figure src="/blog/Erlang⁄Elixir/images/hello-phoenix.png" >}}
+{{< figure src="/blog/Erlang⁄Elixir/hello-phoenix.png" >}}
 
 效果还不错，不过太麻烦了，写页面岂不是要累死！好消息！Phoenix 提供了一些 `phx.gen.*` 的工具可以生成相关代码，减少重复的工作
 

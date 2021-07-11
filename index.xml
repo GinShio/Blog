@@ -4,9 +4,16 @@
         <link>https://blog.ginshio.org/</link>
         <description>iris | GinShio的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><managingEditor>iris@ginshio.org (GinShio)</managingEditor>
-            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 09 May 2021 18:28:00 &#43;0800</lastBuildDate>
+            <webMaster>iris@ginshio.org (GinShio)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 11 Jul 2021 12:14:00 &#43;0800</lastBuildDate>
             <atom:link href="https://blog.ginshio.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>操作系统 (1) – 进程与线程</title>
+    <link>https://blog.ginshio.org/2021/operatingsystem_001/</link>
+    <pubDate>Sun, 11 Jul 2021 12:14:00 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.ginshio.org/2021/operatingsystem_001/</guid>
+    <description><![CDATA[进程 进程 (Process) 是操作系统中的核心概念，是对正在运行的程序的抽象。即使只有一个可用的 CPU，也可以启动多个进程，让操作系统具有并发能力。 进程模型 一]]></description>
+</item><item>
     <title>使用 KMS 激活 Microsoft 软件</title>
     <link>https://blog.ginshio.org/2021/kms/</link>
     <pubDate>Sun, 09 May 2021 18:28:00 &#43;0800</pubDate>
@@ -83,12 +90,5 @@
     <author>作者</author>
     <guid>https://blog.ginshio.org/2020/sicp_001/</guid>
     <description><![CDATA[心智的活动，除了尽力产生各种简单的认识之外，主要表现在如下三个方面： 将若干简单认识组合为一个复杂认识，由此产生出各种复杂认识 将两个认识放在一]]></description>
-</item><item>
-    <title>编译原理 (4) – 语法分析1</title>
-    <link>https://blog.ginshio.org/2020/compilerprinciple_004/</link>
-    <pubDate>Tue, 03 Nov 2020 16:09:00 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.ginshio.org/2020/compilerprinciple_004/</guid>
-    <description><![CDATA[程序设计语言构造的语法可以使用 上下文无关文法 或者 BNF (巴库斯-瑙尔范式) 表示法来描述，文法为语言设计者和编译器编写者提供了很大便利: 文法给出了]]></description>
 </item></channel>
 </rss>

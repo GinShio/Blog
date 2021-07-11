@@ -172,7 +172,7 @@ GitLab 是开源的基于git的 web **DevOps生命周期工具** ，提供了 <s
 
 ### Gitlab 组件 {#gitlab-组件}
 
-{{< figure src="/blog/Applications/images/gitlab_architecture_simplified.png" >}}
+{{< figure src="/blog/Applications/gitlab-architecture-simplified.png" >}}
 
 -   Gitaly：处理所有的 git 操作
 -   GitLab Shell：处理基于 SSH 的 git 会话 与 SSH密钥

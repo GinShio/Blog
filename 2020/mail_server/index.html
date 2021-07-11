@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://blog.ginshio.org/2020/mail_server/" />
 <meta property="og:image" content="https://blog.ginshio.org/logo.png"/>
 <meta property="article:published_time" content="2020-11-16T22:43:00+08:00" />
-<meta property="article:modified_time" content="2020-12-04T14:58:59+08:00" />
+<meta property="article:modified_time" content="2021-07-04T19:57:17+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.ginshio.org/logo.png"/>
 
@@ -30,7 +30,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/blog.ginshio.org\/2020\/mail_server\/"
         },"image": ["https:\/\/blog.ginshio.org\/images\/screenshot.png"],"genre": "posts","keywords": "server, Application","wordcount":  3536 ,
-        "url": "https:\/\/blog.ginshio.org\/2020\/mail_server\/","datePublished": "2020-11-16T22:43:00+08:00","dateModified": "2020-12-04T14:58:59+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/blog.ginshio.org\/2020\/mail_server\/","datePublished": "2020-11-16T22:43:00+08:00","dateModified": "2021-07-04T19:57:17+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "GinShio","logo": "https:\/\/blog.ginshio.org\/logo.png"},"author": {
                 "@type": "Person",
@@ -515,41 +515,25 @@ docker-compose restart postfix-mailcow dovecot-mailcow
 <p>Mailu官方提供了 <a href="https://setup.mailu.io/" target="_blank" rel="noopener noreffer">在线生成配置文件</a>，可以根据我们的需求生成配置文件，我们将使用 Docker-Compose 搭建 master 版本，并将生成的配置文件下载到服务器上。</p>
 <ul>
 <li>initial configuration：进行初始化的配置，比如路径、主域名、TLS、管理界面等，由于我个人喜好自己生成TLS证书，所以选择 mail 禁止mailu帮我生成证书，但是对邮件进行TLS加密，如果需要mailu生成TLS证书选择带有 <code>letsencrypt</code> 的选项
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/blog/Applications/images/mailu_initial_configuration.png"
-        data-srcset="/blog/Applications/images/mailu_initial_configuration.png, /blog/Applications/images/mailu_initial_configuration.png 1.5x, /blog/Applications/images/mailu_initial_configuration.png 2x"
-        data-sizes="auto"
-        alt="/blog/Applications/images/mailu_initial_configuration.png"
-        title="/blog/Applications/images/mailu_initial_configuration.png" /></li>
+<figure>
+    <img src="/blog/Applications/mailu-initial-configuration.png"/> 
+</figure>
+</li>
 <li>pick some features：进行功能配置，我们禁用了webmail，可以根据个人喜好选择合适自己的webmail。剩下的三个选项分别是杀毒 (内存杀手)、WebDAV以及邮件代收，根据自己的需求选择
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/blog/Applications/images/mailu_pick_some_features.png"
-        data-srcset="/blog/Applications/images/mailu_pick_some_features.png, /blog/Applications/images/mailu_pick_some_features.png 1.5x, /blog/Applications/images/mailu_pick_some_features.png 2x"
-        data-sizes="auto"
-        alt="/blog/Applications/images/mailu_pick_some_features.png"
-        title="/blog/Applications/images/mailu_pick_some_features.png" /></li>
+<figure>
+    <img src="/blog/Applications/mailu-pick-some-features.png"/> 
+</figure>
+</li>
 <li>expose Mailu to the world：配置IP与主机名，监听地址填写自己的服务器IP，hostname填写服务器的长主机名
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png"
-        data-srcset="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png, /blog/Applications/images/mailu_expose_Mailu_to_the_world.png 1.5x, /blog/Applications/images/mailu_expose_Mailu_to_the_world.png 2x"
-        data-sizes="auto"
-        alt="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png"
-        title="/blog/Applications/images/mailu_expose_Mailu_to_the_world.png" /></li>
+<figure>
+    <img src="/blog/Applications/mailu-expose-Mailu-to-the-world.png"/> 
+</figure>
+</li>
 <li>database preferences：数据库设置，这里我们选择使用宿主机的PostgreSQL，URL填写的是Docker在宿主机上默认开启的子网
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/blog/Applications/images/mailu_database_preferences.png"
-        data-srcset="/blog/Applications/images/mailu_database_preferences.png, /blog/Applications/images/mailu_database_preferences.png 1.5x, /blog/Applications/images/mailu_database_preferences.png 2x"
-        data-sizes="auto"
-        alt="/blog/Applications/images/mailu_database_preferences.png"
-        title="/blog/Applications/images/mailu_database_preferences.png" /></li>
+<figure>
+    <img src="/blog/Applications/mailu-database-preferences.png"/> 
+</figure>
+</li>
 </ul>
 <h4 id="部署-mailu">部署 Mailu</h4>
 <p>现在开始正式的搭建邮箱服务器，假设你已经将配置文件下载到了 <code>mailu_path</code> 中，我们修改一下配置文件</p>
@@ -720,7 +704,7 @@ docker-compose -p mailu <span class="nb">exec</span> admin flask mailu admin adm
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-12-04</span>
+                <span>更新于 2021-07-04</span>
             </div>
             <div class="post-info-license"></div>
         </div>

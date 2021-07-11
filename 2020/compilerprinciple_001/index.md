@@ -5,7 +5,7 @@
 
 编译器，是一个 **程序** ，它可以阅读以某一 `源语言` 编写的程序，并把该程序翻译成一个 **等价的** 、 用 `目标语言` 编写的程序; 解释器，是另一种语言处理器，它直接利用用户提供的输入执行源程序中指定的操作。
 
-{{< figure src="/blog/CompilerPrinciple/images/compiler.svg" >}}
+{{< figure src="/blog/CompilerPrinciple/compiler.svg" >}}
 
 编译器产生的机器语言目标程序通常比一个解释器 **快** 得多，但是解释器的 **错误诊断效果** 比编译器更好，因为解释器是逐个语句地执行源程序。
 
@@ -19,7 +19,7 @@
 -   汇编器：将编译器产生的中间结果生成 **可重新定位的** 机器代码
 -   链接器：将一个或多个由编译器或汇编器生成的目标文件外加库，链接为一个可执行文件
 
-{{< figure src="/blog/CompilerPrinciple/images/language_processing_system.svg" >}}
+{{< figure src="/blog/CompilerPrinciple/language-processing-system.svg" >}}
 
 现代编译器中，基本可以分步骤调用编译器的各个部分，生成所需要的阶段输出，以 gcc 和 clang 为例
 
@@ -36,7 +36,7 @@
 -   分析：将源程序分解成为多个组成元素，并在要素之上加上语法结构。分析部分被称为编译器的 **前端**
 -   综合：根据中间表示和符号表中的信息来构造用户期待的目标程序。综合部分被称为编译器的 **后端**
 
-{{< figure src="/blog/CompilerPrinciple/images/compiler_steps.svg" >}}
+{{< figure src="/blog/CompilerPrinciple/compiler-steps.svg" >}}
 
 -   词法分析 (lexical analysis)：词法分析器读入组成源程序的字符流，并将它们组成成为有意义的 **词素** (lexeme) 的序列。对于每个词素，词法分析器产生如下形式的 `词法单元` (token) 作为输出 `<token-name，attribute-value>`
 -   语法分析 (syntax analysis)：语法分析器使用由词法分析器生成的各个词法单元的第一个分量来创建树形的中间表示，该中间表示给出了词法分析产生的词法单元流的语法结构。常用表示方法为 **语法树** (syntax tree)，树中的每个内部接点表示一个运算，而该结点的子结点表示该运算的分量
@@ -89,7 +89,7 @@
 
 名字和内存 (存储) 位置的关联，以及之后和值的关联可以用两个映射来描述，这两个映射随着程序的运行而改变。 **环境** (environment) 是从一个名字到存储位置的映射，例如 C 语言中的右值； **状态** (state)  是一个内存位置到它们值的映射，例如 C 语言中左值所对应的右值
 
-{{< figure src="/blog/CompilerPrinciple/images/name_to_value_map.svg" >}}
+{{< figure src="/blog/CompilerPrinciple/name-to-value-map.svg" >}}
 
 大多数环境和状态是 `动态绑定` 的，一般全局变量的环境映射是静态的，编译器可以在生成目标代码的时候为其分配一个地址；常量的声明一般其状态是静态绑定的，我们看到这个语句时就能确定绑定关系，并且在程序的运行时这个绑定不能改变。
 
